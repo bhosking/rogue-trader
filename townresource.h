@@ -6,7 +6,7 @@ class TownResource
 {
 public:
     TownResource();
-    Resource const * resource;
+    const Resource * resource;
     float rate;
     float stock;
     float buyPrice(int num = 1) const;
