@@ -12,6 +12,7 @@ public:
     float value;
     float mass;
     float volume;
+    float decay;
     std::vector<std::pair<Resource*,float> > needs;
 
 }
