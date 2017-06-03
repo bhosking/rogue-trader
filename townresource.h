@@ -6,12 +6,12 @@ class TownResource
 {
 public:
     TownResource();
-    Resource const * resource;
+    const Resource * resource;
     float rate;
     float stock;
     float buyPrice(int num = 1) const;
     float sellPrice(int num = 1) const;
-    std::vector<TownResource *> townResourcesNeeded;
+    std::vector<std::pair<TownResource *,float> > townResourcesNeeded;
 };
 
 #endif // TOWNRESOURCE_H
