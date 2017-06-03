@@ -12,7 +12,9 @@ TEMPLATE = app
 SOURCES += main.cpp \
     resource.cpp \
     config.cpp \
-    townresource.cpp
+    townresource.cpp \
+    updatableentity.cpp \
+    town.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -28,4 +30,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += \
     resource.h \
     config.h \
-    townresource.h
+    townresource.h \
+    updatableentity.h \
+    town.h

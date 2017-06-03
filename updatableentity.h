@@ -6,6 +6,7 @@ class updatableEntity
 {
 public:
     updatableEntity();
+    void processTick() = 0;
 };
 
 #endif // UPDATABLEENTITY_H
