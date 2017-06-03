@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     town.cpp \
     carriedresource.cpp \
     mainwindow.cpp \
-    player.cpp
+    player.cpp \
+    map.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -36,4 +37,5 @@ HEADERS += \
     town.h \
     carriedresource.h \
     mainwindow.h \
-    player.h
+    player.h \
+    map.h
