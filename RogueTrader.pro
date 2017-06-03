@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     config.cpp \
     townresource.cpp \
     town.cpp \
-    carriedresource.cpp
+    carriedresource.cpp \
+    mainwindow.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -32,4 +33,5 @@ HEADERS += \
     townresource.h \
     updatableentity.h \
     town.h \
-    carriedresource.h
+    carriedresource.h \
+    mainwindow.h
