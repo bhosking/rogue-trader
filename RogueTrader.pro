@@ -13,7 +13,6 @@ SOURCES += main.cpp \
     resource.cpp \
     config.cpp \
     townresource.cpp \
-    updatableentity.cpp \
     town.cpp
 
 # The following define makes your compiler emit warnings if you use
