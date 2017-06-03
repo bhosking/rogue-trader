@@ -15,3 +15,8 @@ float TownResource::sellPrice(int num) const
 {
 
 }
+
+float TownResource::getBulkValue(int startStock, int deltaStock) const
+{
+
+}
