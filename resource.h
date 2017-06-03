@@ -1,7 +1,8 @@
 #ifndef RESOURCE_H
 #define RESOURCE_H
 #include <vector>
-#include <pair>
+#include <utility>
+#include <string>
 
 
 class Resource
@@ -14,7 +15,7 @@ public:
     float volume;
     std::vector<std::pair<Resource*,float> > needs;
 
-}
+};
 
 #endif // RESOURCE_H
 //[Resource names]

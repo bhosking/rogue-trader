@@ -8,6 +8,5 @@ Config::Config()
 
 std::vector<Resource *> Config::loadResources()
 {
-    std::unordered<Resources *> resources;
 
 }

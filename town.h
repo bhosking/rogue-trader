@@ -3,11 +3,11 @@
 #include "updatableentity.h"
 #include "unordered_map"
 
-class Town : public updatableEntity
+class Town : public UpdatableEntity
 {
 public:
     Town();
-    processTick();
+    void processTick(World *);
 private:
 
 };
