@@ -16,7 +16,9 @@ SOURCES += main.cpp \
     carriedresource.cpp \
     mainwindow.cpp \
     player.cpp \
-    map.cpp
+    map.cpp \
+    world.cpp \
+    worldscene.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -38,4 +40,6 @@ HEADERS += \
     carriedresource.h \
     mainwindow.h \
     player.h \
-    map.h
+    map.h \
+    world.h \
+    worldscene.h
