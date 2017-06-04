@@ -24,7 +24,7 @@ int TownResource::getStock() const
 
 int TownResource::outPrice(int num) const
 {
-    return getBulkValue(getStock() - 1, -1 * num);
+    return getBulkValue(getStock() - num, num);
 }
 
 int TownResource::inPrice(int num) const
