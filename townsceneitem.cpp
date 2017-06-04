@@ -11,7 +11,7 @@ TownSceneItem::TownSceneItem(std::vector<std::tuple<const Resource *, float, flo
 void TownSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setRenderHints(painter->renderHints() | QPainter::Antialiasing);
-    painter->setPen(Qt::darkRed);
+    painter->setPen(QPen(Qt::darkRed,2));
     painter->setBrush(QBrush(QRadialGradient(QPointF(),m_radius)));
     painter->drawEllipse(QPointF(),m_radius,m_radius);
 }

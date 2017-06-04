@@ -1,5 +1,5 @@
 #include "circularsceneitem.h"
-float CircularSceneItem::m_radius = 5;
+float CircularSceneItem::m_radius = 10;
 
 CircularSceneItem::CircularSceneItem()
 {
