@@ -1,13 +1,19 @@
 #include "world.h"
+#include "config.h"
 
 World::World()
     :m_worldScene(new WorldScene()),
       m_map(new Map()),
       m_playerSceneItem(new PlayerSceneItem())
 {
+    Config config = Config();
     addItemToWorld(m_map,QPointF(0,0));
     addItemToWorld(m_playerSceneItem,QPointF(50,50));
     std::vector<std::tuple<const Resource *, float, float> > resources;
+    resources.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Food"), 1, 0));
+    resources.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Iron"), 0.25, 5));
     std::string name = "Test Town";
     TownSceneItem * testTown = new TownSceneItem(resources,100,name);
     addItemToWorld(testTown,QPointF(100,100));
