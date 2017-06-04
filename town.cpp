@@ -1,6 +1,6 @@
 #include "town.h"
-Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name, QPointF pos)
-    :m_population(population), m_name(name), m_pos(pos)
+Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name)
+    :m_population(population), m_name(name)
 {
     for (std::tuple<const Resource *, float, float> resourceInits:resourceRatesStock)
     {
@@ -21,11 +21,6 @@ unsigned Town::getPopulation() const
 const std::string &Town::getName() const
 {
     return m_name;
-}
-
-QPointF Town::getPos() const
-{
-    return m_pos;
 }
 
 void Town::processTick(World *)

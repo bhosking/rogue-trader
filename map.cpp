@@ -6,6 +6,7 @@ Map::Map()
 {
     m_map->fill(QColor(0xEE,0xEE,0xAA));
     setPixmap(*m_map);
+    setTransformationMode(Qt::SmoothTransformation);
 }
 
 Map::~Map()
@@ -26,6 +27,7 @@ void Map::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void Map::explore(QPointF pos, float radius)
 {
     QPainter p(m_map);
+    p.setRenderHint(QPainter::Antialiasing);
     p.setPen(Qt::black);
     p.setBrush(QBrush(Qt::black,Qt::SolidPattern));
     p.drawEllipse(pos,radius,radius);

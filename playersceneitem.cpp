@@ -7,20 +7,13 @@
 #include "world.h"
 PlayerSceneItem::PlayerSceneItem()
 {
-    setPos(0,0);
-
 }
 
 void PlayerSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    painter->setRenderHints(painter->renderHints() | QPainter::Antialiasing);
     painter->setPen(Qt::darkGreen);
     painter->drawEllipse(QPointF(),m_radius,m_radius);
-    //checks to see if the item is grabbed
-    if(scene()&&scene()->mouseGrabberItem()==this)
-    {
-
-    }
-
     painter->drawLine(QPointF(0,0),m_targetVector);
 }
 
