@@ -18,11 +18,7 @@ private:
     std::vector<TownResource *> m_resources;
     const unsigned m_population;
     const std::string m_name;
-<<<<<<< HEAD
-    const QPointF m_pos;
     void produceResources();
-=======
->>>>>>> 71c357a99a77f30866b85472b521a69ca157d038
 };
 
 #endif // TOWN_H
