@@ -10,13 +10,13 @@ public:
     float getRate() const;
     float getStock() const;
     float outPrice(int num = 1) const;
-    float inPrice(int num = 1) const;
-    float getBulkValue(int startStock, int deltaStock = 1) const;
+    float inPrice(int num = 1) const;  
     const std::vector<std::pair<TownResource *,float> > & getTownResourcesNeeded() const;
     void setStock(float newStock);
-    void setTownResourcesNeeded(std::vector<TownResource *> neededResources);
+    void setTownResourcesNeeded(std::vector<TownResource *> &neededResources);
 
 private:
+    float getBulkValue(int startStock, int deltaStock = 1) const;
     const Resource * m_resource;
     float m_rate;
     float m_stock;
