@@ -34,7 +34,7 @@ int TownResource::inPrice(int num) const
 
 float TownResource::getBulkValue(int startStock, int deltaStock) const
 {
-    float decay = -1 * getResource()->getDecay();
+    float decay = getResource()->getDecay();
     return getResource()->getValue() * exp2(decay * startStock) * (1 - exp2(deltaStock * decay)) / (1 - exp2(decay));
 }
 

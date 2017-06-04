@@ -1,6 +1,6 @@
 #include "resource.h"
-Resource::Resource(std::string name, float value, float mass, float volume, float decay)
-    :m_name(name), m_value(value), m_mass(mass), m_volume(volume), m_decay(decay)
+Resource::Resource(std::string name, float value, float mass, float volume, float halfPrice)
+    :m_name(name), m_value(value), m_mass(mass), m_volume(volume), m_decay(-1 / halfPrice)
 {
 
 }

@@ -8,7 +8,7 @@
 class Resource
 {
 public:
-    Resource(std::string name,float value,float mass,float volume,float decay);
+    Resource(std::string name,float value,float mass,float volume,float halfPrice);
     const std::string & getName() const;
     float getValue() const;
     float getMass() const;
