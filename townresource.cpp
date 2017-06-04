@@ -60,3 +60,8 @@ void TownResource::setTownResourcesNeeded(const std::vector<TownResource *> &tow
         }
     }
 }
+
+void TownResource::adjustStock(float deltaStock)
+{
+    setStock(getStock() + deltaStock);
+}

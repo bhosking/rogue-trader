@@ -14,6 +14,7 @@ public:
     const std::vector<std::pair<TownResource *,float> > & getTownResourcesNeeded() const;
     void setStock(float newStock);
     void setTownResourcesNeeded(const std::vector<TownResource *> &townResources);
+    void adjustStock(float deltaStock);
 
 private:
     float getBulkValue(int startStock, int deltaStock = 1) const;
