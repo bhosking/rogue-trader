@@ -6,6 +6,10 @@ Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRat
     {
         m_resources.push_back(new TownResource(std::get<0>(resourceInits), std::get<1>(resourceInits), std::get<2>(resourceInits)));
     }
+    for (TownResource * townResource : getResources())
+    {
+        townResource->setTownResourcesNeeded(getResources());
+    }
 }
 
 const std::vector<TownResource *> &Town::getResources() const

@@ -48,7 +48,7 @@ void TownResource::setStock(float newStock)
     m_stock = newStock;
 }
 
-void TownResource::setTownResourcesNeeded(std::vector<TownResource *> &townResources)
+void TownResource::setTownResourcesNeeded(const std::vector<TownResource *> &townResources)
 {
     for (std::pair<const Resource *, float> need:getResource()->getNeeds())
     {
