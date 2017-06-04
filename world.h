@@ -28,7 +28,7 @@ public:
      * working with automatically.
      * @param item to add
      */
-    void addItemToWorld(QGraphicsItem * item);
+    void addItemToWorld(QGraphicsItem * item,const QPointF &position);
 
     /**
      * @brief Removes item from World

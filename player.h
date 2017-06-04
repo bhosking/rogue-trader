@@ -11,7 +11,6 @@ public:
     void processTick(World *);
 
 protected:
-    QPointF m_movementDirection;
     float m_speed;
     bool m_stopped;
 };

@@ -5,8 +5,12 @@ World::World()
       m_map(new Map()),
       m_playerSceneItem(new PlayerSceneItem())
 {
-    addItemToWorld(m_map);
-    addItemToWorld(m_playerSceneItem);
+    addItemToWorld(m_map,QPointF(0,0));
+    addItemToWorld(m_playerSceneItem,QPointF(50,50));
+    std::vector<std::tuple<const Resource *, float, float> > resources;
+    std::string name = "Test Town";
+    TownSceneItem * testTown = new TownSceneItem(resources,100,name);
+    addItemToWorld(testTown,QPointF(100,100));
 }
 
 WorldScene *World::getWorldScene()
@@ -29,8 +33,9 @@ const std::vector<TownSceneItem *> &World::getTownSceneItems()
     return m_townSceneItems;
 }
 
-void World::addItemToWorld(QGraphicsItem *item)
+void World::addItemToWorld(QGraphicsItem * item,const QPointF &position)
 {
+    item->setPos(position);
     m_worldScene->addItem(item);
     UpdatableEntity * updatableEntity = dynamic_cast<UpdatableEntity*>(item);
     if(updatableEntity)

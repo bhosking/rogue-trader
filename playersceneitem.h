@@ -14,6 +14,7 @@ public:
     QRectF boundingRect() const;
     void processTick(World * world);
 private:
+    QPointF m_movementDirection;
     QPointF m_targetVector;
     void updateMovementDirection();
 

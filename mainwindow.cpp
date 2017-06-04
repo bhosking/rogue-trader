@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setCentralWidget(m_viewer);
     m_viewer->setScene(m_world->getWorldScene());
     connect(m_gameTimer,SIGNAL(timeout()),this,SLOT(tickGame()));
-    m_gameTimer->start(32);
+    m_gameTimer->start(16);
 }
 
 MainWindow::~MainWindow()
