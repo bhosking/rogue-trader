@@ -41,9 +41,9 @@ public:
     void removeItemFromWorld(QGraphicsItem * item);
     void processTick(World *);
 private:
+    WorldScene * m_worldScene;
     Map * m_map;
     PlayerSceneItem * m_playerSceneItem;
-    WorldScene * m_worldScene;
     std::vector<UpdatableEntity*> m_updatableEntities;
     std::vector<TownSceneItem*> m_townSceneItems;
 
