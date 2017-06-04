@@ -1,4 +1,5 @@
 #include "town.h"
+#include <sstream>
 Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name)
     :m_population(population), m_name(name)
 {
@@ -25,6 +26,17 @@ unsigned Town::getPopulation() const
 const std::string &Town::getName() const
 {
     return m_name;
+}
+
+std::string Town::getStockAndMedianPricesAsString() const
+{
+    std::stringstream ss;
+    for(const TownResource * resource:getResources())
+    {
+        ss << resource->getResource()->getName() << "(" <<resource->getStock() << ") "
+           << (resource->inPrice()+resource->outPrice())/2 <<"g\n";
+    }
+    return ss.str();
 }
 
 void Town::processTick(World *)
