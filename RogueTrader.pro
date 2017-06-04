@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     map.cpp \
     world.cpp \
     worldscene.cpp \
-    playersceneitem.cpp
+    playersceneitem.cpp \
+    townsceneitem.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -44,4 +45,5 @@ HEADERS += \
     map.h \
     world.h \
     worldscene.h \
-    playersceneitem.h
+    playersceneitem.h \
+    townsceneitem.h

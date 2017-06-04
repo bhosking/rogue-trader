@@ -30,13 +30,3 @@ private:
 };
 
 #endif // RESOURCE_H
-//[Resource names]
-//Food
-//Iron
-//Tools
-//Weapons
-//
-//[Food]
-//value=214
-//
-//
