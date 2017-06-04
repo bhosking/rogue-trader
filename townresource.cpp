@@ -54,7 +54,7 @@ void TownResource::produceResource()
     // Reduce all required stock levels
     for (std::pair<TownResource *, float> neededResource : getTownResourcesNeeded())
     {
-        neededResource.first->adjustStock(currentRate * neededResource.second);
+        neededResource.first->adjustStock(-1 * currentRate * neededResource.second);
     }
     adjustStock(currentRate);
 }
