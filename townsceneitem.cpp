@@ -51,9 +51,9 @@ const QPointF &TownSceneItem::getPosition() const
     return scenePos();
 }
 
-void TownSceneItem::processTick(World *)
+void TownSceneItem::processTick(World *world)
 {
-
+    Town::processTick(world);
 }
 
 void TownSceneItem::paintPrices(QPainter *painter)
