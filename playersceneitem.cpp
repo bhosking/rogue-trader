@@ -14,7 +14,7 @@ PlayerSceneItem::PlayerSceneItem()
 void PlayerSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setPen(Qt::darkGreen);
-    painter->drawRect(-5,-5,10,10);
+    painter->drawEllipse(QPointF(),m_radius,m_radius);
     //checks to see if the item is grabbed
     if(scene()&&scene()->mouseGrabberItem()==this)
     {
@@ -49,10 +49,10 @@ void PlayerSceneItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 QRectF PlayerSceneItem::boundingRect() const
 {
-    float x = std::min(0.0,m_targetVector.x()) - 5;
-    float y = std::min(0.0,m_targetVector.y()) - 5;
-    float width = fabs(m_targetVector.x()) + 10;
-    float height = fabs(m_targetVector.y()) + 10;
+    float x = std::min(0.0,m_targetVector.x()) - m_radius;
+    float y = std::min(0.0,m_targetVector.y()) - m_radius;
+    float width = fabs(m_targetVector.x()) + 2*m_radius;
+    float height = fabs(m_targetVector.y()) + 2*m_radius;
 
     return QRectF(x,y,width,height);
 }

@@ -1,9 +1,9 @@
 #ifndef PLAYERSCENEITEM_H
 #define PLAYERSCENEITEM_H
-#include <qgraphicsitem.h>
+#include "circularsceneitem.h"
 #include "player.h"
 
-class PlayerSceneItem : public QGraphicsItem, public Player
+class PlayerSceneItem : public CircularSceneItem, public Player
 {
 public:
     PlayerSceneItem();
