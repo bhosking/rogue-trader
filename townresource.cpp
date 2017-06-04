@@ -38,6 +38,27 @@ float TownResource::getBulkValue(int startStock, int deltaStock) const
     return exp2(decay * startStock) * (1 - exp2(deltaStock * decay)) / (1 - exp2(decay));
 }
 
+float TownResource::getCurrentRate() const
+{
+    float currentRate = getRate();
+    for (std::pair<TownResource *, float> neededResource : getTownResourcesNeeded())
+    {
+        currentRate = std::min(neededResource.first->getStock() / neededResource.second, currentRate);
+    }
+    return currentRate;
+}
+
+void TownResource::produceResource()
+{
+    float currentRate = getCurrentRate();
+    // Reduce all required stock levels
+    for (std::pair<TownResource *, float> neededResource : getTownResourcesNeeded())
+    {
+        neededResource.first->adjustStock(currentRate * neededResource.second);
+    }
+    adjustStock(currentRate);
+}
+
 const std::vector<std::pair<TownResource *, float> > &TownResource::getTownResourcesNeeded() const
 {
     return m_townResourcesNeeded;

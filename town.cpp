@@ -34,5 +34,13 @@ QPointF Town::getPos() const
 
 void Town::processTick(World *)
 {
+    produceResources();
+}
 
+void Town::produceResources()
+{
+    for (TownResource * townResource : getResources())
+    {
+        townResource->produceResource();
+    }
 }

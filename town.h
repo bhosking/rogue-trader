@@ -19,6 +19,7 @@ private:
     const unsigned m_population;
     const std::string m_name;
     const QPointF m_pos;
+    void produceResources();
 };
 
 #endif // TOWN_H
