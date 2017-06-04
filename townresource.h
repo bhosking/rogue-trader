@@ -5,19 +5,22 @@
 class TownResource
 {
 public:
-    TownResource(const Resource * resource, float rate, float stock = 0);
+    TownResource(const Resource * resource, float rate, int stock = 0);
     const Resource * getResource() const;
     float getRate() const;
-    float getStock() const;
-    float outPrice(int num = 1) const;
-    float inPrice(int num = 1) const;  
+    int getStock() const;
+    int outPrice(int num = 1) const;
+    int inPrice(int num = 1) const;
     const std::vector<std::pair<TownResource *,float> > & getTownResourcesNeeded() const;
-    void setStock(float newStock);
     void setTownResourcesNeeded(const std::vector<TownResource *> &townResources);
-    void adjustStock(float deltaStock);
     void produceResource();
+    void setStock(int newStock);
+    void adjustStock(int deltaStock);
 
 private:
+    void setStock(float newStock);
+    void adjustStock(float deltaStock);
+    float getStockAsFloat();
     float getBulkValue(int startStock, int deltaStock = 1) const;
     const Resource * m_resource;
     float m_rate;

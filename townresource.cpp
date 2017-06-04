@@ -1,7 +1,7 @@
 #include "townresource.h"
 #include <math.h>
 
-TownResource::TownResource(const Resource *resource, float rate, float stock)
+TownResource::TownResource(const Resource *resource, float rate, int stock)
     :m_resource(resource), m_rate(rate), m_stock(stock)
 {
 
@@ -17,17 +17,17 @@ float TownResource::getRate() const
     return m_rate;
 }
 
-float TownResource::getStock() const
+int TownResource::getStock() const
 {
     return m_stock;
 }
 
-float TownResource::outPrice(int num) const
+int TownResource::outPrice(int num) const
 {
     return getBulkValue(getStock() - 1, -1 * num);
 }
 
-float TownResource::inPrice(int num) const
+int TownResource::inPrice(int num) const
 {
     return getBulkValue(getStock(), num);
 }
@@ -43,7 +43,7 @@ float TownResource::getCurrentRate() const
     float currentRate = getRate();
     for (std::pair<TownResource *, float> neededResource : getTownResourcesNeeded())
     {
-        currentRate = std::min(neededResource.first->getStock() / neededResource.second, currentRate);
+        currentRate = std::min(neededResource.first->getStockAsFloat() / neededResource.second, currentRate);
     }
     return currentRate;
 }
@@ -59,9 +59,19 @@ void TownResource::produceResource()
     adjustStock(currentRate);
 }
 
+float TownResource::getStockAsFloat()
+{
+    return m_stock;
+}
+
 const std::vector<std::pair<TownResource *, float> > &TownResource::getTownResourcesNeeded() const
 {
     return m_townResourcesNeeded;
+}
+
+void TownResource::setStock(int newStock)
+{
+    m_stock = newStock;
 }
 
 void TownResource::setStock(float newStock)
@@ -82,7 +92,12 @@ void TownResource::setTownResourcesNeeded(const std::vector<TownResource *> &tow
     }
 }
 
+void TownResource::adjustStock(int deltaStock)
+{
+    setStock(getStockAsFloat() + deltaStock);
+}
+
 void TownResource::adjustStock(float deltaStock)
 {
-    setStock(getStock() + deltaStock);
+    setStock(getStockAsFloat() + deltaStock);
 }
