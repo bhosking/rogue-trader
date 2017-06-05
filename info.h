@@ -1,7 +1,10 @@
 #ifndef INFO_H
 #define INFO_H
-#include "resource.h"
-#include "town.h"
+
+#include <vector>
+
+class Town;
+class Resource;
 
 class Info
 {

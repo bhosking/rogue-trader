@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
-#include "world.h"
 #include <QGraphicsView>
 #include <QTimer>
 

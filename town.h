@@ -1,12 +1,13 @@
 #ifndef TOWN_H
 #define TOWN_H
 #include <qvector2d.h>
+#include <unordered_map>
 #include <memory>
 #include "updatableentity.h"
-#include "unordered_map"
-#include "townresource.h"
 #include "informationholder.h"
 
+class Resource;
+class TownResource;
 class Info;
 
 class Town : public UpdatableEntity, public InformationHolder

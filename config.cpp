@@ -1,4 +1,5 @@
 #include "config.h"
+#include "resource.h"
 
 Config::Config()
 {

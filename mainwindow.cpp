@@ -1,4 +1,8 @@
 #include "mainwindow.h"
+#include <qgraphicsview.h>
+#include <qgraphicsitem.h>
+#include "world.h"
+#include "worldscene.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),m_viewer(new QGraphicsView()),m_gameTimer(new QTimer())

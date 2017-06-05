@@ -1,5 +1,10 @@
 #include "world.h"
+#include "map.h"
 #include "config.h"
+#include "worldscene.h"
+#include "playersceneitem.h"
+#include "townsceneitem.h"
+
 World* World::m_instance = nullptr;
 World::World()
     :m_worldScene(new WorldScene()),

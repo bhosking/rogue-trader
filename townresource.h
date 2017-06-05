@@ -1,6 +1,9 @@
 #ifndef TOWNRESOURCE_H
 #define TOWNRESOURCE_H
-#include "resource.h"
+
+#include <vector>
+
+class Resource;
 
 class TownResource
 {

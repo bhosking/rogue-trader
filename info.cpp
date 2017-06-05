@@ -1,4 +1,6 @@
 #include "info.h"
+#include "town.h"
+#include "townresource.h"
 
 Info::Info(const Town *town, int tick)
     :m_town(town), m_tick(tick)

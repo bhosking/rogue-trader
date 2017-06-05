@@ -1,8 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
-#include "resource.h"
 #include <unordered_map>
 
+class Resource;
 
 class Config
 {

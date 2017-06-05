@@ -1,5 +1,6 @@
 #include "townresource.h"
 #include <math.h>
+#include "resource.h"
 
 TownResource::TownResource(const Resource *resource, float rate, int stock)
     :m_resource(resource), m_rate(rate), m_stock(stock)

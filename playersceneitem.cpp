@@ -4,6 +4,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <iostream>
 #include <QVector2D>
+#include "map.h"
 #include "world.h"
 PlayerSceneItem::PlayerSceneItem()
 {

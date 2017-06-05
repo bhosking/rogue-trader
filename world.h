@@ -1,12 +1,14 @@
 #ifndef WORLD_H
 #define WORLD_H
-#include "map.h"
-#include "playersceneitem.h"
-#include "townsceneitem.h"
-#include "worldscene.h"
 #include "updatableentity.h"
 #include <vector>
+#include <qpoint.h>
 
+class QGraphicsItem;
+class Map;
+class TownSceneItem;
+class PlayerSceneItem;
+class WorldScene;
 
 class World : public UpdatableEntity
 {
