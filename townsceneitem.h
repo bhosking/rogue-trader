@@ -12,7 +12,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
-    const QPointF &getPosition() const;
+    const QPointF &getPos() const;
     void processTick(World * world);
 
 private:
