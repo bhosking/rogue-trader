@@ -31,3 +31,8 @@ Info &Info::operator=(const Info &other)
    m_resources = other.getResources();
    return *this;
 }
+
+bool Info::isOlderThan(const Info &other) const
+{
+    return getTick() > other.getTick();
+}

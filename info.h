@@ -11,6 +11,7 @@ public:
     int getTick() const;
     const Town *getTown() const;
     Info &operator= (const Info &other);
+    bool isOlderThan(const Info &other) const;
 private:
      const Town *m_town;
      int m_tick;
