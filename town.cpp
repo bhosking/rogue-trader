@@ -1,5 +1,8 @@
-#include "town.h"
 #include <sstream>
+#include "town.h"
+#include "townresource.h"
+#include "resource.h"
+
 Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name)
     :m_population(population), m_name(name)
 {

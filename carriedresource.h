@@ -1,6 +1,7 @@
 #ifndef CARRIEDRESOURCE_H
 #define CARRIEDRESOURCE_H
-#include "resource.h"
+
+class Resource;
 
 class CarriedResource
 {

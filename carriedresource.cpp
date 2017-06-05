@@ -1,4 +1,5 @@
 #include "carriedresource.h"
+#include "resource.h"
 
 CarriedResource::CarriedResource(const Resource *resource)
     :m_amount(0),m_resource(resource)
