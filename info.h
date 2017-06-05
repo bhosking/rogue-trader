@@ -6,11 +6,14 @@
 class Info
 {
 public:
-    Info();
-    const std::vector<std::pair<const Resource *, int> > & getResources();
-    void update(const Info info);
+    Info(const Town *town, int tick);
+    const std::vector<std::pair<const Resource *, int> > &getResources() const;
+    int getTick() const;
+    const Town *getTown() const;
+    Info &operator= (const Info &other);
 private:
-     unsigned m_tick;
+     const Town *m_town;
+     int m_tick;
      std::vector<std::pair<const Resource *, int> > m_resources;
 };
 
