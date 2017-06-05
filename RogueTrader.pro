@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     worldscene.cpp \
     playersceneitem.cpp \
     townsceneitem.cpp \
-    circularsceneitem.cpp
+    circularsceneitem.cpp \
+    info.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -48,4 +49,5 @@ HEADERS += \
     worldscene.h \
     playersceneitem.h \
     townsceneitem.h \
-    circularsceneitem.h
+    circularsceneitem.h \
+    info.h
