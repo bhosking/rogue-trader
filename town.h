@@ -1,9 +1,12 @@
 #ifndef TOWN_H
 #define TOWN_H
 #include <qvector2d.h>
+#include <memory>
 #include "updatableentity.h"
 #include "unordered_map"
 #include "townresource.h"
+
+class Info;
 
 class Town : public UpdatableEntity
 {
@@ -13,12 +16,14 @@ public:
     unsigned getPopulation() const;
     const std::string & getName() const;
     virtual const QPointF &getPos() const = 0;
+    const std::unordered_map<std::string, std::shared_ptr<Info *> > &getInfos() const;
     std::string getStockAndMedianPricesAsString() const;
     void processTick(World &);
 private:
     std::vector<TownResource *> m_resources;
     const unsigned m_population;
     const std::string m_name;
+    std::unordered_map<std::string, std::shared_ptr<Info *> > m_infos;
     void produceResources();
 };
 

@@ -28,6 +28,11 @@ const std::string &Town::getName() const
     return m_name;
 }
 
+const std::unordered_map<std::string, std::shared_ptr<Info *> > &Town::getInfos() const
+{
+    return m_infos;
+}
+
 std::string Town::getStockAndMedianPricesAsString() const
 {
     std::stringstream ss;
