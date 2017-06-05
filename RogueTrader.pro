@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     townsceneitem.cpp \
     circularsceneitem.cpp \
     info.cpp \
-    trader.cpp
+    trader.cpp \
+    informationholder.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -52,4 +53,5 @@ HEADERS += \
     townsceneitem.h \
     circularsceneitem.h \
     info.h \
-    trader.h
+    trader.h \
+    informationholder.h

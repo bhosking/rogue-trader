@@ -5,10 +5,11 @@
 #include "updatableentity.h"
 #include "unordered_map"
 #include "townresource.h"
+#include "informationholder.h"
 
 class Info;
 
-class Town : public UpdatableEntity
+class Town : public UpdatableEntity, public InformationHolder
 {
 public:
     Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name);

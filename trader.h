@@ -1,8 +1,9 @@
 #ifndef TRADER_H
 #define TRADER_H
 #include "updatableentity.h"
+#include "informationholder.h"
 
-class Trader : public UpdatableEntity
+class Trader : public UpdatableEntity, public InformationHolder
 {
 public:
     Trader();
