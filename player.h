@@ -1,18 +1,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "updatableentity.h"
 #include <QPointF>
+#include "updatableentity.h"
+#include "trader.h"
 
-class Player: public UpdatableEntity
+class Player: public Trader
 {
 public:
     Player();
-    void setSpeed(float);
     void processTick(World &);
-
-protected:
-    float m_speed;
-    bool m_stopped;
 };
 
 #endif // PLAYER_H

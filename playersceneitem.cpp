@@ -35,7 +35,7 @@ void PlayerSceneItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void PlayerSceneItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    m_stopped = false;
+    setStopped(false);
     prepareGeometryChange();
     update();
 }
@@ -52,17 +52,17 @@ QRectF PlayerSceneItem::boundingRect() const
 
 void PlayerSceneItem::processTick(World &world)
 {
-    if(!m_stopped)
+    if(!isStopped())
     {
         QPointF movementVector;
-        if(QVector2D(m_targetVector).length() < m_speed)
+        if(QVector2D(m_targetVector).length() < getSpeed())
         {
-            m_stopped = true;
+            setStopped(true);
             movementVector = m_targetVector;
         }
         else
         {
-            movementVector = m_movementDirection*m_speed;
+            movementVector = m_movementDirection*getSpeed();
         }
         moveBy(movementVector.x(),movementVector.y());
         m_targetVector -= movementVector;
