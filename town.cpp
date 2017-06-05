@@ -39,7 +39,7 @@ std::string Town::getStockAndMedianPricesAsString() const
     return ss.str();
 }
 
-void Town::processTick(World *)
+void Town::processTick(World &)
 {
     produceResources();
 }

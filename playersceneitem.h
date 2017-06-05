@@ -12,7 +12,7 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     QRectF boundingRect() const;
-    void processTick(World * world);
+    void processTick(World &);
 private:
     QPointF m_movementDirection;
     QPointF m_targetVector;

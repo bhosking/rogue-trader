@@ -8,7 +8,7 @@ class Player: public UpdatableEntity
 public:
     Player();
     void setSpeed(float);
-    void processTick(World *);
+    void processTick(World &);
 
 protected:
     float m_speed;

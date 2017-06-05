@@ -6,7 +6,7 @@ Player::Player()
 
 }
 
-void Player::processTick(World *)
+void Player::processTick(World &)
 {
 
 }

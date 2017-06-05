@@ -6,7 +6,7 @@ class UpdatableEntity
 {
 public:
     UpdatableEntity(){}
-    virtual void processTick(World *) = 0;
+    virtual void processTick(World &) = 0;
 };
 
 #endif // UPDATABLEENTITY_H

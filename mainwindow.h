@@ -20,7 +20,6 @@ public slots:
     void tickGame();
 private:
     QGraphicsView * m_viewer;
-    World * m_world;
     QTimer *m_gameTimer;
 };
 

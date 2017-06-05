@@ -11,11 +11,12 @@
 class World : public UpdatableEntity
 {
 public:
-    World();
     WorldScene * getWorldScene();
     Map * getMap();
     const PlayerSceneItem * getPlayerSceneItem();
     const std::vector<TownSceneItem *> &getTownSceneItems();
+
+    int getTick() const;
 
     /**
      * @brief addItemToWorld and takes ownership of the pointer
@@ -39,14 +40,17 @@ public:
      * @param item
      */
     void removeItemFromWorld(QGraphicsItem * item);
-    void processTick(World *);
+    void processTick(World &);
+    static World &getWorld();
 private:
+    World();
     WorldScene * m_worldScene;
     Map * m_map;
     PlayerSceneItem * m_playerSceneItem;
     std::vector<UpdatableEntity*> m_updatableEntities;
     std::vector<TownSceneItem*> m_townSceneItems;
-
+    int m_tick;
+    static World * m_instance;
 };
 
 #endif // WORLD_H

@@ -50,7 +50,7 @@ QRectF PlayerSceneItem::boundingRect() const
     return QRectF(x,y,width,height);
 }
 
-void PlayerSceneItem::processTick(World *world)
+void PlayerSceneItem::processTick(World &world)
 {
     if(!m_stopped)
     {
@@ -66,7 +66,7 @@ void PlayerSceneItem::processTick(World *world)
         }
         moveBy(movementVector.x(),movementVector.y());
         m_targetVector -= movementVector;
-        world->getMap()->explore(scenePos(),20);
+        world.getMap()->explore(scenePos(),20);
     }
     Player::processTick(world);
     update();

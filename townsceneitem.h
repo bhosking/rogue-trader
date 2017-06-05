@@ -13,7 +13,7 @@ public:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     const QPointF &getPos() const;
-    void processTick(World * world);
+    void processTick(World & world);
 
 private:
     bool m_showPrices;

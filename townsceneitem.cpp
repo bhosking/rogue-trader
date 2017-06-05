@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QBrush>
 #include <QRadialGradient>
+#include "world.h"
 TownSceneItem::TownSceneItem(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name)
     :Town(resourceRatesStock,population,name),m_showPrices(false)
 {
@@ -51,7 +52,7 @@ const QPointF &TownSceneItem::getPos() const
     return scenePos();
 }
 
-void TownSceneItem::processTick(World *world)
+void TownSceneItem::processTick(World &world)
 {
     Town::processTick(world);
 }

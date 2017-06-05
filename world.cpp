@@ -1,10 +1,11 @@
 #include "world.h"
 #include "config.h"
-
+World* World::m_instance = nullptr;
 World::World()
     :m_worldScene(new WorldScene()),
       m_map(new Map()),
-      m_playerSceneItem(new PlayerSceneItem())
+      m_playerSceneItem(new PlayerSceneItem()),
+      m_tick(0)
 {
     Config config = Config();
     addItemToWorld(m_map,QPointF(0,0));
@@ -37,6 +38,11 @@ const PlayerSceneItem *World::getPlayerSceneItem()
 const std::vector<TownSceneItem *> &World::getTownSceneItems()
 {
     return m_townSceneItems;
+}
+
+int World::getTick() const
+{
+    return m_tick;
 }
 
 void World::addItemToWorld(QGraphicsItem * item,const QPointF &position)
@@ -72,10 +78,21 @@ void World::removeItemFromWorld(QGraphicsItem *item)
     delete item;
 }
 
-void World::processTick(World *)
+void World::processTick(World &)
 {
+    m_tick++;
     for(UpdatableEntity *entity:m_updatableEntities)
     {
-        entity->processTick(this);
+        entity->processTick(*this);
     }
+}
+
+World &World::getWorld()
+{
+    if(m_instance==nullptr)
+    {
+        m_instance = new World();
+    }
+
+    return *m_instance;
 }
