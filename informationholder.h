@@ -21,6 +21,7 @@ public:
     std::shared_ptr<const Info> getHeldInfoOnTown(const Town * town) const;
 
     void addInfo(const std::shared_ptr<const Info> &newInfo);
+    void addTownCurrentInfo(const Town *town);
 private:
     std::unordered_map<const Town *, std::shared_ptr<const Info> > m_info;
 };
