@@ -1,3 +1,4 @@
+#include <QGraphicsSceneMouseEvent>
 #include "world.h"
 #include "map.h"
 #include "config.h"
@@ -81,6 +82,20 @@ void World::removeItemFromWorld(QGraphicsItem *item)
         m_townSceneItems.erase(std::find(m_townSceneItems.begin(),m_townSceneItems.end(),townSceneItem));
     }
     delete item;
+}
+
+const TownSceneItem *World::getTownSceneItemUnderMouse(QGraphicsSceneMouseEvent *event)
+{
+    const std::vector<TownSceneItem *> &towns = getTownSceneItems();
+    const TownSceneItem * townUnderMouse = nullptr;
+    for(const TownSceneItem * town: towns)
+    {
+        if(town->contains(event->scenePos() - town->getPos()))
+        {
+            townUnderMouse = town;
+        }
+    }
+    return townUnderMouse;
 }
 
 void World::processTick(World &)

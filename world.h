@@ -4,6 +4,7 @@
 #include <vector>
 #include <qpoint.h>
 
+class QGraphicsSceneMouseEvent;
 class QGraphicsItem;
 class Map;
 class TownSceneItem;
@@ -42,6 +43,15 @@ public:
      * @param item
      */
     void removeItemFromWorld(QGraphicsItem * item);
+
+    /**
+     * @brief getTownSceneItemUnderMouse
+     * This function checks to see if a mouse event is over a TownSceneItem and if so returns a pointer to it.
+     * @param event A pointer to the QGraphicsSceneMouseEvent which will be checked.
+     * @return A pointer to the TownSceneItem that the mouse is over, if the mouse is not above a TownSceneItem nullptr is returned.
+     */
+    const TownSceneItem *getTownSceneItemUnderMouse(QGraphicsSceneMouseEvent *event);
+
     void processTick(World &);
     static World &getWorld();
 private:
