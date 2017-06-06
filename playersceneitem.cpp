@@ -94,6 +94,10 @@ void PlayerSceneItem::processTick(World &world)
         move();
         world.getMap()->explore(scenePos(),getExplorationRadius());
     }
+    else if(getDestinationTown())
+    {
+        addTownCurrentInfo(getDestinationTown());
+    }
     Player::processTick(world);
     update();
 }
