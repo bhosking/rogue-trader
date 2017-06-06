@@ -10,6 +10,7 @@
 PlayerSceneItem::PlayerSceneItem()
     :m_explorationRadius(20),m_movementDirection(0,0),m_targetVector(0,0)
 {
+    setBoundingRegionGranularity(0.04);
 }
 
 QPointF PlayerSceneItem::getPos() const
@@ -37,6 +38,11 @@ void PlayerSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 void PlayerSceneItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(!boundingRegion(QTransform()).contains(event->pos().toPoint()))
+    {
+        event->ignore();
+        return;
+    }
     const TownSceneItem * townUnderMouse = World::getWorld().getTownSceneItemUnderMouse(event);
     if(townUnderMouse)
     {
