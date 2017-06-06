@@ -32,5 +32,5 @@ bool containedInCircleAtOrigin(const QPointF &p, float r)
     float y = p.y();
     return x < r &&
             y < r &&
-            x*x + y+y < r * r;
+            x*x + y*y < r * r;
 }
