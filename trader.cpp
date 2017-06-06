@@ -1,7 +1,7 @@
 #include "trader.h"
 
 Trader::Trader()
-    :m_speed(1),m_stopped(false)
+    :m_speed(1),m_atDestination(true),m_destination(nullptr)
 {
 
 }
@@ -16,14 +16,24 @@ void Trader::setSpeed(float newSpeed)
     m_speed = newSpeed;
 }
 
-bool Trader::isStopped() const
+bool Trader::isAtDestination() const
 {
-    return m_stopped;
+    return m_atDestination;
 }
 
-void Trader::setStopped(bool stopped)
+void Trader::setStoppedAtDestination(bool stopped)
 {
-    m_stopped = stopped;
+    m_atDestination = stopped;
+}
+
+const Town *Trader::getDestinationTown()
+{
+    return m_destination;
+}
+
+void Trader::setDestinationTown(const Town * destination)
+{
+    m_destination = destination;
 }
 
 void Trader::processTick(World &)

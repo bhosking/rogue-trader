@@ -20,6 +20,7 @@ private:
     float m_explorationRadius;
     QPointF m_movementDirection;
     QPointF m_targetVector;
+    void move();
     void updateMovementDirection();
 
 };

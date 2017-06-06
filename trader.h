@@ -4,6 +4,8 @@
 #include "updatableentity.h"
 #include "informationholder.h"
 
+class Town;
+
 class Trader : public UpdatableEntity, public InformationHolder
 {
 public:
@@ -11,13 +13,16 @@ public:
     virtual QPointF getPos() const = 0;
     float getSpeed() const;
     void setSpeed(float);
-    bool isStopped() const;
-    void setStopped(bool);
+    bool isAtDestination() const;
+    void setStoppedAtDestination(bool);
+    const Town *getDestinationTown();
+    void setDestinationTown(const Town *destination);
     void processTick(World &);
 
 private:
     float m_speed;
-    bool m_stopped;
+    bool m_atDestination;
+    const Town * m_destination;
 };
 
 #endif // TRADER_H

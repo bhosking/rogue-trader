@@ -6,6 +6,7 @@
 #include <QVector2D>
 #include "map.h"
 #include "world.h"
+#include "townsceneitem.h"
 PlayerSceneItem::PlayerSceneItem()
     :m_explorationRadius(20),m_movementDirection(0,0),m_targetVector(0,0)
 {
@@ -36,7 +37,16 @@ void PlayerSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 void PlayerSceneItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    m_targetVector = event->pos();
+    const TownSceneItem * townUnderMouse = World::getWorld().getTownSceneItemUnderMouse(event);
+    if(townUnderMouse)
+    {
+        m_targetVector = townUnderMouse->getPos()-scenePos();
+    }
+    else
+    {
+        m_targetVector = event->pos();
+    }
+
     updateMovementDirection();
     prepareGeometryChange();
     update();
@@ -44,7 +54,16 @@ void PlayerSceneItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void PlayerSceneItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    m_targetVector = event->pos();
+    const TownSceneItem * townUnderMouse = World::getWorld().getTownSceneItemUnderMouse(event);
+    if(townUnderMouse)
+    {
+        m_targetVector = townUnderMouse->getPos()-scenePos();
+    }
+    else
+    {
+        m_targetVector = event->pos();
+    }
+
     updateMovementDirection();
     prepareGeometryChange();
     update();
@@ -52,7 +71,8 @@ void PlayerSceneItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void PlayerSceneItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    setStopped(false);
+    setDestinationTown(World::getWorld().getTownSceneItemUnderMouse(event));
+    setStoppedAtDestination(false);
     prepareGeometryChange();
     update();
 }
@@ -69,24 +89,29 @@ QRectF PlayerSceneItem::boundingRect() const
 
 void PlayerSceneItem::processTick(World &world)
 {
-    if(!isStopped())
-    {
-        QPointF movementVector;
-        if(QVector2D(m_targetVector).length() < getSpeed())
-        {
-            setStopped(true);
-            movementVector = m_targetVector;
-        }
-        else
-        {
-            movementVector = m_movementDirection*getSpeed();
-        }
-        moveBy(movementVector.x(),movementVector.y());
-        m_targetVector -= movementVector;
-        world.getMap()->explore(scenePos(),20);
+    if(!isAtDestination())
+    {    
+        move();
+        world.getMap()->explore(scenePos(),getExplorationRadius());
     }
     Player::processTick(world);
     update();
+}
+
+void PlayerSceneItem::move()
+{
+    QPointF movementVector;
+    if(QVector2D(m_targetVector).length() < getSpeed())
+    {
+        setStoppedAtDestination(true);
+        movementVector = m_targetVector;
+    }
+    else
+    {
+        movementVector = m_movementDirection*getSpeed();
+    }
+    moveBy(movementVector.x(),movementVector.y());
+    m_targetVector -= movementVector;
 }
 
 void PlayerSceneItem::updateMovementDirection()
