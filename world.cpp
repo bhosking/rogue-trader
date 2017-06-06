@@ -24,6 +24,8 @@ World::World()
     std::string name = "Test Town";
     TownSceneItem * testTown = new TownSceneItem(resources,100,name);
     addItemToWorld(testTown,QPointF(100,100));
+
+    getMap()->explore(getPlayerSceneItem()->getPos(),getPlayerSceneItem()->getExplorationRadius());
 }
 
 WorldScene *World::getWorldScene()

@@ -1,5 +1,6 @@
 #ifndef TRADER_H
 #define TRADER_H
+#include <QPointF>
 #include "updatableentity.h"
 #include "informationholder.h"
 
@@ -7,6 +8,7 @@ class Trader : public UpdatableEntity, public InformationHolder
 {
 public:
     Trader();
+    virtual QPointF getPos() const = 0;
     float getSpeed() const;
     void setSpeed(float);
     bool isStopped() const;

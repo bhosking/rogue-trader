@@ -7,7 +7,23 @@
 #include "map.h"
 #include "world.h"
 PlayerSceneItem::PlayerSceneItem()
+    :m_explorationRadius(20),m_movementDirection(0,0),m_targetVector(0,0)
 {
+}
+
+QPointF PlayerSceneItem::getPos() const
+{
+    return scenePos();
+}
+
+float PlayerSceneItem::getExplorationRadius() const
+{
+    return m_explorationRadius;
+}
+
+void PlayerSceneItem::setExplorationRadius(float newRadius)
+{
+    m_explorationRadius = newRadius;
 }
 
 void PlayerSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

@@ -7,6 +7,9 @@ class PlayerSceneItem : public CircularSceneItem, public Player
 {
 public:
     PlayerSceneItem();
+    QPointF getPos() const;
+    float getExplorationRadius() const;
+    void setExplorationRadius(float newRadius);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -14,6 +17,7 @@ public:
     QRectF boundingRect() const;
     void processTick(World &);
 private:
+    float m_explorationRadius;
     QPointF m_movementDirection;
     QPointF m_targetVector;
     void updateMovementDirection();
