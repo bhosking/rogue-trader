@@ -26,20 +26,13 @@ int TownResource::getStock() const
 
 int TownResource::outPrice(int num) const
 {
-    return lrint(getBulkValue(getStock() - num, num));
+    return getResource()->outPrice(getStock(),num);
 }
 
 int TownResource::inPrice(int num) const
 {
-    return lrint(getBulkValue(getStock(), num));
+    return getResource()->inPrice(getStock(),num);
 }
-
-float TownResource::getBulkValue(int startStock, int deltaStock) const
-{
-    float decay = getResource()->getDecay();
-    return getResource()->getValue() * exp2(decay * startStock) * (1 - exp2(deltaStock * decay)) / (1 - exp2(decay));
-}
-
 float TownResource::getCurrentRate() const
 {
     float currentRate = getRate();

@@ -31,17 +31,6 @@ const std::string &Town::getName() const
     return m_name;
 }
 
-std::string Town::getStockAndMedianPricesAsString() const
-{
-    std::stringstream ss;
-    for(const TownResource * resource:getResources())
-    {
-        ss << resource->getResource()->getName() << "(" <<resource->getStock() << ") "
-           << (resource->inPrice()+resource->outPrice())/2 <<"g\n";
-    }
-    return ss.str();
-}
-
 void Town::processTick(World &)
 {
     produceResources();

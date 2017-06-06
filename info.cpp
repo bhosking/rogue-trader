@@ -1,6 +1,8 @@
+#include <sstream>
 #include "info.h"
 #include "town.h"
 #include "townresource.h"
+#include "resource.h"
 
 Info::Info(const Town *town, int tick)
     :m_town(town), m_tick(tick)
@@ -37,4 +39,15 @@ Info &Info::operator=(const Info &other)
 bool Info::isOlderThan(const Info &other) const
 {
     return getTick() > other.getTick();
+}
+
+std::string Info::getStockAndMedianPricesAsString() const
+{
+    std::stringstream ss;
+    for(std::pair<const Resource *,int> resourceStockPair: getResources())
+    {
+        ss << resourceStockPair.first->getName() << "(" <<resourceStockPair.second << ") "
+           << (resourceStockPair.first->inPrice(resourceStockPair.second)+resourceStockPair.first->outPrice(resourceStockPair.second))/2 <<"g\n";
+    }
+    return ss.str();
 }

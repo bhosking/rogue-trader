@@ -18,8 +18,8 @@ public:
 private:
     bool m_showPrices;
     QRectF pricesRectangle;
-    void paintPrices(QPainter *painter);
-    QRectF updatePricesDisplayRectangle(QPainter *painter);
+    void paintPrices(QPainter *painter, std::shared_ptr<const Info> &info);
+    QRectF updatePricesDisplayRectangle(QPainter *painter, std::shared_ptr<const Info> &info);
 };
 
 #endif // TOWNSCENEITEM_H

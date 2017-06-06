@@ -3,6 +3,8 @@
 #include <QBrush>
 #include <QRadialGradient>
 #include "world.h"
+#include "playersceneitem.h"
+#include "info.h"
 TownSceneItem::TownSceneItem(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name)
     :Town(resourceRatesStock,population,name),m_showPrices(false)
 {
@@ -23,13 +25,16 @@ QRectF TownSceneItem::boundingRect() const
 
 void TownSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    std::shared_ptr<const Info> info = World::getWorld().getPlayerSceneItem()->getHeldInfoOnTown(this);
+
     painter->setRenderHints(painter->renderHints() | QPainter::Antialiasing);
     painter->setPen(QPen(Qt::darkRed,2));
     painter->setBrush(QBrush(QRadialGradient(QPointF(),m_radius)));
     painter->drawEllipse(QPointF(),m_radius,m_radius);
-    if(m_showPrices)
+
+    if(m_showPrices&&info)
     {
-        paintPrices(painter);
+        paintPrices(painter,info);
     }
 }
 
@@ -57,17 +62,17 @@ void TownSceneItem::processTick(World &world)
     Town::processTick(world);
 }
 
-void TownSceneItem::paintPrices(QPainter *painter)
+void TownSceneItem::paintPrices(QPainter *painter, std::shared_ptr<const Info> &info)
 {
     painter->setPen(QPen(Qt::black,2));
-    updatePricesDisplayRectangle(painter);
+    updatePricesDisplayRectangle(painter,info);
     painter->drawRoundedRect(pricesRectangle,5,5);
-    painter->drawText(pricesRectangle.adjusted(5,5,-5,-5),QString(getStockAndMedianPricesAsString().c_str()));
+    painter->drawText(pricesRectangle.adjusted(5,5,-5,-5),QString(info->getStockAndMedianPricesAsString().c_str()));
 }
 
-QRectF TownSceneItem::updatePricesDisplayRectangle(QPainter *painter)
+QRectF TownSceneItem::updatePricesDisplayRectangle(QPainter *painter, std::shared_ptr<const Info> &info)
 {
-    pricesRectangle = painter->boundingRect(QRect(),Qt::AlignLeft,QString(getStockAndMedianPricesAsString().c_str()));
+    pricesRectangle = painter->boundingRect(QRect(),Qt::AlignLeft,QString(info->getStockAndMedianPricesAsString().c_str()));
     pricesRectangle.moveTopLeft(QPointF(-pricesRectangle.width()/2,-pricesRectangle.height() - m_radius - 5));
     pricesRectangle.adjust(-5.0,-5.0,5.0,5.0);
     prepareGeometryChange();

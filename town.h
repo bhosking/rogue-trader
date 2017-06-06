@@ -18,7 +18,6 @@ public:
     unsigned getPopulation() const;
     const std::string & getName() const;
     virtual QPointF getPos() const = 0;
-    std::string getStockAndMedianPricesAsString() const;
     void processTick(World &);
 private:
     std::vector<TownResource *> m_resources;

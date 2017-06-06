@@ -17,8 +17,12 @@ public:
     const std::vector<std::pair<const Resource *, float> > & getNeeds() const;
     void addNeed(const Resource *, float requiredAmount);
     void setValue(float newValue);
+    int outPrice(int startStock, int num = 1) const;
+    int inPrice(int startStock, int num = 1) const;
 
 private:
+    float getBulkValue(int startStock, int deltaStock = 1) const;
+
     Resource() = default;
     std::string m_name;
     float m_value;

@@ -1,3 +1,4 @@
+#include <math.h>
 #include "resource.h"
 Resource::Resource(std::string name, float value, float mass, float volume, float halfPrice)
     :m_name(name), m_value(value), m_mass(mass), m_volume(volume), m_decay(-1 / halfPrice)
@@ -43,4 +44,20 @@ void Resource::addNeed(const Resource * resource, float requiredAmount)
 void Resource::setValue(float newValue)
 {
     m_value = newValue;
+}
+
+int Resource::outPrice(int startStock, int num) const
+{
+    return lrint(getBulkValue(startStock - num, num));
+}
+
+int Resource::inPrice(int startStock, int num) const
+{
+    return lrint(getBulkValue(startStock, num));
+}
+
+float Resource::getBulkValue(int startStock, int deltaStock) const
+{
+    float decay = getDecay();
+    return getValue() * exp2(decay * startStock) * (1 - exp2(deltaStock * decay)) / (1 - exp2(decay));
 }

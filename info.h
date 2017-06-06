@@ -1,6 +1,6 @@
 #ifndef INFO_H
 #define INFO_H
-
+#include <string>
 #include <vector>
 
 class Town;
@@ -15,6 +15,7 @@ public:
     const Town *getTown() const;
     Info &operator= (const Info &other);
     bool isOlderThan(const Info &other) const;
+    std::string getStockAndMedianPricesAsString() const;
 private:
      const Town *m_town;
      int m_tick;
