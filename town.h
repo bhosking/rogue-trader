@@ -1,6 +1,6 @@
 #ifndef TOWN_H
 #define TOWN_H
-#include <qvector2d.h>
+#include <qvector2d>
 #include <unordered_map>
 #include <memory>
 #include "updatableentity.h"
@@ -17,7 +17,7 @@ public:
     const std::vector<TownResource *> &getResources() const;
     unsigned getPopulation() const;
     const std::string & getName() const;
-    virtual const QPointF &getPos() const = 0;
+    virtual QPointF getPos() const = 0;
     const std::unordered_map<std::string, std::shared_ptr<Info *> > &getInfos() const;
     std::string getStockAndMedianPricesAsString() const;
     void processTick(World &);

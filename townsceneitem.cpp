@@ -47,7 +47,7 @@ void TownSceneItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     update();
 }
 
-const QPointF &TownSceneItem::getPos() const
+QPointF TownSceneItem::getPos() const
 {
     return scenePos();
 }

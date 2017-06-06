@@ -1,9 +1,10 @@
-#include "townresource.h"
 #include <math.h>
+#include <algorithm>
+#include "townresource.h"
 #include "resource.h"
 
 TownResource::TownResource(const Resource *resource, float rate, int stock)
-    :m_resource(resource), m_rate(rate), m_stock(stock)
+    :m_resource(resource), m_rate(rate), m_stock((float)stock)
 {
 
 }
@@ -20,17 +21,17 @@ float TownResource::getRate() const
 
 int TownResource::getStock() const
 {
-    return m_stock;
+    return (int)m_stock;
 }
 
 int TownResource::outPrice(int num) const
 {
-    return getBulkValue(getStock() - num, num);
+    return lrint(getBulkValue(getStock() - num, num));
 }
 
 int TownResource::inPrice(int num) const
 {
-    return getBulkValue(getStock(), num);
+    return lrint(getBulkValue(getStock(), num));
 }
 
 float TownResource::getBulkValue(int startStock, int deltaStock) const
@@ -72,7 +73,7 @@ const std::vector<std::pair<TownResource *, float> > &TownResource::getTownResou
 
 void TownResource::setStock(int newStock)
 {
-    m_stock = newStock;
+    m_stock = (float)newStock;
 }
 
 void TownResource::setStock(float newStock)
