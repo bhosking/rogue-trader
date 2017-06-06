@@ -8,8 +8,6 @@ class Map : public QGraphicsPixmapItem
 public:
     Map();
     ~Map();
-    void mousePressEvent(QGraphicsSceneMouseEvent * event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
     void explore(QPointF pos, float radius);
 
 private:

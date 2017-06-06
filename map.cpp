@@ -14,16 +14,6 @@ Map::~Map()
     delete m_map;
 }
 
-void Map::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    explore(event->scenePos(),20);
-}
-
-void Map::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    explore(event->scenePos(),20);
-}
-
 void Map::explore(QPointF pos, float radius)
 {
     QPainter p(m_map);

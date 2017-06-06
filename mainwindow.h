@@ -2,9 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QGridLayout>
-#include <QGraphicsView>
-#include <QTimer>
+
+class WorldViewer;
+class QTabWidget;
+class QTimer;
+class SideWindow;
 
 class MainWindow : public QMainWindow
 {
@@ -12,14 +14,15 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-
     ~MainWindow();
 
 public slots:
     void tickGame();
 private:
-    QGraphicsView * m_viewer;
+    WorldViewer * m_worldViewer;
+    QTabWidget *m_centralTabWidget;
     QTimer *m_gameTimer;
+    SideWindow *m_sideWindow;
 };
 
 #endif // MAINWINDOW_H
