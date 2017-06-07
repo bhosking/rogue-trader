@@ -1,6 +1,7 @@
 #ifndef TOWN_H
 #define TOWN_H
-#include <qvector2d>
+#include <vector>
+#include <QPointF>
 #include <unordered_map>
 #include <memory>
 #include "updatableentity.h"
