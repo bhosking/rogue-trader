@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class BuyOrSellWidget;
+
 class SideWindow : public QWidget
 {
 public:

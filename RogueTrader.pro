@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     trader.cpp \
     informationholder.cpp \
     sidewindow.cpp \
-    worldviewer.cpp
+    worldviewer.cpp \
+    buyorsellwidget.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -58,4 +59,5 @@ HEADERS += \
     trader.h \
     informationholder.h \
     sidewindow.h \
-    worldviewer.h
+    worldviewer.h \
+    buyorsellwidget.h
