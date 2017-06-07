@@ -1,4 +1,5 @@
 #include <QGraphicsSceneMouseEvent>
+#include <sstream>
 #include "world.h"
 #include "map.h"
 #include "config.h"
@@ -117,4 +118,61 @@ World &World::getWorld()
     }
 
     return *m_instance;
+}
+
+std::string World::ticksToTime(int ticks, TimeFormat type)
+{
+    std::stringstream ss;
+    int mins = ticks%60;
+    ticks /= 60;
+    int hours = ticks%24;
+    int days = ticks/24;
+    bool foundSomethingAlready = false;
+    if(!(days==0&&type==TimeFormat::NON_ZERO)&&type==TimeFormat::DAYS)
+    {
+        addDaysToStringStream(days,&ss);
+        foundSomethingAlready = true;
+        if(type==TimeFormat::MOST_SIGNIFICANT)
+            return ss.str();
+    }
+    if(!(hours==0&&type==TimeFormat::NON_ZERO)&&type==TimeFormat::HOURS)
+    {
+       if(foundSomethingAlready)
+       {
+            ss <<", ";
+       }
+       addHoursToStringStream(hours,&ss);
+       if(type==TimeFormat::MOST_SIGNIFICANT)
+           return ss.str();
+    }
+    if(!(mins==0&&type==TimeFormat::NON_ZERO)&&type==TimeFormat::MINUTES)
+    {
+        if(foundSomethingAlready)
+        {
+             ss <<", ";
+        }
+        addMinutesToStringStream(mins,&ss);
+    }
+    return ss.str();
+}
+
+void World::addDaysToStringStream(int days, std::stringstream *ss)
+{
+    (*ss) << days << " day";
+    if(days!=1)
+        (*ss) << "s";
+}
+
+void World::addHoursToStringStream(int hours, std::stringstream *ss)
+{
+    (*ss) << hours << " hour";
+    if(hours!=1)
+        (*ss) << "s";
+}
+
+void World::addMinutesToStringStream(int mins, std::stringstream *ss)
+{
+    (*ss) << mins << " minute";
+    if(mins!=1)
+        (*ss) << "s";
 }

@@ -3,6 +3,7 @@
 #include "town.h"
 #include "townresource.h"
 #include "resource.h"
+#include "world.h"
 
 Info::Info(const Town *town, int tick)
     :m_town(town), m_tick(tick)
@@ -49,5 +50,25 @@ std::string Info::getStockAndMedianPricesAsString() const
         ss << resourceStockPair.first->getName() << "(" <<resourceStockPair.second << ") "
            << (resourceStockPair.first->inPrice(resourceStockPair.second)+resourceStockPair.first->outPrice(resourceStockPair.second))/2 <<"g\n";
     }
+    std::string infoAge = getAgeOfInfoAsString();
+    if(infoAge=="")
+    {
+        ss << "(current)";
+    }
+    else
+    {
+        ss <<"("<< infoAge << " old)";
+    }
+
     return ss.str();
+}
+
+int Info::getAgeOfInfo() const
+{
+    return World::getWorld().getTick()- getTick();
+}
+
+std::string Info::getAgeOfInfoAsString() const
+{
+    return World::ticksToTime(getAgeOfInfo());
 }

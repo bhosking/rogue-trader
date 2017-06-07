@@ -3,6 +3,7 @@
 #include "updatableentity.h"
 #include <vector>
 #include <qpoint.h>
+#include <string>
 
 class QGraphicsSceneMouseEvent;
 class QGraphicsItem;
@@ -11,9 +12,27 @@ class TownSceneItem;
 class PlayerSceneItem;
 class WorldScene;
 
+enum class TimeFormat
+{
+    DAYS = 1,
+    HOURS = 2,
+    MINUTES = 4,
+    NON_ZERO = 8,
+    MOST_SIGNIFICANT = 16,
+    DAYS_HOURS_AND_MINUTES = 7
+};
+
+inline TimeFormat operator|(TimeFormat a, TimeFormat b)
+{return static_cast<TimeFormat>(static_cast<int>(a) | static_cast<int>(b));}
+inline bool operator==(TimeFormat a, TimeFormat b)
+{return static_cast<int>(a) & static_cast<int>(b);}
+inline bool operator!=(TimeFormat a, TimeFormat b)
+{return !(a==b);}
+
 class World : public UpdatableEntity
 {
 public:
+
     WorldScene * getWorldScene();
     Map * getMap();
     const PlayerSceneItem * getPlayerSceneItem();
@@ -54,7 +73,12 @@ public:
 
     void processTick(World &);
     static World &getWorld();
+    static std::string ticksToTime(int ticks,TimeFormat type = TimeFormat::MOST_SIGNIFICANT|TimeFormat::DAYS_HOURS_AND_MINUTES|TimeFormat::NON_ZERO);
 private:
+    static void addDaysToStringStream(int days, std::stringstream * ss);
+    static void addHoursToStringStream(int hours, std::stringstream * ss);
+    static void addMinutesToStringStream(int mins, std::stringstream * ss);
+
     World();
     WorldScene * m_worldScene;
     Map * m_map;
