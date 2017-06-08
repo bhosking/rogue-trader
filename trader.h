@@ -25,6 +25,9 @@ public:
     void setInventoryResource(const Resource *resource, int value);
     void adjustInventory(const std::unordered_map<const Resource *, int> changes);
     void adjustInventoryResource(const Resource *resource, int change);
+    int getGP() const;
+    void setGP(int gp);
+    void adjustGP(int change);
     void processTick(World &);
 
 private:
@@ -32,6 +35,7 @@ private:
     bool m_atDestination;
     Town * m_destination;
     std::unordered_map<const Resource *, int> m_inventory;
+    int m_gp;
 };
 
 #endif // TRADER_H

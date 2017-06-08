@@ -1,7 +1,10 @@
 #include "trader.h"
+#include "town.h"
+#include "townresource.h"
+#include "resource.h"
 
 Trader::Trader()
-    :m_speed(1),m_atDestination(true),m_destination(nullptr)
+    :m_speed(1),m_atDestination(true),m_destination(nullptr),m_gp(0)
 {
 
 }
@@ -62,6 +65,21 @@ int Trader::getInventoryResource(const Resource *resource) const
 void Trader::adjustInventoryResource(const Resource *resource, int change)
 {
     setInventoryResource(resource, getInventoryResource(resource) + change);
+}
+
+int Trader::getGP() const
+{
+    return m_gp;
+}
+
+void Trader::setGP(int gp)
+{
+    m_gp = gp;
+}
+
+void Trader::adjustGP(int change)
+{
+    setGP(getGP() + change);
 }
 
 void Trader::setInventoryResource(const Resource *resource, int value)
