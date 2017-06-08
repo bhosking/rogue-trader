@@ -16,7 +16,7 @@ Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRat
     }
 }
 
-const TownResource *Town::getResource(const Resource *resource)
+TownResource *Town::getResource(const Resource *resource)
 {
     for (TownResource * townResource : getResources())
     {

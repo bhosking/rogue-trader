@@ -26,12 +26,12 @@ void Trader::setStoppedAtDestination(bool stopped)
     m_atDestination = stopped;
 }
 
-const Town *Trader::getDestinationTown()
+Town *Trader::getDestinationTown()
 {
     return m_destination;
 }
 
-void Trader::setDestinationTown(const Town * destination)
+void Trader::setDestinationTown(Town * destination)
 {
     m_destination = destination;
 }

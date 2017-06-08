@@ -15,7 +15,7 @@ class Town : public UpdatableEntity, public InformationHolder
 {
 public:
     Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name);
-    const TownResource *getResource(const Resource *resource);
+    TownResource *getResource(const Resource *resource);
     const std::vector<TownResource *> &getResources() const;
     unsigned getPopulation() const;
     const std::string & getName() const;

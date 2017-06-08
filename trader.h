@@ -17,8 +17,8 @@ public:
     void setSpeed(float);
     bool isAtDestination() const;
     void setStoppedAtDestination(bool);
-    const Town *getDestinationTown();
-    void setDestinationTown(const Town *destination);
+    Town *getDestinationTown();
+    void setDestinationTown(Town *destination);
     const std::unordered_map<const Resource *, int> &getInventory() const;
     void setInventory(const std::unordered_map<const Resource *, int> other);
     int getInventoryResource(const Resource *resource) const;
@@ -30,7 +30,7 @@ public:
 private:
     float m_speed;
     bool m_atDestination;
-    const Town * m_destination;
+    Town * m_destination;
     std::unordered_map<const Resource *, int> m_inventory;
 };
 

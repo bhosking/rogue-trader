@@ -87,11 +87,11 @@ void World::removeItemFromWorld(QGraphicsItem *item)
     delete item;
 }
 
-const TownSceneItem *World::getTownSceneItemUnderMouse(QGraphicsSceneMouseEvent *event)
+TownSceneItem *World::getTownSceneItemUnderMouse(QGraphicsSceneMouseEvent *event)
 {
     const std::vector<TownSceneItem *> &towns = getTownSceneItems();
-    const TownSceneItem * townUnderMouse = nullptr;
-    for(const TownSceneItem * town: towns)
+    TownSceneItem * townUnderMouse = nullptr;
+    for(TownSceneItem * town: towns)
     {
         if(town->contains(event->scenePos() - town->getPos()))
         {
