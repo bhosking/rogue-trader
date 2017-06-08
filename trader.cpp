@@ -82,6 +82,24 @@ void Trader::adjustGP(int change)
     setGP(getGP() + change);
 }
 
+void Trader::buy(const Resource *resource, int amount)
+{
+    if (isAtDestination() && getDestinationTown())
+    {
+
+    }
+}
+
+void Trader::sell(const Resource *resource, int amount)
+{
+    if (isAtDestination() && getDestinationTown())
+    {
+        adjustInventoryResource(resource, amount);
+        getDestinationTown()->getResource(resource)->adjustStock(amount);
+        adjustGP(resource->inPrice(getDestinationTown()->getResource(resource)->getStock(), amount));
+    }
+}
+
 void Trader::setInventoryResource(const Resource *resource, int value)
 {
     m_inventory[resource] = value;
