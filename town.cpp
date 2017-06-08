@@ -16,6 +16,18 @@ Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRat
     }
 }
 
+const TownResource *Town::getResource(const Resource *resource)
+{
+    for (TownResource * townResource : getResources())
+    {
+        if (townResource->getResource() == resource)
+        {
+            return townResource;
+        }
+    }
+    return nullptr;
+}
+
 const std::vector<TownResource *> &Town::getResources() const
 {
     return m_resources;
