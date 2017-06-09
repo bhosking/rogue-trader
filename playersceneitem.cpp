@@ -79,6 +79,7 @@ void PlayerSceneItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     setDestinationTown(World::getWorld().getTownSceneItemUnderMouse(event));
     setStoppedAtDestination(false);
+    emit leftTown();
     prepareGeometryChange();
     update();
 }
@@ -100,9 +101,11 @@ void PlayerSceneItem::processTick(World &world)
         move();
         world.getMap()->explore(scenePos(),getExplorationRadius());
     }
+    //if at destination and its a town, add its information.
     else if(getDestinationTown())
     {
-        addTownCurrentInfo(getDestinationTown());
+        std::shared_ptr<const Info> info = addTownCurrentInfo(getDestinationTown());
+        emit arrivedAtTown(info);
     }
     Player::processTick(world);
     update();

@@ -3,8 +3,11 @@
 #include "circularsceneitem.h"
 #include "player.h"
 
+class Info;
+
 class PlayerSceneItem : public CircularSceneItem, public Player
 {
+    Q_OBJECT
 public:
     PlayerSceneItem();
     QPointF getPos() const;
@@ -16,6 +19,11 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     QRectF boundingRect() const;
     void processTick(World &);
+
+signals:
+    void arrivedAtTown(std::shared_ptr<const Info>);
+    void leftTown();
+
 private:
     float m_explorationRadius;
     QPointF m_movementDirection;

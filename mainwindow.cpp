@@ -7,6 +7,7 @@
 #include "worldscene.h"
 #include "worldviewer.h"
 #include "sidewindow.h"
+#include "playersceneitem.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,6 +27,12 @@ MainWindow::MainWindow(QWidget *parent) :
     m_worldViewer->setScene(World::getWorld().getWorldScene());
     m_worldViewer->setDragMode(QGraphicsView::ScrollHandDrag);
     connect(m_gameTimer,SIGNAL(timeout()),this,SLOT(tickGame()));
+    connect(World::getWorld().getPlayerSceneItem(),SIGNAL(arrivedAtTown(std::shared_ptr<const Info>)),this,SLOT(pause()));
+    connect(World::getWorld().getPlayerSceneItem(),SIGNAL(arrivedAtTown(std::shared_ptr<const Info>)),m_sideWindow,SLOT(playerArrivedAtTown(std::shared_ptr<const Info>)));
+
+    connect(World::getWorld().getPlayerSceneItem(),SIGNAL(leftTown()),this,SLOT(unpause()));
+    connect(World::getWorld().getPlayerSceneItem(),SIGNAL(leftTown()),m_sideWindow,SLOT(playerLeftTown()));
+
     m_gameTimer->start(16);
 }
 
@@ -36,4 +43,14 @@ MainWindow::~MainWindow()
 void MainWindow::tickGame()
 {
     World::getWorld().processTick(World::getWorld());
+}
+
+void MainWindow::pause()
+{
+    m_gameTimer->stop();
+}
+
+void MainWindow::unpause()
+{
+    m_gameTimer->start();
 }

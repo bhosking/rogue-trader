@@ -2,7 +2,7 @@
 #define CIRCULARSCENEITEM_H
 #include <QGraphicsItem>
 
-class CircularSceneItem : public QGraphicsItem
+class CircularSceneItem : public QGraphicsObject
 {
 public:
     CircularSceneItem();

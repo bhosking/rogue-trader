@@ -18,6 +18,8 @@ public:
 
 public slots:
     void tickGame();
+    void pause();
+    void unpause();
 private:
     WorldViewer * m_worldViewer;
     QTabWidget *m_centralTabWidget;

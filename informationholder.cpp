@@ -17,9 +17,10 @@ void InformationHolder::addInfo(const std::shared_ptr<const Info> & newInfo)
     m_info[newInfo->getTown()] = newInfo;
 }
 
-void InformationHolder::addTownCurrentInfo(const Town *town)
+std::shared_ptr<const Info> InformationHolder::addTownCurrentInfo(const Town *town)
 {
     m_info[town] = std::shared_ptr<const Info>(new Info(town, World::getWorld().getTick()));
+    return m_info[town];
 }
 
 std::shared_ptr<const Info> InformationHolder::getHeldInfoOnTown(const Town * const town) const
