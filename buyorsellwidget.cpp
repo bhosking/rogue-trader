@@ -61,6 +61,11 @@ void BuyOrSellWidget::setSelectedAmount(int newAmount)
     }
 }
 
+void BuyOrSellWidget::BuyOrSellButtonPressed()
+{
+    emit BuyOrSellAmountOfResource(m_resource,m_selectedAmount);
+}
+
 void BuyOrSellWidget::setTownStockAmount(int newTownStockAmount)
 {
     m_townStock = newTownStockAmount;

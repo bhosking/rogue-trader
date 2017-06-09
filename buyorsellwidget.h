@@ -34,9 +34,10 @@ private:
     int m_selectedAmount;
     Type m_type;
 signals:
-    void buyOrSellButtonPressed();
+    void BuyOrSellAmountOfResource(const Resource * resource, int amount);
 public slots:
     void setSelectedAmount(int newAmount);
+    void BuyOrSellButtonPressed();
 
 };
 
