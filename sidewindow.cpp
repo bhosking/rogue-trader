@@ -54,5 +54,5 @@ void SideWindow::playerLeftTown()
     {
         m_buyWidgets[i]->hide();
     }
-    m_townNameLabel->setText("<b>       On the road again...       </b>");
+    m_townNameLabel->setText("<b>On the road again...</b>");
 }
