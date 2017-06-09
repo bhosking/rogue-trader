@@ -1,7 +1,8 @@
 #include <math.h>
 #include "resource.h"
 Resource::Resource(std::string name, float value, float mass, float volume, float halfPrice)
-    :m_name(name), m_value(value), m_mass(mass), m_volume(volume), m_decay(-1 / halfPrice)
+    :m_name(name), m_value(value), m_mass(mass), m_volume(volume), m_decay(-1 / halfPrice),
+      m_decayConstant(m_value/(1-exp2(m_decay)))
 {
 
 }
@@ -31,6 +32,11 @@ float Resource::getDecay() const
     return m_decay;
 }
 
+float Resource::getDecayConstant() const
+{
+    return m_decayConstant;
+}
+
 const std::vector<std::pair<const Resource *, float> > &Resource::getNeeds() const
 {
     return m_needs;
@@ -44,6 +50,7 @@ void Resource::addNeed(const Resource * resource, float requiredAmount)
 void Resource::setValue(float newValue)
 {
     m_value = newValue;
+    setDecayConstant();
 }
 
 int Resource::outPrice(int startStock, int num) const
@@ -58,6 +65,10 @@ int Resource::inPrice(int startStock, int num) const
 
 float Resource::getBulkValue(int startStock, int deltaStock) const
 {
-    float decay = getDecay();
-    return getValue() * exp2(decay * startStock) * (1 - exp2(deltaStock * decay)) / (1 - exp2(decay));
+    return exp2(getDecay() * startStock) * (1 - exp2(deltaStock * getDecay())) * getDecayConstant();
+}
+
+void Resource::setDecayConstant()
+{
+    m_decayConstant = getValue() / (1-exp2(getDecay()));
 }

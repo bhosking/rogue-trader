@@ -14,6 +14,7 @@ public:
     float getMass() const;
     float getVolume() const;
     float getDecay() const;
+    float getDecayConstant() const;
     const std::vector<std::pair<const Resource *, float> > & getNeeds() const;
     void addNeed(const Resource *, float requiredAmount);
     void setValue(float newValue);
@@ -22,6 +23,7 @@ public:
 
 private:
     float getBulkValue(int startStock, int deltaStock = 1) const;
+    void setDecayConstant();
 
     Resource() = default;
     std::string m_name;
@@ -29,6 +31,7 @@ private:
     float m_mass;
     float m_volume;
     float m_decay;
+    float m_decayConstant;
     std::vector<std::pair<const Resource*,float> > m_needs;
 
 };
