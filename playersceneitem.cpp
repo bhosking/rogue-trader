@@ -32,7 +32,14 @@ void PlayerSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 {
     painter->setRenderHints(painter->renderHints() | QPainter::Antialiasing);
     painter->setPen(QPen(Qt::darkGreen,2));
-    painter->drawEllipse(QPointF(),m_radius,m_radius);
+    if(isAtDestination()&&getDestinationTown())
+    {
+        painter->drawEllipse(QPointF(),m_radius+2,m_radius+2);
+    }
+    else
+    {
+        painter->drawEllipse(QPointF(),m_radius,m_radius);
+    }
     painter->drawLine(QPointF(0,0),m_targetVector);
 }
 
@@ -86,10 +93,10 @@ void PlayerSceneItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 QRectF PlayerSceneItem::boundingRect() const
 {
-    float x = std::min(0.0,m_targetVector.x()) - m_radius;
-    float y = std::min(0.0,m_targetVector.y()) - m_radius;
-    float width = fabs(m_targetVector.x()) + 2*m_radius;
-    float height = fabs(m_targetVector.y()) + 2*m_radius;
+    float x = std::min(0.0,m_targetVector.x()) - m_radius - 2;
+    float y = std::min(0.0,m_targetVector.y()) - m_radius - 2;
+    float width = fabs(m_targetVector.x()) + 2*m_radius + 4;
+    float height = fabs(m_targetVector.y()) + 2*m_radius + 4;
 
     return QRectF(x,y,width,height);
 }
