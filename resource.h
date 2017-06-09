@@ -20,7 +20,7 @@ public:
     void setValue(float newValue);
     int outPrice(int startStock, int num = 1) const;
     int inPrice(int startStock, int num = 1) const;
-
+    int howMuchCanIBuy(int startStock, int gp) const;
 private:
     float getBulkValue(int startStock, int deltaStock = 1) const;
     void setDecayConstant();
