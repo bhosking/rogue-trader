@@ -33,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(World::getWorld().getPlayerSceneItem(),SIGNAL(leftTown()),this,SLOT(unpause()));
     connect(World::getWorld().getPlayerSceneItem(),SIGNAL(leftTown()),m_sideWindow,SLOT(playerLeftTown()));
 
+    connect(m_sideWindow,SIGNAL(buyWidgetClicked(const Resource*,int)),this,SLOT(PlayerTryBuyResource(const Resource*,int)));
+    connect(m_sideWindow,SIGNAL(sellWidgetClicked(const Resource*,int)),this,SLOT(PlayerTrySellResource(const Resource*,int)));
+
     m_gameTimer->start(16);
 }
 
@@ -53,4 +56,16 @@ void MainWindow::pause()
 void MainWindow::unpause()
 {
     m_gameTimer->start();
+}
+
+void MainWindow::PlayerTryBuyResource(const Resource * resource, int amount)
+{
+    World::getWorld().getPlayerSceneItem()->buy(resource,amount);
+    World::getWorld().getPlayerSceneItem()->updateTownInfo();
+}
+
+void MainWindow::PlayerTrySellResource(const Resource * resource, int amount)
+{
+    World::getWorld().getPlayerSceneItem()->sell(resource,amount);
+    World::getWorld().getPlayerSceneItem()->updateTownInfo();
 }

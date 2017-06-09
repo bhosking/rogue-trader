@@ -7,6 +7,7 @@ class WorldViewer;
 class QTabWidget;
 class QTimer;
 class SideWindow;
+class Resource;
 
 class MainWindow : public QMainWindow
 {
@@ -20,6 +21,9 @@ public slots:
     void tickGame();
     void pause();
     void unpause();
+    void PlayerTryBuyResource(const Resource *resource, int amount);
+    void PlayerTrySellResource(const Resource *resource, int amount);
+
 private:
     WorldViewer * m_worldViewer;
     QTabWidget *m_centralTabWidget;

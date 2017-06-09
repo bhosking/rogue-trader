@@ -28,8 +28,8 @@ public:
     int getGP() const;
     void setGP(int gp);
     void adjustGP(int change);
-    void buy(const Resource *resource, int amount);
-    void sell(const Resource *resource, int amount);
+    virtual void buy(const Resource *resource, int amount);
+    virtual void sell(const Resource *resource, int amount);
     void processTick(World &);
 
 private:

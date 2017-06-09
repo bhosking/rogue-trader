@@ -82,6 +82,10 @@ void BuyOrSellWidget::setTownStock(const std::pair<const Resource *, int> &stock
 void BuyOrSellWidget::setPlayerStockAmount(int newPlayerStockAmount)
 {
     m_playerStock = newPlayerStockAmount;
+    if(m_type==Type::SELL)
+    {
+        m_buyOrSellAmountSlider->setMaximum(m_playerStock);
+    }
     update();
 }
 

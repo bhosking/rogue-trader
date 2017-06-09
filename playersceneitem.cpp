@@ -111,6 +111,25 @@ void PlayerSceneItem::processTick(World &world)
     update();
 }
 
+void PlayerSceneItem::updateTownInfo()
+{
+    addTownCurrentInfo(getDestinationTown());
+}
+
+void PlayerSceneItem::buy(const Resource *resource, int amount)
+{
+    Trader::buy(resource,amount);
+    std::shared_ptr<const Info> info = addTownCurrentInfo(getDestinationTown());
+    emit arrivedAtTown(info,getInventory());
+}
+
+void PlayerSceneItem::sell(const Resource *resource, int amount)
+{
+    Trader::sell(resource,amount);
+    std::shared_ptr<const Info> info = addTownCurrentInfo(getDestinationTown());
+    emit arrivedAtTown(info,getInventory());
+}
+
 void PlayerSceneItem::move()
 {
     QPointF movementVector;

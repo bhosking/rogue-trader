@@ -35,7 +35,7 @@ public:
 
     WorldScene * getWorldScene();
     Map * getMap();
-    const PlayerSceneItem * getPlayerSceneItem();
+    PlayerSceneItem * getPlayerSceneItem();
     const std::vector<TownSceneItem *> &getTownSceneItems();
 
     int getTick() const;

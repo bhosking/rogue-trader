@@ -63,7 +63,7 @@ Map *World::getMap()
     return m_map;
 }
 
-const PlayerSceneItem *World::getPlayerSceneItem()
+PlayerSceneItem *World::getPlayerSceneItem()
 {
     return m_playerSceneItem;
 }
