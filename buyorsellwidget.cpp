@@ -37,7 +37,7 @@ BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, int townStock , Type 
     setLayout(new QGridLayout());
     this->layout()->addWidget(groupBox);
 
-    connect(m_buyOrSellButton,SIGNAL(clicked(bool)),this,SIGNAL(buyOrSellButtonPressed()));
+    connect(m_buyOrSellButton,SIGNAL(clicked(bool)),this,SLOT(buyOrSellButtonPressed()));
     connect(m_buyOrSellAmountSlider,SIGNAL(valueChanged(int)),this,SLOT(setSelectedAmount(int)));
 }
 
@@ -59,6 +59,11 @@ void BuyOrSellWidget::setSelectedAmount(int newAmount)
         m_selectedAmount = newAmount>m_playerStock ? m_playerStock : newAmount;
 
     }
+}
+
+void BuyOrSellWidget::buyOrSellButtonPressed()
+{
+    emit buyOrSellAmountOfResource(m_resource,m_selectedAmount);
 }
 
 void BuyOrSellWidget::setTownStockAmount(int newTownStockAmount)

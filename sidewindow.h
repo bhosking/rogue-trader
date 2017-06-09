@@ -21,6 +21,9 @@ public:
 public slots:
     void playerArrivedAtTown(std::shared_ptr<const Info> info, const std::unordered_map<const Resource *, int> & inventory);
     void playerLeftTown();
+signals:
+    void buyWidgetClicked(const Resource * resource, int amount);
+    void sellWidgetClicked(const Resource * resource, int amount);
 private:
     QLabel * m_townNameLabel;
     std::vector<BuyOrSellWidget*> m_buyWidgets;

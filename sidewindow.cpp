@@ -48,13 +48,14 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
         if(i >= m_buyWidgets.size())
         {
             m_buyWidgets.push_back(new BuyOrSellWidget(resources[i].first,resources[i].second,BuyOrSellWidget::Type::BUY,this));
+            connect(m_buyWidgets[i],SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(buyWidgetClicked(const Resource*,int)));
             m_buyTab->addWidget(m_buyWidgets[i]);
         }
         else
         {
             m_buyWidgets[i]->setTownStock(resources[i]);
         }
-
+        m_buyWidgets[i]->setSelectedAmount(0);
         //set up sell widgets
         std::unordered_map<const Resource *, int>::const_iterator inventoryResource = inventory.find(resources[i].first);
         if(inventoryResource!=inventory.end())
@@ -62,6 +63,7 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
             if(i >= m_sellWidgets.size())
             {
                 m_sellWidgets.push_back(new BuyOrSellWidget(resources[i].first,resources[i].second,BuyOrSellWidget::Type::SELL,this));
+                connect(m_buyWidgets[i],SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(sellWidgetClicked(const Resource*,int)));
                 m_sellTab->addWidget(m_sellWidgets[numberOfSellWidgets]);
             }
             else
@@ -69,6 +71,8 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
                 m_sellWidgets[numberOfSellWidgets]->setTownStock(resources[i]);
             }
             m_sellWidgets[numberOfSellWidgets]->setPlayerStockAmount((*inventoryResource).second);
+            m_sellWidgets[numberOfSellWidgets]->setSelectedAmount(0);
+
             numberOfSellWidgets++;
         }
     }

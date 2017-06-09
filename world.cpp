@@ -21,10 +21,33 @@ World::World()
     resources.push_back(std::tuple<const Resource *, float, float>
                         (config.getResource("Food"), 1, 0));
     resources.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Wood"), 0.5, 0));
+    resources.push_back(std::tuple<const Resource *, float, float>
                         (config.getResource("Iron"), 0.25, 5));
     std::string name = "Test Town";
     TownSceneItem * testTown = new TownSceneItem(resources,100,name);
     addItemToWorld(testTown,QPointF(100,100));
+    std::vector<std::tuple<const Resource *, float, float> > resources2;
+    resources2.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Food"), 0.5, 0));
+    resources2.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Wood"), 0.8, 0));
+    resources2.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Iron"), 0.5, 5));
+    std::string name2 = "Test Town Two";
+    TownSceneItem * testTown2 = new TownSceneItem(resources2,150,name2);
+    addItemToWorld(testTown2,QPointF(150,200));
+    std::vector<std::tuple<const Resource *, float, float> > resources3;
+    resources3.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Food"), 1.5, 0));
+    resources3.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Wood"), 0.2, 0));
+    resources3.push_back(std::tuple<const Resource *, float, float>
+                        (config.getResource("Iron"), 0, 5));
+    std::string name3 = "Test Town Three";
+    TownSceneItem * testTown3 = new TownSceneItem(resources3,150,name3);
+    addItemToWorld(testTown3,QPointF(200,100));
+
 
     m_playerSceneItem->adjustInventoryResource(config.getResource("Food"),100);
     getMap()->explore(getPlayerSceneItem()->getPos(),getPlayerSceneItem()->getExplorationRadius());
