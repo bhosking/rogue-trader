@@ -1,3 +1,4 @@
+#include <sstream>
 #include "trader.h"
 #include "town.h"
 #include "townresource.h"
@@ -136,4 +137,15 @@ void Trader::adjustInventory(const std::unordered_map<const Resource *, int> cha
 void Trader::processTick(World &)
 {
 
+}
+
+std::string Trader::outPutInventoryAsString()
+{
+    std::stringstream ss;
+    ss <<getGP() << "gp\n";
+     for(std::pair<const Resource *,int> resourceStockPair: getInventory())
+    {
+        ss << resourceStockPair.first->getName() << "(" <<resourceStockPair.second << ")\n";
+    }
+    return ss.str();
 }

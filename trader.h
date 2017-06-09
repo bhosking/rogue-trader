@@ -1,5 +1,6 @@
 #ifndef TRADER_H
 #define TRADER_H
+#include <string>
 #include <QPointF>
 #include <unordered_map>
 #include "updatableentity.h"
@@ -31,6 +32,7 @@ public:
     virtual void buy(const Resource *resource, int amount);
     virtual void sell(const Resource *resource, int amount);
     void processTick(World &);
+    std::string outPutInventoryAsString();
 
 private:
     float m_speed;

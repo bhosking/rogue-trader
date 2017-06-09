@@ -8,6 +8,7 @@ class QTabWidget;
 class QTimer;
 class SideWindow;
 class Resource;
+class QLabel;
 
 class MainWindow : public QMainWindow
 {
@@ -25,6 +26,7 @@ public slots:
     void PlayerTrySellResource(const Resource *resource, int amount);
 
 private:
+    QLabel * m_inventoryLabel;
     WorldViewer * m_worldViewer;
     QTabWidget *m_centralTabWidget;
     QTimer *m_gameTimer;
