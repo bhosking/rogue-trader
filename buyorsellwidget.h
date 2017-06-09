@@ -2,7 +2,7 @@
 #define BUYORSELLWIDGET_H
 
 #include <QWidget>
-
+#include <utility>
 class Resource;
 class QSlider;
 class QPushButton;
@@ -17,12 +17,13 @@ class BuyOrSellWidget : public QWidget
 public:
     enum class Type{BUY,SELL};
 
-    explicit BuyOrSellWidget(Resource * resource, int stock, Type type, QWidget *parent = 0);
+    explicit BuyOrSellWidget(const Resource * resource, int stock, Type type, QWidget *parent = 0);
     int getSelectedAmount();
     void setStockAmount(int newStockAmount);
+    void setStock(const std::pair<const Resource *, int> &stock);
 private:
     QSlider * m_buyOrSellAmountSlider;
-    Resource * m_resource;
+    const Resource * m_resource;
     QPushButton * m_buyOrSellButton;
     QLabel * m_unitPriceLabel;
     QLabel * m_totalPriceLabel;

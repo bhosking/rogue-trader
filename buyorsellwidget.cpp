@@ -5,7 +5,7 @@
 #include <QGroupBox>
 #include "buyorsellwidget.h"
 #include "resource.h"
-BuyOrSellWidget::BuyOrSellWidget(Resource *resource, int stock , Type type , QWidget *parent)
+BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, int stock , Type type , QWidget *parent)
     :m_buyOrSellAmountSlider(new QSlider()),
       m_resource(resource),
       m_buyOrSellButton(new QPushButton()),
@@ -68,4 +68,10 @@ void BuyOrSellWidget::setStockAmount(int newStockAmount)
     m_stock = newStockAmount;
     m_buyOrSellAmountSlider->setMaximum(m_stock);
     setSelectedAmount(m_selectedAmount);
+}
+
+void BuyOrSellWidget::setStock(const std::pair<const Resource *, int> &stock)
+{
+    m_resource = stock.first;
+    setStockAmount(stock.second);
 }
