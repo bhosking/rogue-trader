@@ -81,6 +81,12 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
     {
         m_buyWidgets[i]->hide();
     }
+
+    //hide any remainding unused sell widgets
+    for(;numberOfSellWidgets<m_sellWidgets.size();++numberOfSellWidgets)
+    {
+        m_sellWidgets[numberOfSellWidgets]->hide();
+    }
 }
 
 void SideWindow::playerArrivedAtTown(std::shared_ptr<const Info> info, const std::unordered_map<const Resource *, int> &inventory)

@@ -90,6 +90,8 @@ void Trader::buy(const Resource *resource, int amount)
         TownResource *townResource = destinationTown->getResource(resource);
         int inStock = townResource->getStock();
         int buyAmount = std::min(resource->howMuchCanIBuy(inStock, getGP()), amount);
+        if(buyAmount==0)
+            return;
         adjustGP(-1 * resource->outPrice(inStock, buyAmount));
         townResource->adjustStock(-1 * buyAmount);
         adjustInventoryResource(resource, buyAmount);
@@ -109,7 +111,18 @@ void Trader::sell(const Resource *resource, int amount)
 
 void Trader::setInventoryResource(const Resource *resource, int value)
 {
-    m_inventory[resource] = value;
+    if(value==0)
+    {
+        auto resourceLocation = m_inventory.find(resource);
+        if(resourceLocation!=m_inventory.end())
+        {
+            m_inventory.erase(resourceLocation);
+        }
+    }
+    else
+    {
+        m_inventory[resource] = value;
+    }
 }
 
 void Trader::adjustInventory(const std::unordered_map<const Resource *, int> changes)
