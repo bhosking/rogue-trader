@@ -15,7 +15,7 @@ public:
     const Town *getTown() const;
     Info &operator= (const Info &other);
     bool isOlderThan(const Info &other) const;
-    std::string getStockAndMedianPricesAsString() const;
+    std::string getTownNameStockAndMedianPricesAsString() const;
     int getAgeOfInfo() const;
     std::string getAgeOfInfoAsString() const;
 private:

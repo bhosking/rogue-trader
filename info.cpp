@@ -42,9 +42,10 @@ bool Info::isOlderThan(const Info &other) const
     return getTick() > other.getTick();
 }
 
-std::string Info::getStockAndMedianPricesAsString() const
+std::string Info::getTownNameStockAndMedianPricesAsString() const
 {
     std::stringstream ss;
+    ss << m_town->getName() << "\n";
     for(std::pair<const Resource *,int> resourceStockPair: getResources())
     {
         ss << resourceStockPair.first->getName() << "(" <<resourceStockPair.second << ") "
