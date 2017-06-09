@@ -5,25 +5,25 @@
 #include <QGroupBox>
 #include "buyorsellwidget.h"
 #include "resource.h"
-BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, int stock , Type type , QWidget *parent)
+BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, int townStock , Type type , QWidget *parent)
     :m_buyOrSellAmountSlider(new QSlider()),
       m_resource(resource),
       m_buyOrSellButton(new QPushButton()),
       m_unitPriceLabel(new QLabel()),
       m_totalPriceLabel(new QLabel()),
-      m_stock(stock),
+      m_townStock(townStock),
       m_selectedAmount(0),
       m_type(type)
 {
     m_buyOrSellAmountSlider->setOrientation(Qt::Horizontal);
     int maxTextWidth = m_unitPriceLabel->fontMetrics().width("Unit Price: "+QString::number(m_resource->outPrice(0)));
     m_unitPriceLabel->setMinimumWidth(maxTextWidth);
-    maxTextWidth = m_totalPriceLabel->fontMetrics().width("Total Price: "+QString::number(m_resource->outPrice(m_stock,m_stock)));
+    maxTextWidth = m_totalPriceLabel->fontMetrics().width("Total Price: "+QString::number(m_resource->outPrice(m_townStock,m_townStock)));
     m_totalPriceLabel->setMinimumWidth(maxTextWidth);
 
     if(m_type==Type::BUY)
     {
-        m_buyOrSellAmountSlider->setMaximum(m_stock);
+        m_buyOrSellAmountSlider->setMaximum(m_townStock);
         m_buyOrSellButton->setText("Buy");
     }
     setSelectedAmount(0);
@@ -48,30 +48,66 @@ int BuyOrSellWidget::getSelectedAmount()
 
 void BuyOrSellWidget::setSelectedAmount(int newAmount)
 {
+    m_selectedAmount = newAmount;
+    update();
+    if(m_type==Type::BUY)
+    {
+        m_selectedAmount = newAmount>m_townStock ? m_townStock : newAmount;
+    }
+    else
+    {
+        m_selectedAmount = newAmount>m_playerStock ? m_playerStock : newAmount;
 
-    m_selectedAmount = newAmount>m_stock ? m_stock : newAmount;
+    }
+}
+
+void BuyOrSellWidget::setTownStockAmount(int newTownStockAmount)
+{
+    m_townStock = newTownStockAmount;
+    m_buyOrSellAmountSlider->setMaximum(m_townStock);
+    update();
+}
+
+void BuyOrSellWidget::setTownStock(const std::pair<const Resource *, int> &stock)
+{
+    m_resource = stock.first;
+    setTownStockAmount(stock.second);
+}
+
+void BuyOrSellWidget::setPlayerStockAmount(int newPlayerStockAmount)
+{
+    m_playerStock = newPlayerStockAmount;
+    update();
+}
+
+void BuyOrSellWidget::update()
+{
+
+    if(m_type==Type::BUY)
+    {
+        m_selectedAmount = m_selectedAmount>m_townStock ? m_townStock : m_selectedAmount;
+    }
+    else
+    {
+        m_selectedAmount = m_selectedAmount>m_playerStock ? m_playerStock : m_selectedAmount;
+
+    }
 
     if(m_buyOrSellAmountSlider->value()!=m_selectedAmount)
     {
         m_buyOrSellAmountSlider->setValue(m_selectedAmount);
     }
+
     if(m_type==Type::BUY)
     {
-        m_unitPriceLabel->setText("Unit Price: " + QString::number(m_resource->outPrice(m_stock-m_selectedAmount)));
-        m_totalPriceLabel->setText("Total Price: " + QString::number(m_resource->outPrice(m_stock,m_selectedAmount)));
+        m_unitPriceLabel->setText("Unit Price: " + QString::number(m_resource->outPrice(m_townStock-m_selectedAmount)));
+        m_totalPriceLabel->setText("Total Price: " + QString::number(m_resource->outPrice(m_townStock,m_selectedAmount)));
         m_buyOrSellButton->setText("Buy " + QString::number(m_selectedAmount));
     }
-}
-
-void BuyOrSellWidget::setStockAmount(int newStockAmount)
-{
-    m_stock = newStockAmount;
-    m_buyOrSellAmountSlider->setMaximum(m_stock);
-    setSelectedAmount(m_selectedAmount);
-}
-
-void BuyOrSellWidget::setStock(const std::pair<const Resource *, int> &stock)
-{
-    m_resource = stock.first;
-    setStockAmount(stock.second);
+    else
+    {
+        m_unitPriceLabel->setText("Unit Price: " + QString::number(m_resource->inPrice(m_townStock+m_selectedAmount)));
+        m_totalPriceLabel->setText("Total Price: " + QString::number(m_resource->inPrice(m_townStock,m_selectedAmount)));
+        m_buyOrSellButton->setText("Sell " + QString::number(m_selectedAmount));
+    }
 }
