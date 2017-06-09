@@ -67,12 +67,12 @@ void TownSceneItem::paintPrices(QPainter *painter, std::shared_ptr<const Info> &
     painter->setPen(QPen(Qt::black,2));
     updatePricesDisplayRectangle(painter,info);
     painter->drawRoundedRect(pricesRectangle,5,5);
-    painter->drawText(pricesRectangle.adjusted(5,5,-5,-5),QString(info->getStockAndMedianPricesAsString().c_str()));
+    painter->drawText(pricesRectangle.adjusted(5,5,-5,-5),QString(info->getTownNameStockAndMedianPricesAsString().c_str()));
 }
 
 QRectF TownSceneItem::updatePricesDisplayRectangle(QPainter *painter, std::shared_ptr<const Info> &info)
 {
-    pricesRectangle = painter->boundingRect(QRect(),Qt::AlignLeft,QString(info->getStockAndMedianPricesAsString().c_str()));
+    pricesRectangle = painter->boundingRect(QRect(),Qt::AlignLeft,QString(info->getTownNameStockAndMedianPricesAsString().c_str()));
     pricesRectangle.moveTopLeft(QPointF(-pricesRectangle.width()/2,-pricesRectangle.height() - m_radius - 5));
     pricesRectangle.adjust(-5.0,-5.0,5.0,5.0);
     prepareGeometryChange();

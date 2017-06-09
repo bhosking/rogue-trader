@@ -52,7 +52,7 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
         }
         else
         {
-            m_buyWidgets[i]->setStock(resources[i]);
+            m_buyWidgets[i]->setTownStock(resources[i]);
         }
 
         //set up sell widgets
@@ -61,13 +61,14 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
         {
             if(i >= m_sellWidgets.size())
             {
-                m_sellWidgets.push_back(new BuyOrSellWidget((*inventoryResource).first,(*inventoryResource).second,BuyOrSellWidget::Type::BUY,this));
+                m_sellWidgets.push_back(new BuyOrSellWidget(resources[i].first,resources[i].second,BuyOrSellWidget::Type::SELL,this));
                 m_sellTab->addWidget(m_sellWidgets[numberOfSellWidgets]);
             }
             else
             {
-                m_buyWidgets[numberOfSellWidgets]->setStock((*inventoryResource));
+                m_sellWidgets[numberOfSellWidgets]->setTownStock(resources[i]);
             }
+            m_sellWidgets[numberOfSellWidgets]->setPlayerStockAmount((*inventoryResource).second);
             numberOfSellWidgets++;
         }
     }
