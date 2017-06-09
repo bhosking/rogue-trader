@@ -1,4 +1,5 @@
 #include <math.h>
+#include <limits>
 #include "resource.h"
 Resource::Resource(std::string name, float value, float mass, float volume, float halfPrice)
     :m_name(name), m_value(value), m_mass(mass), m_volume(volume), m_decay(-1 / halfPrice),
@@ -65,7 +66,10 @@ int Resource::inPrice(int startStock, int num) const
 
 int Resource::howMuchCanIBuy(int startStock, int gp) const
 {
-    return static_cast<int>(log2(1 - gp / (getDecayConstant() * exp2(getDecay() * startStock))) / getDecay());
+    float d = gp/(getDecayConstant() * exp2(getDecay() * startStock));
+    if(d>=1)
+        return std::numeric_limits<int>::max();
+    return static_cast<int>(log2(1 - d) / getDecay());
 }
 
 float Resource::getBulkValue(int startStock, int deltaStock) const

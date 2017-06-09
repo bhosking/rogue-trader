@@ -54,6 +54,7 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
         else
         {
             m_buyWidgets[i]->setTownStock(resources[i]);
+            m_buyWidgets[i]->show();
         }
         m_buyWidgets[i]->setSelectedAmount(0);
         //set up sell widgets
@@ -69,6 +70,7 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
             else
             {
                 m_sellWidgets[numberOfSellWidgets]->setTownStock(resources[i]);
+                m_sellWidgets[numberOfSellWidgets]->show();
             }
             m_sellWidgets[numberOfSellWidgets]->setPlayerStockAmount((*inventoryResource).second);
             m_sellWidgets[numberOfSellWidgets]->setSelectedAmount(0);
