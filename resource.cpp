@@ -63,6 +63,11 @@ int Resource::inPrice(int startStock, int num) const
     return lrint(getBulkValue(startStock, num));
 }
 
+int Resource::howMuchCanIBuy(int startStock, int gp) const
+{
+    return static_cast<int>(log2(1 - gp / (getDecayConstant() * exp2(getDecay() * startStock))) / getDecay());
+}
+
 float Resource::getBulkValue(int startStock, int deltaStock) const
 {
     return exp2(getDecay() * startStock) * (1 - exp2(deltaStock * getDecay())) * getDecayConstant();
