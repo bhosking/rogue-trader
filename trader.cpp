@@ -105,8 +105,8 @@ void Trader::sell(const Resource *resource, int amount)
     if (isAtDestination() && getDestinationTown())
     {
         adjustInventoryResource(resource, -1 * amount);
-        getDestinationTown()->getResource(resource)->adjustStock(amount);
         adjustGP(resource->inPrice(getDestinationTown()->getResource(resource)->getStock(), amount));
+        getDestinationTown()->getResource(resource)->adjustStock(amount);
     }
 }
 
