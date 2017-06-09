@@ -26,6 +26,7 @@ World::World()
     TownSceneItem * testTown = new TownSceneItem(resources,100,name);
     addItemToWorld(testTown,QPointF(100,100));
 
+    m_playerSceneItem->adjustInventoryResource(config.getResource("Food"),100);
     getMap()->explore(getPlayerSceneItem()->getPos(),getPlayerSceneItem()->getExplorationRadius());
 }
 

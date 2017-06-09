@@ -105,7 +105,7 @@ void PlayerSceneItem::processTick(World &world)
     else if(getDestinationTown())
     {
         std::shared_ptr<const Info> info = addTownCurrentInfo(getDestinationTown());
-        emit arrivedAtTown(info);
+        emit arrivedAtTown(info,getInventory());
     }
     Player::processTick(world);
     update();

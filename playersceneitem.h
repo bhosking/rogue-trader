@@ -21,7 +21,7 @@ public:
     void processTick(World &);
 
 signals:
-    void arrivedAtTown(std::shared_ptr<const Info>);
+    void arrivedAtTown(std::shared_ptr<const Info>, const std::unordered_map<const Resource *, int> & inventory);
     void leftTown();
 
 private:
