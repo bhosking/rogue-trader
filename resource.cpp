@@ -66,10 +66,7 @@ int Resource::inPrice(int startStock, int num) const
 
 int Resource::howMuchCanIBuy(int startStock, int gp) const
 {
-    float d = gp/(getDecayConstant() * exp2(getDecay() * startStock));
-    if(d>=1)
-        return std::numeric_limits<int>::max();
-    return static_cast<int>(log2(1 - d) / getDecay());
+    return static_cast<int>(-1 * log2(gp/(getDecayConstant() * exp2(getDecay() * startStock)) + 1) / getDecay());
 }
 
 float Resource::getBulkValue(int startStock, int deltaStock) const
