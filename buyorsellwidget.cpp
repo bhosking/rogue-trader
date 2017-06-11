@@ -69,7 +69,10 @@ void BuyOrSellWidget::buyOrSellButtonPressed()
 void BuyOrSellWidget::setTownStockAmount(int newTownStockAmount)
 {
     m_townStock = newTownStockAmount;
-    m_buyOrSellAmountSlider->setMaximum(m_townStock);
+    if (m_type==Type::BUY)
+    {
+        m_buyOrSellAmountSlider->setMaximum(m_townStock);
+    }
     update();
 }
 
