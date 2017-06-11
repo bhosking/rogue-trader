@@ -6,14 +6,21 @@ Config::Config()
     loadResources();
 }
 
-const std::unordered_map<std::string, Resource *> &Config::getResources() const
+const std::vector<const Resource *> &Config::getResources() const
 {
     return m_resources;
 }
 
 const Resource *Config::getResource(std::string name) const
 {
-    return getResources().at(name);
+    for (const Resource *resource : getResources())
+    {
+        if (resource->getName() == name)
+        {
+            return resource;
+        }
+    }
+    return nullptr;
 }
 
 void Config::loadResources()
@@ -26,8 +33,12 @@ void Config::loadResources()
     resources.push_back(new Resource("Iron", 40, 1, 0.5, 50));
 
     for (Resource * resource : resources) {
-        m_resources[resource->getName()] = resource;
+        std::string name=resource->getName();
+        // Resource Needs
+        if (name=="Iron")
+        {
+            resource->addNeed(getResource("Food"), 3);
+        }
+        m_resources.push_back(resource);
     }
-    // Resource Needs
-    m_resources.at("Iron")->addNeed(getResource("Food"), 3);
 }
