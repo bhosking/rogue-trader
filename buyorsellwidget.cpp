@@ -5,13 +5,13 @@
 #include <QGroupBox>
 #include "buyorsellwidget.h"
 #include "resource.h"
-BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, int townStock , Type type , QWidget *parent)
+BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, Type type , QWidget *parent)
     :m_buyOrSellAmountSlider(new QSlider()),
       m_resource(resource),
       m_buyOrSellButton(new QPushButton()),
       m_unitPriceLabel(new QLabel()),
       m_totalPriceLabel(new QLabel()),
-      m_townStock(townStock),
+      m_townStock(0),
       m_selectedAmount(0),
       m_type(type)
 {

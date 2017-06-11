@@ -7,6 +7,7 @@
 #include "resource.h"
 #include "info.h"
 #include "town.h"
+#include "config.h"
 
 SideWindow::SideWindow()
     :m_townNameLabel(new QLabel("<b>On the road again...</b>")),
@@ -32,62 +33,49 @@ SideWindow::SideWindow()
 
     m_tabWidget->hide();
 
+    Config config = Config();
+    for (const Resource *resource : config.getResources())
+    {
+        m_buyWidgets.push_back(new BuyOrSellWidget(resource, BuyOrSellWidget::Type::BUY, this));
+        connect(m_buyWidgets.back(),SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(buyWidgetClicked(const Resource*,int)));
+        m_buyTab->addWidget(m_buyWidgets.back());
+        m_sellWidgets.push_back(new BuyOrSellWidget(resource, BuyOrSellWidget::Type::SELL, this));
+        connect(m_sellWidgets.back(),SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(sellWidgetClicked(const Resource*,int)));
+        m_sellTab->addWidget(m_sellWidgets.back());
+    }
 }
 
 void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unordered_map<const Resource *, int> &inventory)
 {
     m_tabWidget->show();
     m_townNameLabel->setText("<b>"+QString(newInfo->getTown()->getName().c_str())+"</b>");
-    int numberOfSellWidgets = 0;
-    //set up buy widgets
+    //Note these resources must all be present in the correct order
     const std::vector<std::pair<const Resource *, int> >  & resources = newInfo->getResources();
-    int i = 0;
-    for(;i < resources.size();++i)
+    for(unsigned i = 0;i < resources.size();++i)
     {
-        //set up buy widgets
-        if(i >= m_buyWidgets.size())
+        if (resources[i].second > 0)
         {
-            m_buyWidgets.push_back(new BuyOrSellWidget(resources[i].first,resources[i].second,BuyOrSellWidget::Type::BUY,this));
-            connect(m_buyWidgets[i],SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(buyWidgetClicked(const Resource*,int)));
-            m_buyTab->addWidget(m_buyWidgets[i]);
+            m_buyWidgets[i]->setTownStock(resources[i]);
+            m_buyWidgets[i]->setSelectedAmount(0);
+            m_buyWidgets[i]->show();
         }
         else
         {
-            m_buyWidgets[i]->setTownStock(resources[i]);
-            m_buyWidgets[i]->show();
+            m_buyWidgets[i]->hide();
         }
-        m_buyWidgets[i]->setSelectedAmount(0);
-        //set up sell widgets
         std::unordered_map<const Resource *, int>::const_iterator inventoryResource = inventory.find(resources[i].first);
-        if(inventoryResource!=inventory.end())
+        if((inventoryResource!=inventory.end())&&((*inventoryResource).second > 0))
         {
-            if(i >= m_sellWidgets.size())
-            {
-                m_sellWidgets.push_back(new BuyOrSellWidget(resources[i].first,resources[i].second,BuyOrSellWidget::Type::SELL,this));
-                connect(m_sellWidgets.back(),SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(sellWidgetClicked(const Resource*,int)));
-                m_sellTab->addWidget(m_sellWidgets[numberOfSellWidgets]);
-            }
-            else
-            {
-                m_sellWidgets[numberOfSellWidgets]->setTownStock(resources[i]);
-                m_sellWidgets[numberOfSellWidgets]->show();
-            }
-            m_sellWidgets[numberOfSellWidgets]->setPlayerStockAmount((*inventoryResource).second);
-            m_sellWidgets[numberOfSellWidgets]->setSelectedAmount(0);
-
-            numberOfSellWidgets++;
+            m_sellWidgets[i]->setPlayerStockAmount((*inventoryResource).second);
+            m_sellWidgets[i]->setSelectedAmount(0);
+            m_sellWidgets[i]->setTownStock(resources[i]);
+            m_sellWidgets[i]->show();
         }
-    }
-    //hide any remainding unused buy widgets
-    for(;i<m_buyWidgets.size();++i)
-    {
-        m_buyWidgets[i]->hide();
-    }
+        else
+        {
+            m_sellWidgets[i]->hide();
+        }
 
-    //hide any remainding unused sell widgets
-    for(;numberOfSellWidgets<m_sellWidgets.size();++numberOfSellWidgets)
-    {
-        m_sellWidgets[numberOfSellWidgets]->hide();
     }
 }
 

@@ -17,7 +17,7 @@ class BuyOrSellWidget : public QWidget
 public:
     enum class Type{BUY,SELL};
 
-    explicit BuyOrSellWidget(const Resource * resource, int townStock, Type type, QWidget *parent = 0);
+    explicit BuyOrSellWidget(const Resource * resource, Type type, QWidget *parent = 0);
     int getSelectedAmount();
     void setTownStockAmount(int newTownStockAmount);
     void setTownStock(const std::pair<const Resource *, int> &stock);
