@@ -64,7 +64,7 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
             if(i >= m_sellWidgets.size())
             {
                 m_sellWidgets.push_back(new BuyOrSellWidget(resources[i].first,resources[i].second,BuyOrSellWidget::Type::SELL,this));
-                connect(m_sellWidgets[i],SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(sellWidgetClicked(const Resource*,int)));
+                connect(m_sellWidgets.back(),SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(sellWidgetClicked(const Resource*,int)));
                 m_sellTab->addWidget(m_sellWidgets[numberOfSellWidgets]);
             }
             else
