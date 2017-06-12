@@ -3,6 +3,7 @@
 #include <QLabel>
 #include <QGridLayout>
 #include <QGroupBox>
+#include <QSvgWidget>
 #include "buyorsellwidget.h"
 #include "resource.h"
 BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, Type type , QWidget *parent)
@@ -13,13 +14,15 @@ BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, Type type , QWidget *
       m_totalPriceLabel(new QLabel()),
       m_townStock(0),
       m_selectedAmount(0),
-      m_type(type)
+      m_type(type),
+      m_svg(new QSvgWidget(QString::fromStdString(resource->getIconName())))
 {
     m_buyOrSellAmountSlider->setOrientation(Qt::Horizontal);
     int maxTextWidth = m_unitPriceLabel->fontMetrics().width("Unit Price: "+QString::number(m_resource->outPrice(0)));
     m_unitPriceLabel->setMinimumWidth(maxTextWidth);
     maxTextWidth = m_totalPriceLabel->fontMetrics().width("Total Price: "+QString::number(m_resource->outPrice(m_townStock,m_townStock)));
     m_totalPriceLabel->setMinimumWidth(maxTextWidth);
+    m_svg->setFixedSize(64, 64);
 
     if(m_type==Type::BUY)
     {
@@ -29,10 +32,12 @@ BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, Type type , QWidget *
     setSelectedAmount(0);
     QGroupBox *groupBox = new QGroupBox(m_resource->getName().c_str());
     QGridLayout * gridLayout = new QGridLayout();
-    gridLayout->addWidget(m_buyOrSellAmountSlider,0,0,1,3);
-    gridLayout->addWidget(m_unitPriceLabel,1,0);
-    gridLayout->addWidget(m_totalPriceLabel,1,1);
-    gridLayout->addWidget(m_buyOrSellButton,1,2);
+
+    gridLayout->addWidget(m_svg, 0, 0);
+    gridLayout->addWidget(m_buyOrSellAmountSlider,1,0,1,3);
+    gridLayout->addWidget(m_unitPriceLabel,2,0);
+    gridLayout->addWidget(m_totalPriceLabel,2,1);
+    gridLayout->addWidget(m_buyOrSellButton,2,2);
     groupBox->setLayout(gridLayout);
     setLayout(new QGridLayout());
     this->layout()->addWidget(groupBox);

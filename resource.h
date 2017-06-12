@@ -8,7 +8,7 @@
 class Resource
 {
 public:
-    Resource(std::string name,float value,float mass,float volume,float halfPrice);
+    Resource(std::string name,float value,float mass,float volume,float halfPrice, std::string iconName);
     const std::string & getName() const;
     float getValue() const;
     float getMass() const;
@@ -16,6 +16,7 @@ public:
     float getDecay() const;
     float getDecayConstant() const;
     const std::vector<std::pair<const Resource *, float> > & getNeeds() const;
+    const std::string &getIconName() const;
     void addNeed(const Resource *, float requiredAmount);
     void setValue(float newValue);
     int outPrice(int startStock, int num = 1) const;
@@ -32,6 +33,7 @@ private:
     float m_volume;
     float m_decay;
     float m_decayConstant;
+    std::string m_iconName;
     std::vector<std::pair<const Resource*,float> > m_needs;
 
 };

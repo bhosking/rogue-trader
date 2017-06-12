@@ -7,6 +7,7 @@ class Resource;
 class QSlider;
 class QPushButton;
 class QLabel;
+class QSvgWidget;
 
 
 
@@ -29,6 +30,7 @@ private:
     QPushButton * m_buyOrSellButton;
     QLabel * m_unitPriceLabel;
     QLabel * m_totalPriceLabel;
+    QSvgWidget * m_svg;
     int m_townStock;
     int m_playerStock;
     int m_selectedAmount;

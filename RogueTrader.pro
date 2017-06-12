@@ -61,3 +61,8 @@ HEADERS += \
     sidewindow.h \
     worldviewer.h \
     buyorsellwidget.h
+
+QT += svg
+
+RESOURCES += \
+    images.qrc

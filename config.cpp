@@ -28,9 +28,9 @@ void Config::loadResources()
     std::vector <Resource *> resources;
     // Resource Declaration
     // Parameters are name, value, mass, volume, halfPrice
-    resources.push_back(new Resource("Food", 10, 1, 2, 100));
-    resources.push_back(new Resource("Wood", 6, 10, 5, 400));
-    resources.push_back(new Resource("Iron", 40, 1, 0.5, 50));
+    resources.push_back(new Resource("Food", 10, 1, 2, 100, ":/images/Food.svg"));
+    resources.push_back(new Resource("Wood", 6, 10, 5, 400, ":/images/Wood.svg"));
+    resources.push_back(new Resource("Iron", 40, 1, 0.5, 50, ":/images/Steel.svg"));
 
     for (Resource * resource : resources) {
         std::string name=resource->getName();

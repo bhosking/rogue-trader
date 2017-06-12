@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="Food.svg">images/foodbread.svg</file>
+        <file alias="Wood.svg">images/wood logs.svg</file>
+        <file alias="Steel.svg">images/steel ingot.svg</file>
+    </qresource>
+</RCC>
