@@ -6,7 +6,7 @@
 #include "playersceneitem.h"
 #include "info.h"
 TownSceneItem::TownSceneItem(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name)
-    :Town(resourceRatesStock,population,name),m_showPrices(false)
+    :Town(resourceRatesStock,population,name),m_showPrices(false),m_playerKnowledge(false)
 {
     setAcceptHoverEvents(true);
 }
@@ -59,6 +59,28 @@ QPointF TownSceneItem::getPos() const
 
 void TownSceneItem::processTick(World &world)
 {
+    if (!m_playerKnowledge)
+    {
+        PlayerSceneItem *playerSceneItem = world.getPlayerSceneItem();
+        if(playerSceneItem->getHeldInfoOnTown(this))
+        {
+            m_playerKnowledge = true;
+            setVisible(true);
+        }
+        else
+        {
+            QPointF pos = playerSceneItem->getPos();
+            pos -= getPos();
+            if (containedInCircleAtOrigin(pos, playerSceneItem->getExplorationRadius() + m_radius))
+            {
+                setVisible(true);
+            }
+            else if (isVisible())
+            {
+                setVisible(false);
+            }
+        }
+    }
     Town::processTick(world);
 }
 

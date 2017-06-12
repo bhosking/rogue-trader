@@ -68,7 +68,7 @@ void PlayerSceneItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void PlayerSceneItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     const TownSceneItem * townUnderMouse = World::getWorld().getTownSceneItemUnderMouse(event);
-    if(townUnderMouse)
+    if(townUnderMouse&&townUnderMouse->isVisible())
     {
         m_targetVector = townUnderMouse->getPos()-scenePos();
     }

@@ -17,6 +17,7 @@ public:
 
 private:
     bool m_showPrices;
+    bool m_playerKnowledge;
     QRectF pricesRectangle;
     void paintPrices(QPainter *painter, std::shared_ptr<const Info> &info);
     QRectF updatePricesDisplayRectangle(QPainter *painter, std::shared_ptr<const Info> &info);
