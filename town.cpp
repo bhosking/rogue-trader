@@ -1,9 +1,10 @@
 #include <sstream>
+#include <algorithm>
 #include "town.h"
 #include "townresource.h"
 #include "resource.h"
 
-Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name)
+Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, int population, std::string &name)
     :m_population(population), m_name(name)
 {
     for (std::tuple<const Resource *, float, float> resourceInits:resourceRatesStock)
@@ -33,7 +34,7 @@ const std::vector<TownResource *> &Town::getResources() const
     return m_resources;
 }
 
-unsigned Town::getPopulation() const
+int Town::getPopulation() const
 {
    return m_population;
 }
@@ -41,6 +42,11 @@ unsigned Town::getPopulation() const
 const std::string &Town::getName() const
 {
     return m_name;
+}
+
+void Town::adjustPopulation(int change)
+{
+    m_population = std::max(m_population + change, 0);
 }
 
 void Town::processTick(World &)
