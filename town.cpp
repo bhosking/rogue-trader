@@ -51,8 +51,20 @@ void Town::adjustPopulation(int change)
 
 void Town::processTick(World &)
 {
+    setWorkers();
     produceResources();
     consumeResources();
+}
+
+void Town::setWorkers()
+{
+    //Placeholder logic distributes evenly
+    int numResources = getResources().size();
+    float workersEach = static_cast<float>(getPopulation()) / numResources;
+    for (TownResource * townResource : getResources())
+    {
+        townResource->setWorkers(workersEach);
+    }
 }
 
 void Town::consumeResources()

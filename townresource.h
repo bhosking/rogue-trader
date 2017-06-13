@@ -19,6 +19,7 @@ public:
     void produceResource();
     int consumeResources(int currentPopulation);
     void setStock(int newStock);
+    void setWorkers(float workers);
     void adjustStock(int deltaStock);
 
 private:
@@ -29,6 +30,7 @@ private:
     const Resource * m_resource;
     float m_rate;
     float m_stock;
+    float m_workers;
     std::vector<std::pair<TownResource *,float> > m_townResourcesNeeded;
     float getCurrentRate() const;
 };

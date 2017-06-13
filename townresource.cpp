@@ -16,7 +16,7 @@ const Resource *TownResource::getResource() const
 
 float TownResource::getRate() const
 {
-    return m_rate;
+    return m_rate * std::sqrt(m_workers);
 }
 
 int TownResource::getStock() const
@@ -91,6 +91,11 @@ const std::vector<std::pair<TownResource *, float> > &TownResource::getTownResou
 void TownResource::setStock(int newStock)
 {
     m_stock = (float)newStock;
+}
+
+void TownResource::setWorkers(float workers)
+{
+    m_workers = workers;
 }
 
 void TownResource::setStock(float newStock)
