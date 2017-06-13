@@ -15,8 +15,7 @@ World::World()
       m_tick(0)
 {
     Config config = Config();
-    addItemToWorld(m_map,QPointF(0,0));
-    addItemToWorld(m_playerSceneItem,QPointF(50,50));
+    m_worldScene->setBackgroundBrush(Qt::black);
     std::vector<std::tuple<const Resource *, float, float> > resources;
     resources.push_back(std::tuple<const Resource *, float, float>
                         (config.getResource("Food"), 1, 0));
@@ -48,6 +47,9 @@ World::World()
     TownSceneItem * testTown3 = new TownSceneItem(resources3,150,name3);
     addItemToWorld(testTown3,QPointF(200,100));
 
+    addItemToWorld(m_map,QPointF(0,0));
+
+    addItemToWorld(m_playerSceneItem,QPointF(50,50));
 
     m_playerSceneItem->adjustInventoryResource(config.getResource("Food"),100);
     getMap()->explore(getPlayerSceneItem()->getPos(),getPlayerSceneItem()->getExplorationRadius());

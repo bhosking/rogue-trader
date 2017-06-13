@@ -43,6 +43,7 @@ void TownSceneItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     m_showPrices = true;
     prepareGeometryChange();
+    setZValue(1);
     update();
 }
 
