@@ -78,6 +78,11 @@ float TownResource::getStockAsFloat()
     return m_stock;
 }
 
+float TownResource::getValue()
+{
+    return getResource()->getValue() * exp2(getStock() * getResource()->getDecay());
+}
+
 const std::vector<std::pair<TownResource *, float> > &TownResource::getTownResourcesNeeded() const
 {
     return m_townResourcesNeeded;

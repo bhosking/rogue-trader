@@ -25,6 +25,7 @@ private:
     void setStock(float newStock);
     void adjustStock(float deltaStock);
     float getStockAsFloat();
+    float getValue();
     const Resource * m_resource;
     float m_rate;
     float m_stock;
