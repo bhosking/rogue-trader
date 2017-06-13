@@ -1,9 +1,9 @@
 #include <math.h>
 #include <limits>
 #include "resource.h"
-Resource::Resource(std::string name, float value, float mass, float volume, float halfPrice, std::string iconName)
+Resource::Resource(std::string name, float value, float mass, float volume, float halfPrice, float consume, std::string iconName)
     :m_name(name), m_value(value), m_mass(mass), m_volume(volume), m_decay(-1 / halfPrice),
-      m_decayConstant(m_value/(1-exp2(m_decay))), m_iconName(iconName)
+      m_decayConstant(m_value/(1-exp2(m_decay))), m_consume(consume), m_iconName(iconName)
 {
 
 }
@@ -36,6 +36,11 @@ float Resource::getDecay() const
 float Resource::getDecayConstant() const
 {
     return m_decayConstant;
+}
+
+float Resource::getConsume() const
+{
+    return m_consume;
 }
 
 const std::vector<std::pair<const Resource *, float> > &Resource::getNeeds() const
