@@ -54,6 +54,11 @@ void TownResource::produceResource()
     adjustStock(currentRate);
 }
 
+bool TownResource::consumeResource()
+{
+    return true;
+}
+
 float TownResource::getStockAsFloat()
 {
     return m_stock;

@@ -17,6 +17,7 @@ public:
     const std::vector<std::pair<TownResource *,float> > & getTownResourcesNeeded() const;
     void setTownResourcesNeeded(const std::vector<TownResource *> &townResources);
     void produceResource();
+    bool consumeResource();
     void setStock(int newStock);
     void adjustStock(int deltaStock);
 

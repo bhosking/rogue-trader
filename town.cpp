@@ -46,6 +46,18 @@ const std::string &Town::getName() const
 void Town::processTick(World &)
 {
     produceResources();
+    consumeResources();
+}
+
+void Town::consumeResources()
+{
+    int deltaPop = 0;
+    for (TownResource * townResource : getResources())
+    {
+        if (!townResource) {
+
+        }
+    }
 }
 
 void Town::produceResources()

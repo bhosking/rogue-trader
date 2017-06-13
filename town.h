@@ -25,6 +25,7 @@ private:
     std::vector<TownResource *> m_resources;
     const unsigned m_population;
     const std::string m_name;
+    void consumeResources();
     void produceResources();
 };
 
