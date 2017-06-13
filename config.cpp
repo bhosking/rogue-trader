@@ -37,7 +37,7 @@ void Config::loadResources()
         // Resource Needs
         if (name=="Iron")
         {
-            resource->addNeed(getResource("Food"), 3);
+            resource->addNeed(getResource("Wood"), 3);
         }
         m_resources.push_back(resource);
     }
