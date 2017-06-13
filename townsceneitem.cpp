@@ -41,10 +41,13 @@ void TownSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void TownSceneItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    m_showPrices = true;
-    prepareGeometryChange();
-    setZValue(1);
-    update();
+    if(World::getWorld().getPlayerSceneItem()->getHeldInfoOnTown(this))
+    {
+        m_showPrices = true;
+        prepareGeometryChange();
+        setZValue(1);
+        update();
+    }
 }
 
 void TownSceneItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
