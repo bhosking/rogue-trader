@@ -9,6 +9,7 @@ TownSceneItem::TownSceneItem(std::vector<std::tuple<const Resource *, float, flo
     :Town(resourceRatesStock,population,name),m_showPrices(false),m_playerKnowledge(false)
 {
     setAcceptHoverEvents(true);
+    setVisible(false);
 }
 
 QRectF TownSceneItem::boundingRect() const
@@ -52,6 +53,12 @@ void TownSceneItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     update();
 }
 
+void TownSceneItem::playerKnows()
+{
+    m_playerKnowledge = true;
+    setVisible(true);
+}
+
 QPointF TownSceneItem::getPos() const
 {
     return scenePos();
@@ -64,8 +71,7 @@ void TownSceneItem::processTick(World &world)
         PlayerSceneItem *playerSceneItem = world.getPlayerSceneItem();
         if(playerSceneItem->getHeldInfoOnTown(this))
         {
-            m_playerKnowledge = true;
-            setVisible(true);
+            playerKnows();
         }
         else
         {
@@ -73,11 +79,7 @@ void TownSceneItem::processTick(World &world)
             pos -= getPos();
             if (containedInCircleAtOrigin(pos, playerSceneItem->getExplorationRadius() + m_radius))
             {
-                setVisible(true);
-            }
-            else if (isVisible())
-            {
-                setVisible(false);
+                playerKnows();
             }
         }
     }
