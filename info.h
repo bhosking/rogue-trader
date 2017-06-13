@@ -17,9 +17,11 @@ public:
     bool isOlderThan(const Info &other) const;
     std::string getTownNameStockAndMedianPricesAsString() const;
     int getAgeOfInfo() const;
+    int getPopulation() const;
     std::string getAgeOfInfoAsString() const;
 private:
      const Town *m_town;
+     int m_population;
      int m_tick;
      std::vector<std::pair<const Resource *, int> > m_resources;
 };
