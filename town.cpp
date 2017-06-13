@@ -57,11 +57,13 @@ void Town::processTick(World &)
 
 void Town::consumeResources()
 {
-    int deltaPop = 0;
+    int population = getPopulation();
     for (TownResource * townResource : getResources())
     {
-        if (!townResource) {
-
+        int deltaPopulation = townResource->consumeResources(population);
+        if (deltaPopulation != 0)
+        {
+            adjustPopulation(deltaPopulation);
         }
     }
 }

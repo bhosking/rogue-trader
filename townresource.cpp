@@ -54,9 +54,23 @@ void TownResource::produceResource()
     adjustStock(currentRate);
 }
 
-bool TownResource::consumeResource()
+int TownResource::consumeResources(int currentPopulation)
 {
-    return true;
+        float consumed = currentPopulation * getResource()->getConsume();
+        float stock = getStockAsFloat();
+        setStock(std::max(stock - consumed, static_cast<float>(0)));
+        if (getResource()->getName() == "Food")
+        {
+            if (stock < consumed)
+            {
+                return -1;
+            }
+            else if (stock >= consumed * 1000)
+            {
+                return 1;
+            }
+        }
+        return 0;
 }
 
 float TownResource::getStockAsFloat()
