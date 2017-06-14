@@ -12,8 +12,8 @@ public:
     const Resource * getResource() const;
     float getRate() const;
     int getStock() const;
-    int outPrice(int num = 1) const;
-    int inPrice(int num = 1) const;
+    int outPrice(int population, int num = 1) const;
+    int inPrice(int population, int num = 1) const;
     const std::vector<std::pair<TownResource *,float> > & getTownResourcesNeeded() const;
     void setTownResourcesNeeded(const std::vector<TownResource *> &townResources);
     void produceResource();
@@ -26,7 +26,7 @@ private:
     void setStock(float newStock);
     void adjustStock(float deltaStock);
     float getStockAsFloat();
-    float getValue();
+    float getValue(int population);
     const Resource * m_resource;
     float m_rate;
     float m_stock;

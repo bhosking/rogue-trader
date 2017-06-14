@@ -24,14 +24,14 @@ int TownResource::getStock() const
     return (int)m_stock;
 }
 
-int TownResource::outPrice(int num) const
+int TownResource::outPrice(int population, int num) const
 {
-    return getResource()->outPrice(getStock(),num);
+    return getResource()->outPrice(getStock(), population, num);
 }
 
-int TownResource::inPrice(int num) const
+int TownResource::inPrice(int population, int num) const
 {
-    return getResource()->inPrice(getStock(),num);
+    return getResource()->inPrice(getStock(), population, num);
 }
 float TownResource::getCurrentRate() const
 {
@@ -78,9 +78,9 @@ float TownResource::getStockAsFloat()
     return m_stock;
 }
 
-float TownResource::getValue()
+float TownResource::getValue(int population)
 {
-    return getResource()->getValue() * exp2(getStock() * getResource()->getDecay());
+    return getResource()->getValue() * exp2(getStock() * getResource()->getDecay(population));
 }
 
 const std::vector<std::pair<TownResource *, float> > &TownResource::getTownResourcesNeeded() const

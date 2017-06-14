@@ -3,7 +3,7 @@
 #include "resource.h"
 Resource::Resource(std::string name, float value, float mass, float volume, float halfPrice, float consume, std::string iconName)
     :m_name(name), m_value(value), m_mass(mass), m_volume(volume), m_decay(-1 / halfPrice),
-      m_decayConstant(m_value/(1-exp2(m_decay))), m_consume(consume), m_iconName(iconName)
+      m_consume(consume), m_iconName(iconName)
 {
 
 }
@@ -28,14 +28,9 @@ float Resource::getVolume() const
     return m_volume;
 }
 
-float Resource::getDecay() const
+float Resource::getDecay(int population) const
 {
-    return m_decay;
-}
-
-float Resource::getDecayConstant() const
-{
-    return m_decayConstant;
+    return population != 0 ? m_decay/population : m_decay;
 }
 
 float Resource::getConsume() const
@@ -61,30 +56,26 @@ void Resource::addNeed(const Resource * resource, float requiredAmount)
 void Resource::setValue(float newValue)
 {
     m_value = newValue;
-    setDecayConstant();
 }
 
-int Resource::outPrice(int startStock, int num) const
+int Resource::outPrice(int startStock, int population, int num) const
 {
-    return lrint(getBulkValue(startStock - num, num));
+    return lrint(getBulkValue(startStock - num, population, num));
 }
 
-int Resource::inPrice(int startStock, int num) const
+int Resource::inPrice(int startStock, int population, int num) const
 {
-    return lrint(getBulkValue(startStock, num));
+    return lrint(getBulkValue(startStock, population, num));
 }
 
-int Resource::howMuchCanIBuy(int startStock, int gp) const
+int Resource::howMuchCanIBuy(int startStock, int population, int gp) const
 {
-    return static_cast<int>(-1 * log2(gp/(getDecayConstant() * exp2(getDecay() * startStock)) + 1) / getDecay());
+    float decay = getDecay(population);
+    return static_cast<int>(-1 * log2(gp * (1-exp2(decay))/(getValue() * exp2(decay * startStock)) + 1) / decay);
 }
 
-float Resource::getBulkValue(int startStock, int deltaStock) const
+float Resource::getBulkValue(int startStock, int population, int deltaStock) const
 {
-    return exp2(getDecay() * startStock) * (1 - exp2(deltaStock * getDecay())) * getDecayConstant();
-}
-
-void Resource::setDecayConstant()
-{
-    m_decayConstant = getValue() / (1-exp2(getDecay()));
+    float decay = getDecay(population);
+    return getValue() * exp2(decay * startStock) * (1 - exp2(deltaStock * decay)) / (1-exp2(decay));
 }

@@ -51,7 +51,8 @@ std::string Info::getTownNameStockAndMedianPricesAsString() const
     for(std::pair<const Resource *,int> resourceStockPair: getResources())
     {
         ss << resourceStockPair.first->getName() << "(" <<resourceStockPair.second << ") "
-           << (resourceStockPair.first->inPrice(resourceStockPair.second)+resourceStockPair.first->outPrice(resourceStockPair.second))/2 <<"g\n";
+           << (resourceStockPair.first->inPrice(resourceStockPair.second, getPopulation())
+               +resourceStockPair.first->outPrice(resourceStockPair.second, getPopulation()))/2 <<"g\n";
     }
     std::string infoAge = getAgeOfInfoAsString();
     if(infoAge=="")

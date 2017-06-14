@@ -51,8 +51,11 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
     m_townNameLabel->setText("<b>"+QString(newInfo->getTown()->getName().c_str())+"</b>");
     //Note these resources must all be present in the correct order
     const std::vector<std::pair<const Resource *, int> >  & resources = newInfo->getResources();
+    int population = newInfo->getPopulation();
     for(unsigned i = 0;i < resources.size();++i)
     {
+        m_buyWidgets[i]->setTownPopulation(population);
+        m_sellWidgets[i]->setTownPopulation(population);
         if (resources[i].second > 0)
         {
             m_buyWidgets[i]->setTownStock(resources[i]);

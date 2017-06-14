@@ -23,6 +23,7 @@ public:
     void setTownStockAmount(int newTownStockAmount);
     void setTownStock(const std::pair<const Resource *, int> &stock);
     void setPlayerStockAmount(int newPlayerStockAmount);
+    void setTownPopulation(int population);
 private:
     void update();
     QSlider * m_buyOrSellAmountSlider;
@@ -32,6 +33,7 @@ private:
     QLabel * m_totalPriceLabel;
     QSvgWidget * m_svg;
     int m_townStock;
+    int m_townPopulation;
     int m_playerStock;
     int m_selectedAmount;
     Type m_type;

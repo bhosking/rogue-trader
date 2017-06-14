@@ -18,9 +18,9 @@ BuyOrSellWidget::BuyOrSellWidget(const Resource *resource, Type type , QWidget *
       m_svg(new QSvgWidget(QString::fromStdString(resource->getIconName())))
 {
     m_buyOrSellAmountSlider->setOrientation(Qt::Horizontal);
-    int maxTextWidth = m_unitPriceLabel->fontMetrics().width("Unit Price: "+QString::number(m_resource->outPrice(0)));
+    int maxTextWidth = m_unitPriceLabel->fontMetrics().width("Unit Price: "+QString::number(m_resource->outPrice(0, 1)));
     m_unitPriceLabel->setMinimumWidth(maxTextWidth);
-    maxTextWidth = m_totalPriceLabel->fontMetrics().width("Total Price: "+QString::number(m_resource->outPrice(m_townStock,m_townStock)));
+    maxTextWidth = m_totalPriceLabel->fontMetrics().width("Total Price: "+QString::number(m_resource->outPrice(m_townStock, 1, m_townStock)));
     m_totalPriceLabel->setMinimumWidth(maxTextWidth);
     m_svg->setFixedSize(64, 64);
 
@@ -97,6 +97,11 @@ void BuyOrSellWidget::setPlayerStockAmount(int newPlayerStockAmount)
     update();
 }
 
+void BuyOrSellWidget::setTownPopulation(int population)
+{
+    m_townPopulation = population;
+}
+
 void BuyOrSellWidget::update()
 {
 
@@ -117,14 +122,14 @@ void BuyOrSellWidget::update()
 
     if(m_type==Type::BUY)
     {
-        m_unitPriceLabel->setText("Unit Price: " + QString::number(m_resource->outPrice(m_townStock-m_selectedAmount)));
-        m_totalPriceLabel->setText("Total Price: " + QString::number(m_resource->outPrice(m_townStock,m_selectedAmount)));
+        m_unitPriceLabel->setText("Unit Price: " + QString::number(m_resource->outPrice(m_townStock-m_selectedAmount, m_townPopulation)));
+        m_totalPriceLabel->setText("Total Price: " + QString::number(m_resource->outPrice(m_townStock, m_townPopulation, m_selectedAmount)));
         m_buyOrSellButton->setText("Buy " + QString::number(m_selectedAmount));
     }
     else
     {
-        m_unitPriceLabel->setText("Unit Price: " + QString::number(m_resource->inPrice(m_townStock+m_selectedAmount)));
-        m_totalPriceLabel->setText("Total Price: " + QString::number(m_resource->inPrice(m_townStock,m_selectedAmount)));
+        m_unitPriceLabel->setText("Unit Price: " + QString::number(m_resource->inPrice(m_townStock+m_selectedAmount, m_townPopulation)));
+        m_totalPriceLabel->setText("Total Price: " + QString::number(m_resource->inPrice(m_townStock, m_townPopulation, m_selectedAmount)));
         m_buyOrSellButton->setText("Sell " + QString::number(m_selectedAmount));
     }
 }
