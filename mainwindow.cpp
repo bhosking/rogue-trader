@@ -9,10 +9,11 @@
 #include "worldviewer.h"
 #include "sidewindow.h"
 #include "playersceneitem.h"
+#include "inventoryscreen.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    m_inventoryLabel(new QLabel()),
+    m_inventoryScreen(new InventoryScreen()),
     m_worldViewer(new WorldViewer()),
     m_gameTimer(new QTimer()),
     m_centralTabWidget(new QTabWidget()),
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QGridLayout * gridLayout = new QGridLayout();
     widget->setLayout(gridLayout);
     m_centralTabWidget->addTab(m_worldViewer,"Map");
-    m_centralTabWidget->addTab(m_inventoryLabel,"Inventory");
+    m_centralTabWidget->addTab(m_inventoryScreen,"Inventory");
     gridLayout->addWidget(m_centralTabWidget,1,1);
     gridLayout->addWidget(m_sideWindow,1,2);
 
@@ -39,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_sideWindow,SIGNAL(buyWidgetClicked(const Resource*,int)),this,SLOT(PlayerTryBuyResource(const Resource*,int)));
     connect(m_sideWindow,SIGNAL(sellWidgetClicked(const Resource*,int)),this,SLOT(PlayerTrySellResource(const Resource*,int)));
 
-    m_inventoryLabel->setText(World::getWorld().getPlayerSceneItem()->outPutInventoryAsString().c_str());
+    m_inventoryScreen->refreshInventory(World::getWorld().getPlayerSceneItem()->getInventory());
 
     m_gameTimer->start(16);
 }
@@ -66,13 +67,11 @@ void MainWindow::unpause()
 void MainWindow::PlayerTryBuyResource(const Resource * resource, int amount)
 {
     World::getWorld().getPlayerSceneItem()->buy(resource,amount);
-    m_inventoryLabel->setText(World::getWorld().getPlayerSceneItem()->outPutInventoryAsString().c_str());
-
+    m_inventoryScreen->refreshInventory(World::getWorld().getPlayerSceneItem()->getInventory());
 }
 
 void MainWindow::PlayerTrySellResource(const Resource * resource, int amount)
 {
     World::getWorld().getPlayerSceneItem()->sell(resource,amount);
-    m_inventoryLabel->setText(World::getWorld().getPlayerSceneItem()->outPutInventoryAsString().c_str());
-
+    m_inventoryScreen->refreshInventory(World::getWorld().getPlayerSceneItem()->getInventory());
 }

@@ -13,7 +13,7 @@ public:
     const Resource * getResource(std::string name) const;
 private:
     void loadResources();
-    std::vector<const Resource *> m_resources;
+    static std::vector<const Resource *> m_resources;
 };
 
 #endif // CONFIG_H

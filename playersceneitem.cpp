@@ -11,6 +11,7 @@ PlayerSceneItem::PlayerSceneItem()
     :m_explorationRadius(20),m_movementDirection(0,0),m_targetVector(0,0)
 {
     setBoundingRegionGranularity(0.04);
+    setZValue(2);
 }
 
 QPointF PlayerSceneItem::getPos() const

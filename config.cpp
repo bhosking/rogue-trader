@@ -1,9 +1,12 @@
 #include "config.h"
 #include "resource.h"
 
+std::vector<const Resource *> Config::m_resources = std::vector<const Resource *>();
+
 Config::Config()
 {
-    loadResources();
+    if(m_resources.empty())
+        loadResources();
 }
 
 const std::vector<const Resource *> &Config::getResources() const
