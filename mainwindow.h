@@ -25,7 +25,7 @@ public slots:
     void unpause();
     void PlayerTryBuyResource(const Resource *resource, int amount);
     void PlayerTrySellResource(const Resource *resource, int amount);
-
+    void refreshInventoryScreenInfo();
 private:
     InventoryScreen * m_inventoryScreen;
     WorldViewer * m_worldViewer;

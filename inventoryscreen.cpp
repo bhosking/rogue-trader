@@ -1,4 +1,4 @@
-#include <QTableWidgetItem>
+#include <QPixmap>
 #include <QSvgWidget>
 #include <QLabel>
 #include <QGridLayout>
@@ -95,7 +95,8 @@ struct InventoryRow
 };
 
 InventoryScreen::InventoryScreen()
-    :m_headerRow(new InventoryRow())
+    :m_headerRow(new InventoryRow()),
+      m_goldAmount(new QLabel("0"))
 {
     Config config = Config();
     QGridLayout * layout = new QGridLayout();
@@ -108,7 +109,15 @@ InventoryScreen::InventoryScreen()
         m_currentInv.push_back(invRow);
         row++;
     }
+    m_goldAmount->setStyleSheet("font-size: 32px");
+    QLabel * goldImage = new QLabel();
+    QPixmap * goldPic = new QPixmap(":/images/GP.png");
     layout->setRowStretch(row,1);
+
+    layout->addWidget(m_goldAmount,row+1,0,1,4,Qt::AlignVCenter|Qt::AlignRight);
+    goldImage->setPixmap(goldPic->scaled(96,96,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+    layout->addWidget(goldImage,row+1,4,1,1,Qt::AlignBottom|Qt::AlignRight);
+
     setLayout(layout);
 }
 
@@ -126,4 +135,9 @@ void InventoryScreen::refreshInventory(const std::unordered_map<const Resource *
             m_currentInv[i]->setAmount(it->second);
         }
     }
+}
+
+void InventoryScreen::setGold(int amount)
+{
+    m_goldAmount->setText(QString::number(amount));
 }

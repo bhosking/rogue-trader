@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_sideWindow,SIGNAL(buyWidgetClicked(const Resource*,int)),this,SLOT(PlayerTryBuyResource(const Resource*,int)));
     connect(m_sideWindow,SIGNAL(sellWidgetClicked(const Resource*,int)),this,SLOT(PlayerTrySellResource(const Resource*,int)));
 
-    m_inventoryScreen->refreshInventory(World::getWorld().getPlayerSceneItem()->getInventory());
+    refreshInventoryScreenInfo();
 
     m_gameTimer->start(16);
 }
@@ -67,11 +67,17 @@ void MainWindow::unpause()
 void MainWindow::PlayerTryBuyResource(const Resource * resource, int amount)
 {
     World::getWorld().getPlayerSceneItem()->buy(resource,amount);
-    m_inventoryScreen->refreshInventory(World::getWorld().getPlayerSceneItem()->getInventory());
+    refreshInventoryScreenInfo();
 }
 
 void MainWindow::PlayerTrySellResource(const Resource * resource, int amount)
 {
     World::getWorld().getPlayerSceneItem()->sell(resource,amount);
+    refreshInventoryScreenInfo();
+}
+
+void MainWindow::refreshInventoryScreenInfo()
+{
     m_inventoryScreen->refreshInventory(World::getWorld().getPlayerSceneItem()->getInventory());
+    m_inventoryScreen->setGold(World::getWorld().getPlayerSceneItem()->getGP());
 }
