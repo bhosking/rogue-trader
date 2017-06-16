@@ -7,8 +7,15 @@
 #include "map.h"
 #include "world.h"
 #include "townsceneitem.h"
+
+QPointF normalized(const QPointF &p)
+{
+    float length = sqrt(p.x()*p.x()+p.y()*p.y());
+    return QPointF(p.x()/length,p.y()/length);
+}
+
 PlayerSceneItem::PlayerSceneItem()
-    :m_explorationRadius(20),m_movementDirection(0,0),m_targetVector(0,0)
+    :m_explorationRadius(20),m_targetVector(0,0)
 {
     setBoundingRegionGranularity(0.04);
     setZValue(2);
@@ -61,7 +68,6 @@ void PlayerSceneItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         m_targetVector = event->pos();
     }
 
-    updateMovementDirection();
     prepareGeometryChange();
     update();
 }
@@ -78,7 +84,6 @@ void PlayerSceneItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         m_targetVector = event->pos();
     }
 
-    updateMovementDirection();
     prepareGeometryChange();
     update();
 }
@@ -148,13 +153,8 @@ void PlayerSceneItem::move()
     }
     else
     {
-        movementVector = m_movementDirection*getSpeed();
+        movementVector = normalized(m_targetVector)*getSpeed();
     }
     moveBy(movementVector.x(),movementVector.y());
     m_targetVector -= movementVector;
-}
-
-void PlayerSceneItem::updateMovementDirection()
-{
-    m_movementDirection = QVector2D(m_targetVector).normalized().toPointF();
 }
