@@ -12,7 +12,6 @@ void AITrader::makeTrade()
     Town *thisTown = getDestinationTown();
     if (isAtDestination() && thisTown)
     {
-        std::shared_ptr<const Info> thisTownInfo = addTownCurrentInfo(thisTown);
         for (std::pair<const Resource *, int> resourceStock : getInventory())
         {
             sell(resourceStock.first, resourceStock.second);
@@ -25,6 +24,7 @@ void AITrader::makeTrade()
         int bestOtherStock = 0;
         int bestOtherTownPopulation = 0;
         float bestProfit = 0;
+        std::shared_ptr<const Info> thisTownInfo = getHeldInfoOnTown(thisTown);
         int thisTownPopulation = thisTownInfo->getPopulation();
         const std::vector<std::pair<const Resource *, int> > thisTownResources = thisTownInfo->getResources();
         for (int i=0; i<thisTownResources.size(); i++)
