@@ -103,11 +103,13 @@ void Trader::buy(const Resource *resource, int amount)
 
 void Trader::sell(const Resource *resource, int amount)
 {
-    if (isAtDestination() && getDestinationTown())
+    Town *destinationTown = getDestinationTown();
+    if (isAtDestination() && destinationTown)
     {
+        TownResource *townResource = destinationTown->getResource(resource);
         adjustInventoryResource(resource, -1 * amount);
-        adjustGP(resource->inPrice(getDestinationTown()->getResource(resource)->getStock(), getDestinationTown()->getPopulation(), amount));
-        getDestinationTown()->getResource(resource)->adjustStock(amount);
+        adjustGP(resource->inPrice(townResource->getStock(), destinationTown->getPopulation(), amount));
+        townResource->adjustStock(amount);
     }
 }
 
