@@ -96,6 +96,7 @@ void Trader::buy(const Resource *resource, int amount)
             return;
         adjustGP(-1 * resource->outPrice(inStock, population, buyAmount));
         townResource->adjustStock(-1 * buyAmount);
+        addTownCurrentInfo(destinationTown);
         adjustInventoryResource(resource, buyAmount);
 
     }
@@ -110,6 +111,7 @@ void Trader::sell(const Resource *resource, int amount)
         adjustInventoryResource(resource, -1 * amount);
         adjustGP(resource->inPrice(townResource->getStock(), destinationTown->getPopulation(), amount));
         townResource->adjustStock(amount);
+        addTownCurrentInfo(destinationTown);
     }
 }
 
