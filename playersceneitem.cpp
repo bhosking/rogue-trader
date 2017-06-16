@@ -2,16 +2,19 @@
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
-#include <iostream>
-#include <QVector2D>
 #include "map.h"
 #include "world.h"
 #include "townsceneitem.h"
 
+float length(const QPointF &p)
+{
+    return sqrtf(p.x()*p.x()+p.y()*p.y());
+}
+
 QPointF normalized(const QPointF &p)
 {
-    float length = sqrt(p.x()*p.x()+p.y()*p.y());
-    return QPointF(p.x()/length,p.y()/length);
+    float len = length(p);
+    return QPointF(p.x()/len,p.y()/len);
 }
 
 PlayerSceneItem::PlayerSceneItem()
@@ -146,7 +149,7 @@ void PlayerSceneItem::sell(const Resource *resource, int amount)
 void PlayerSceneItem::move()
 {
     QPointF movementVector;
-    if(QVector2D(m_targetVector).length() < getSpeed())
+    if(length(m_targetVector) < getSpeed())
     {
         setStoppedAtDestination(true);
         movementVector = m_targetVector;
