@@ -81,6 +81,11 @@ int Resource::getMaxTradeAmount(int stockA, int populationA, int stockB, int pop
     return static_cast<int>((stockA * decayA - stockB * decayB) / (decayA + decayB));
 }
 
+float Resource::getRelativeDifference(int stockA, int populationA, int stockB, int populationB) const
+{
+    return stockB * getDecay(populationB) - stockA * getDecay(populationA);
+}
+
 float Resource::getBulkValue(int startStock, int population, int deltaStock) const
 {
     float decay = getDecay(population);
