@@ -6,19 +6,8 @@
 #include "world.h"
 #include "townsceneitem.h"
 
-float length(const QPointF &p)
-{
-    return sqrtf(p.x()*p.x()+p.y()*p.y());
-}
-
-QPointF normalized(const QPointF &p)
-{
-    float len = length(p);
-    return QPointF(p.x()/len,p.y()/len);
-}
-
 PlayerSceneItem::PlayerSceneItem()
-    :m_explorationRadius(20),m_targetVector(0,0)
+    :m_explorationRadius(20)
 {
     setBoundingRegionGranularity(0.04);
     setZValue(2);
@@ -51,7 +40,7 @@ void PlayerSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     {
         painter->drawEllipse(QPointF(),m_radius,m_radius);
     }
-    painter->drawLine(QPointF(0,0),m_targetVector);
+    painter->drawLine(QPointF(0,0),getTargetVector());
 }
 
 void PlayerSceneItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -64,11 +53,11 @@ void PlayerSceneItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     const TownSceneItem * townUnderMouse = World::getWorld().getTownSceneItemUnderMouse(event);
     if(townUnderMouse)
     {
-        m_targetVector = townUnderMouse->getPos()-scenePos();
+        setTargetVector(townUnderMouse->getPos()-scenePos());
     }
     else
     {
-        m_targetVector = event->pos();
+        setTargetVector(event->pos());
     }
 
     prepareGeometryChange();
@@ -80,11 +69,11 @@ void PlayerSceneItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     const TownSceneItem * townUnderMouse = World::getWorld().getTownSceneItemUnderMouse(event);
     if(townUnderMouse&&townUnderMouse->isVisible())
     {
-        m_targetVector = townUnderMouse->getPos()-scenePos();
+        setTargetVector(townUnderMouse->getPos()-scenePos());
     }
     else
     {
-        m_targetVector = event->pos();
+        setTargetVector(event->pos());
     }
 
     prepareGeometryChange();
@@ -102,10 +91,10 @@ void PlayerSceneItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 QRectF PlayerSceneItem::boundingRect() const
 {
-    float x = std::min(0.0,m_targetVector.x()) - m_radius - 2;
-    float y = std::min(0.0,m_targetVector.y()) - m_radius - 2;
-    float width = fabs(m_targetVector.x()) + 2*m_radius + 4;
-    float height = fabs(m_targetVector.y()) + 2*m_radius + 4;
+    float x = std::min(0.0,getTargetVector().x()) - m_radius - 2;
+    float y = std::min(0.0,getTargetVector().y()) - m_radius - 2;
+    float width = fabs(getTargetVector().x()) + 2*m_radius + 4;
+    float height = fabs(getTargetVector().y()) + 2*m_radius + 4;
 
     return QRectF(x,y,width,height);
 }
@@ -114,14 +103,8 @@ void PlayerSceneItem::processTick(World &world)
 {
     if(!isAtDestination())
     {    
-        move();
+        move(getSpeed());
         world.getMap()->explore(scenePos(),getExplorationRadius());
-    }
-    //if at destination and its a town, add its information.
-    else if(getDestinationTown())
-    {
-        std::shared_ptr<const Info> info = addTownCurrentInfo(getDestinationTown());
-        emit arrivedAtTown(info,getInventory());
     }
     Player::processTick(world);
     update();
@@ -146,18 +129,14 @@ void PlayerSceneItem::sell(const Resource *resource, int amount)
     emit arrivedAtTown(info,getInventory());
 }
 
-void PlayerSceneItem::move()
+void PlayerSceneItem::arrivedAtDestiniation()
 {
-    QPointF movementVector;
-    if(length(m_targetVector) < getSpeed())
+    setStoppedAtDestination(true);
+
+    //if at destination and its a town, add its information.
+    if(getDestinationTown())
     {
-        setStoppedAtDestination(true);
-        movementVector = m_targetVector;
+        std::shared_ptr<const Info> info = addTownCurrentInfo(getDestinationTown());
+        emit arrivedAtTown(info,getInventory());
     }
-    else
-    {
-        movementVector = normalized(m_targetVector)*getSpeed();
-    }
-    moveBy(movementVector.x(),movementVector.y());
-    m_targetVector -= movementVector;
 }

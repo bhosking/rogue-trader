@@ -1,11 +1,11 @@
 #ifndef PLAYERSCENEITEM_H
 #define PLAYERSCENEITEM_H
-#include "circularsceneitem.h"
+#include "movablesceneitem.h"
 #include "player.h"
 
 class Info;
 
-class PlayerSceneItem : public CircularSceneItem, public Player
+class PlayerSceneItem : public MovableSceneItem, public Player
 {
     Q_OBJECT
 public:
@@ -22,15 +22,13 @@ public:
     void updateTownInfo();
     virtual void buy(const Resource *resource, int amount);
     virtual void sell(const Resource *resource, int amount);
-
+    void arrivedAtDestiniation();
 signals:
     void arrivedAtTown(std::shared_ptr<const Info>, const std::unordered_map<const Resource *, int> & inventory);
     void leftTown();
 
 private:
     float m_explorationRadius;
-    QPointF m_targetVector;
-    void move();
 
 };
 
