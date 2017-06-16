@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     sidewindow.cpp \
     worldviewer.cpp \
     buyorsellwidget.cpp \
-    inventoryscreen.cpp
+    inventoryscreen.cpp \
+    aitrader.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -62,7 +63,8 @@ HEADERS += \
     sidewindow.h \
     worldviewer.h \
     buyorsellwidget.h \
-    inventoryscreen.h
+    inventoryscreen.h \
+    aitrader.h
 
 QT += svg
 
