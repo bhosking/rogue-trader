@@ -85,7 +85,7 @@ void AITrader::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->drawLine(QPointF(0,0),getTargetVector());
 }
 
-void AITrader::arrivedAtDestiniation()
+void AITrader::arrivedAtDestination()
 {
     makeTrade();
 }
