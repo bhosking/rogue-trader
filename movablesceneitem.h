@@ -9,7 +9,7 @@ public:
     void setTargetVector(const QPointF & target);
     const QPointF &getTargetVector() const;
     void move(float speed);
-    virtual void arrivedAtDestiniation() = 0;
+    virtual void arrivedAtDestination() = 0;
 
 private:
     QPointF m_targetVector;

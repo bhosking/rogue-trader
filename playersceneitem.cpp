@@ -129,7 +129,7 @@ void PlayerSceneItem::sell(const Resource *resource, int amount)
     emit arrivedAtTown(info,getInventory());
 }
 
-void PlayerSceneItem::arrivedAtDestiniation()
+void PlayerSceneItem::arrivedAtDestination()
 {
     setStoppedAtDestination(true);
 

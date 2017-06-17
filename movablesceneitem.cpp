@@ -43,5 +43,5 @@ void MovableSceneItem::move(float speed)
     moveBy(movementVector.x(),movementVector.y());
     m_targetVector -= movementVector;
     if(arrived)
-        arrivedAtDestiniation();
+        arrivedAtDestination();
 }
