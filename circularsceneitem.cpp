@@ -7,10 +7,10 @@ CircularSceneItem::CircularSceneItem()
 }
 QRectF CircularSceneItem::boundingRect() const
 {
-    float x = - m_radius;
-    float y = - m_radius;
-    float width = 2 * m_radius;
-    float height = 2 * m_radius;
+    float x = - m_radius  - 2;
+    float y = - m_radius - 2;
+    float width = 2 * m_radius + 4;
+    float height = 2 * m_radius + 4;
 
     return QRectF(x,y,width,height);
 }

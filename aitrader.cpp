@@ -14,9 +14,9 @@ void AITrader::makeTrade()
     Town *thisTown = getDestinationTown();
     if (isAtDestination() && thisTown)
     {
-        for (std::pair<const Resource *, int> resourceStock : getInventory())
+        while(!getInventory().empty())
         {
-            sell(resourceStock.first, resourceStock.second);
+            sell(getInventory().begin()->first,getInventory().begin()->second);
         }
         int gp = getGP();
         //Naively calculate greatest profit -> largest relative price difference
@@ -91,7 +91,6 @@ void AITrader::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     {
         painter->drawEllipse(QPointF(),m_radius,m_radius);
     }
-    painter->drawLine(QPointF(0,0),getTargetVector());
 }
 
 void AITrader::arrivedAtDestination()
