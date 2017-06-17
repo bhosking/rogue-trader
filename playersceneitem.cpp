@@ -118,15 +118,13 @@ void PlayerSceneItem::updateTownInfo()
 void PlayerSceneItem::buy(const Resource *resource, int amount)
 {
     Trader::buy(resource,amount);
-    std::shared_ptr<const Info> info = addTownCurrentInfo(getDestinationTown());
-    emit arrivedAtTown(info,getInventory());
+    emit arrivedAtTown(getHeldInfoOnTown(getDestinationTown()),getInventory());
 }
 
 void PlayerSceneItem::sell(const Resource *resource, int amount)
 {
     Trader::sell(resource,amount);
-    std::shared_ptr<const Info> info = addTownCurrentInfo(getDestinationTown());
-    emit arrivedAtTown(info,getInventory());
+    emit arrivedAtTown(getHeldInfoOnTown(getDestinationTown()),getInventory());
 }
 
 void PlayerSceneItem::arrivedAtDestiniation()
