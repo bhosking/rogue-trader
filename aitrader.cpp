@@ -1,6 +1,8 @@
+#include <QPainter>
 #include "aitrader.h"
 #include "info.h"
 #include "resource.h"
+#include "town.h"
 
 AITrader::AITrader()
 {
@@ -18,7 +20,7 @@ void AITrader::makeTrade()
         }
         int gp = getGP();
         //Naively calculate greatest profit -> largest relative price difference
-        const Town *bestOtherTown = nullptr;
+        Town *bestOtherTown = nullptr;
         const Resource *bestResource = nullptr;
         int bestThisStock = 0;
         int bestOtherStock = 0;
@@ -33,9 +35,9 @@ void AITrader::makeTrade()
             int thisStock = thisTownResources[i].second;
             if (gp > resource->outPrice(thisStock, thisTownPopulation))
             {
-                for (std::pair<const Town *, std::shared_ptr<const Info> > townInfo : getAllHeldInfo())
+                for (std::pair<Town *, std::shared_ptr<const Info> > townInfo : getAllHeldInfo())
                 {
-                    const Town *otherTown = townInfo.first;
+                    Town *otherTown = townInfo.first;
                     if (otherTown != thisTown)
                     {
                         std::shared_ptr<const Info> otherTownInfo = townInfo.second;
@@ -57,6 +59,8 @@ void AITrader::makeTrade()
         }
         if (bestResource) {
             buy(bestResource, bestResource->getMaxTradeAmount(bestThisStock, thisTownPopulation, bestOtherStock, bestOtherTownPopulation));
+            setTargetVector(bestOtherTown->getPos()-getPos());
+            setDestinationTown(bestOtherTown);
             // Go trade with bestOtherTown
         }
         else
@@ -64,4 +68,34 @@ void AITrader::makeTrade()
             // No good trades available from this town, go exploring?
         }
     }
+}
+
+void AITrader::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    painter->setRenderHints(painter->renderHints() | QPainter::Antialiasing);
+    painter->setPen(QPen(Qt::darkBlue,2));
+    if(isAtDestination()&&getDestinationTown())
+    {
+        painter->drawEllipse(QPointF(),m_radius+2,m_radius+2);
+    }
+    else
+    {
+        painter->drawEllipse(QPointF(),m_radius,m_radius);
+    }
+    painter->drawLine(QPointF(0,0),getTargetVector());
+}
+
+void AITrader::arrivedAtDestiniation()
+{
+    makeTrade();
+}
+
+void AITrader::processTick(World &)
+{
+    move(getSpeed());
+}
+
+QPointF AITrader::getPos() const
+{
+    return scenePos();
 }

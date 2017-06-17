@@ -10,7 +10,7 @@ class InformationHolder
 {
 public:
     InformationHolder();
-    const std::unordered_map<const Town *, std::shared_ptr<const Info> > &getAllHeldInfo() const;
+    const std::unordered_map<Town *, std::shared_ptr<const Info> > &getAllHeldInfo() const;
     /**
      * @brief getHeldInfoOnTown
      * Checks to see if there is information on the town and if so return it
@@ -18,12 +18,12 @@ public:
      * @return A shared pointer to information on the town.
      * If this information holder has no information on the town the null shared_ptr is returned instead.
      */
-    std::shared_ptr<const Info> getHeldInfoOnTown(const Town * town) const;
+    std::shared_ptr<const Info> getHeldInfoOnTown(Town * town) const;
 
     void addInfo(const std::shared_ptr<const Info> &newInfo);
-    std::shared_ptr<const Info> addTownCurrentInfo(const Town *town);
+    std::shared_ptr<const Info> addTownCurrentInfo(Town *town);
 private:
-    std::unordered_map<const Town *, std::shared_ptr<const Info> > m_info;
+    std::unordered_map<Town *, std::shared_ptr<const Info> > m_info;
 };
 
 #endif // INFORMATIONHOLDER_H
