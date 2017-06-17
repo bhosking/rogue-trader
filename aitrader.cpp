@@ -26,6 +26,8 @@ void AITrader::makeTrade()
         int bestOtherStock = 0;
         int bestOtherTownPopulation = 0;
         float bestProfit = 0;
+        float cheapestProfit = 0;
+        Town *cheapestOtherTown = nullptr;
         std::shared_ptr<const Info> thisTownInfo = getHeldInfoOnTown(thisTown);
         int thisTownPopulation = thisTownInfo->getPopulation();
         const std::vector<std::pair<const Resource *, int> > thisTownResources = thisTownInfo->getResources();
@@ -53,20 +55,27 @@ void AITrader::makeTrade()
                             bestOtherTownPopulation = otherTownPopulation;
                             bestProfit = profit;
                         }
+                        else if (profit < cheapestProfit)
+                        {
+                            cheapestOtherTown = otherTown;
+                            cheapestProfit = profit;
+                        }
                     }
                 }
             }
         }
         if (bestResource) {
             buy(bestResource, bestResource->getMaxTradeAmount(bestThisStock, thisTownPopulation, bestOtherStock, bestOtherTownPopulation));
-            setTargetVector(bestOtherTown->getPos()-getPos());
-            setDestinationTown(bestOtherTown);
-            // Go trade with bestOtherTown
         }
         else
         {
             // No good trades available from this town, go exploring?
+            //go to the town with the largest relative price difference (cheaper than here)
+            bestOtherTown = cheapestOtherTown;
         }
+        setTargetVector(bestOtherTown->getPos()-getPos());
+        setDestinationTown(bestOtherTown);
+        // Go trade with bestOtherTown
     }
 }
 
