@@ -6,6 +6,8 @@
 #include "worldscene.h"
 #include "playersceneitem.h"
 #include "townsceneitem.h"
+#include "aitrader.h"
+#include "info.h"
 
 World* World::m_instance = nullptr;
 World::World()
@@ -53,6 +55,16 @@ World::World()
 
     m_playerSceneItem->adjustInventoryResource(config.getResource("Food"),100);
     getMap()->explore(getPlayerSceneItem()->getPos(),getPlayerSceneItem()->getExplorationRadius());
+
+    //add traders
+    AITrader * trader = new AITrader();
+    trader->adjustInventoryResource(config.getResource("Food"),100);
+    trader->addInfo(std::shared_ptr<const Info>(new Info(testTown, 0)));
+    trader->addInfo(std::shared_ptr<const Info>(new Info(testTown2, 0)));
+    trader->addInfo(std::shared_ptr<const Info>(new Info(testTown3, 0)));
+    trader->setDestinationTown(testTown);
+    addItemToWorld(trader,testTown->getPos());
+
 }
 
 WorldScene *World::getWorldScene()

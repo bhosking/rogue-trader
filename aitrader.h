@@ -10,7 +10,7 @@ public:
     AITrader();
     void makeTrade();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void arrivedAtDestiniation();
+    void arrivedAtDestination();
     void processTick(World &);
     QPointF getPos() const;
 
