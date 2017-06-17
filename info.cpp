@@ -5,7 +5,7 @@
 #include "resource.h"
 #include "world.h"
 
-Info::Info(const Town *town, int tick)
+Info::Info(Town *town, int tick)
     :m_town(town), m_tick(tick)
 {
     m_population = town->getPopulation();
@@ -25,7 +25,7 @@ int Info::getTick() const
     return m_tick;
 }
 
-const Town *Info::getTown() const
+Town *Info::getTown() const
 {
     return m_town;
 }
