@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     buyorsellwidget.cpp \
     inventoryscreen.cpp \
     aitrader.cpp \
-    movablesceneitem.cpp
+    movablesceneitem.cpp \
+    carrier.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -66,7 +67,8 @@ HEADERS += \
     buyorsellwidget.h \
     inventoryscreen.h \
     aitrader.h \
-    movablesceneitem.h
+    movablesceneitem.h \
+    carrier.h
 
 QT += svg
 
