@@ -75,6 +75,7 @@ void AITrader::makeTrade()
         }
         setTargetVector(bestOtherTown->getPos()-getPos());
         setDestinationTown(bestOtherTown);
+        setStoppedAtDestination(false);
         // Go trade with bestOtherTown
     }
 }
@@ -95,6 +96,7 @@ void AITrader::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void AITrader::arrivedAtDestination()
 {
+    setStoppedAtDestination(true);
     makeTrade();
 }
 
