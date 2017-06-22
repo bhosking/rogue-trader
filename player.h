@@ -8,7 +8,7 @@ class Player: public Trader
 {
 public:
     Player();
-    void processTick(World &);
+    void processTick(World &world);
 };
 
 #endif // PLAYER_H

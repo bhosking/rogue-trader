@@ -100,8 +100,9 @@ void AITrader::arrivedAtDestination()
     makeTrade();
 }
 
-void AITrader::processTick(World &)
+void AITrader::processTick(World &world)
 {
+    Trader::processTick(world);
     move(getSpeed());
 }
 
