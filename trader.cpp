@@ -3,9 +3,10 @@
 #include "town.h"
 #include "townresource.h"
 #include "resource.h"
+#include "config.h"
 
 Trader::Trader()
-    :m_speed(1),m_atDestination(true),m_destination(nullptr),m_gp(0)
+    :m_speed(1),m_atDestination(true),m_destination(nullptr),m_gp(0),m_foodPerDistance(1.0/1024),m_energy(0)
 {
 
 }
@@ -141,7 +142,24 @@ void Trader::adjustInventory(const std::unordered_map<const Resource *, int> cha
 
 void Trader::processTick(World &)
 {
-
+    if (!isAtDestination())
+    {
+        m_energy -= m_foodPerDistance * m_speed;
+        if (m_energy <= 0)
+        {
+            const Resource *foodResource = Config().getResource("Food");
+            if (getInventoryResource(foodResource) > 0)
+            {
+                adjustInventoryResource(foodResource, -1);
+                m_energy += 1;
+            }
+            else
+            {
+                //Out of food - die
+                setSpeed(0);
+            }
+        }
+    }
 }
 
 std::string Trader::outPutInventoryAsString()

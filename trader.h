@@ -40,6 +40,8 @@ private:
     Town * m_destination;
     std::unordered_map<const Resource *, int> m_inventory;
     int m_gp;
+    float m_foodPerDistance;
+    float m_energy;
 };
 
 #endif // TRADER_H
