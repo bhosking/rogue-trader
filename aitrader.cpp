@@ -3,6 +3,7 @@
 #include "info.h"
 #include "resource.h"
 #include "town.h"
+#include "config.h"
 
 AITrader::AITrader()
 {
@@ -18,6 +19,8 @@ void AITrader::makeTrade()
         {
             sell(getInventory().begin()->first,getInventory().begin()->second);
         }
+        //Buy some food to bring total food to 10 #dontstarve
+        buy(Config().getResource("Food"), 10);
         int gp = getGP();
         //Naively calculate greatest profit -> largest relative price difference
         Town *bestOtherTown = nullptr;
