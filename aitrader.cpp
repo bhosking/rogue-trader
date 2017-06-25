@@ -86,15 +86,9 @@ void AITrader::makeTrade()
 void AITrader::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setRenderHints(painter->renderHints() | QPainter::Antialiasing);
-    painter->setPen(QPen(Qt::darkBlue,2));
-    if(isAtDestination()&&getDestinationTown())
-    {
-        painter->drawEllipse(QPointF(),m_radius+2,m_radius+2);
-    }
-    else
-    {
-        painter->drawEllipse(QPointF(),m_radius,m_radius);
-    }
+    painter->setPen(QPen(Qt::cyan,2));
+    painter->drawEllipse(QPointF(),m_radius,m_radius);
+
 }
 
 void AITrader::arrivedAtDestination()

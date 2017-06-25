@@ -93,17 +93,20 @@ void TownSceneItem::processTick(World &world)
 void TownSceneItem::paintPrices(QPainter *painter, std::shared_ptr<const Info> &info)
 {
     painter->setPen(QPen(Qt::black,2));
-    updatePricesDisplayRectangle(painter,info);
+    if(info!=m_currentInfo)
+    {
+        updatePricesDisplayRectangle(painter,info);
+        m_currentInfo = info;
+    }
     painter->drawRoundedRect(pricesRectangle,5,5);
     painter->drawText(pricesRectangle.adjusted(5,5,-5,-5),QString(info->getTownNameStockAndMedianPricesAsString().c_str()));
 }
 
-QRectF TownSceneItem::updatePricesDisplayRectangle(QPainter *painter, std::shared_ptr<const Info> &info)
+void TownSceneItem::updatePricesDisplayRectangle(QPainter *painter, std::shared_ptr<const Info> &info)
 {
     pricesRectangle = painter->boundingRect(QRect(),Qt::AlignLeft,QString(info->getTownNameStockAndMedianPricesAsString().c_str()));
     pricesRectangle.moveTopLeft(QPointF(-pricesRectangle.width()/2,-pricesRectangle.height() - m_radius - 5));
     pricesRectangle.adjust(-5.0,-5.0,5.0,5.0);
     prepareGeometryChange();
     update();
-    return pricesRectangle;
 }

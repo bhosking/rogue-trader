@@ -21,7 +21,8 @@ private:
     bool m_playerKnowledge;
     QRectF pricesRectangle;
     void paintPrices(QPainter *painter, std::shared_ptr<const Info> &info);
-    QRectF updatePricesDisplayRectangle(QPainter *painter, std::shared_ptr<const Info> &info);
+    void updatePricesDisplayRectangle(QPainter *painter, std::shared_ptr<const Info> &info);
+    mutable std::shared_ptr<const Info> m_currentInfo;
 };
 
 #endif // TOWNSCENEITEM_H
