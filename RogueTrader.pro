@@ -15,7 +15,6 @@ SOURCES += main.cpp \
     town.cpp \
     carriedresource.cpp \
     mainwindow.cpp \
-    player.cpp \
     map.cpp \
     world.cpp \
     worldscene.cpp \
@@ -52,7 +51,6 @@ HEADERS += \
     town.h \
     carriedresource.h \
     mainwindow.h \
-    player.h \
     map.h \
     world.h \
     worldscene.h \
