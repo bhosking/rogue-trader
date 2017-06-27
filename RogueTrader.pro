@@ -23,7 +23,6 @@ SOURCES += main.cpp \
     circularsceneitem.cpp \
     info.cpp \
     trader.cpp \
-    informationholder.cpp \
     sidewindow.cpp \
     worldviewer.cpp \
     buyorsellwidget.cpp \
@@ -59,7 +58,6 @@ HEADERS += \
     circularsceneitem.h \
     info.h \
     trader.h \
-    informationholder.h \
     sidewindow.h \
     worldviewer.h \
     buyorsellwidget.h \

@@ -4,6 +4,8 @@
 #include "townresource.h"
 #include "resource.h"
 #include "config.h"
+#include "info.h"
+#include "world.h"
 
 Trader::Trader()
     :m_speed(1),m_atDestination(true),m_destination(nullptr),m_gp(0),m_foodPerDistance(1.0/1024),m_energy(0)
@@ -171,4 +173,31 @@ std::string Trader::outPutInventoryAsString()
         ss << resourceStockPair.first->getName() << "(" <<resourceStockPair.second << ")\n";
     }
     return ss.str();
+}
+
+const std::unordered_map<Town *, std::shared_ptr<const Info> > &Trader::getAllHeldInfo() const
+{
+    return m_info;
+}
+
+void Trader::addInfo(const std::shared_ptr<const Info> & newInfo)
+{
+    m_info[newInfo->getTown()] = newInfo;
+}
+
+std::shared_ptr<const Info> Trader::addTownCurrentInfo(Town *town)
+{
+    addInfo(std::shared_ptr<const Info>(new Info(town, World::getWorld().getTick())));
+    return getHeldInfoOnTown(town);
+}
+
+std::shared_ptr<const Info> Trader::getHeldInfoOnTown(Town * const town) const
+{
+    auto townInfo = m_info.find(town);
+    if(townInfo==m_info.end())
+    {
+        return std::shared_ptr<const Info>();
+    }
+    else
+        return std::shared_ptr<const Info>(townInfo->second);
 }
