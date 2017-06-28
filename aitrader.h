@@ -2,9 +2,8 @@
 #define AITRADER_H
 
 #include "trader.h"
-#include "movablesceneitem.h"
 
-class AITrader : public Trader, public MovableSceneItem
+class AITrader : public Trader
 {
 public:
     AITrader();

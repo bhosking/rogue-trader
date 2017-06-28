@@ -5,13 +5,12 @@
 #include <unordered_map>
 #include <memory>
 #include "updatableentity.h"
-#include "informationholder.h"
 
 class Resource;
 class TownResource;
 class Info;
 
-class Town : public UpdatableEntity, public InformationHolder
+class Town : public UpdatableEntity
 {
 public:
     Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, int population, std::string &name);

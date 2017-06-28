@@ -106,7 +106,7 @@ void PlayerSceneItem::processTick(World &world)
         move(getSpeed());
         world.getMap()->explore(scenePos(),getExplorationRadius());
     }
-    Player::processTick(world);
+    Trader::processTick(world);
     update();
 }
 

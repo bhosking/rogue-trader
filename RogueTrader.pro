@@ -15,7 +15,6 @@ SOURCES += main.cpp \
     town.cpp \
     carriedresource.cpp \
     mainwindow.cpp \
-    player.cpp \
     map.cpp \
     world.cpp \
     worldscene.cpp \
@@ -24,13 +23,11 @@ SOURCES += main.cpp \
     circularsceneitem.cpp \
     info.cpp \
     trader.cpp \
-    informationholder.cpp \
     sidewindow.cpp \
     worldviewer.cpp \
     buyorsellwidget.cpp \
     inventoryscreen.cpp \
     aitrader.cpp \
-    movablesceneitem.cpp \
     carrier.cpp
 
 # The following define makes your compiler emit warnings if you use
@@ -52,7 +49,6 @@ HEADERS += \
     town.h \
     carriedresource.h \
     mainwindow.h \
-    player.h \
     map.h \
     world.h \
     worldscene.h \
@@ -61,13 +57,11 @@ HEADERS += \
     circularsceneitem.h \
     info.h \
     trader.h \
-    informationholder.h \
     sidewindow.h \
     worldviewer.h \
     buyorsellwidget.h \
     inventoryscreen.h \
     aitrader.h \
-    movablesceneitem.h \
     carrier.h
 
 QT += svg
