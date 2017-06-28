@@ -28,7 +28,6 @@ SOURCES += main.cpp \
     buyorsellwidget.cpp \
     inventoryscreen.cpp \
     aitrader.cpp \
-    movablesceneitem.cpp \
     carrier.cpp
 
 # The following define makes your compiler emit warnings if you use
@@ -63,7 +62,6 @@ HEADERS += \
     buyorsellwidget.h \
     inventoryscreen.h \
     aitrader.h \
-    movablesceneitem.h \
     carrier.h
 
 QT += svg

@@ -4,13 +4,14 @@
 #include <QPointF>
 #include <unordered_map>
 #include <memory>
+#include "circularsceneitem.h"
 #include "updatableentity.h"
 
 class Town;
 class Resource;
 class Info;
 
-class Trader : public UpdatableEntity
+class Trader : public CircularSceneItem, public UpdatableEntity
 {
 public:
     Trader();
@@ -47,6 +48,11 @@ public:
 
     void addInfo(const std::shared_ptr<const Info> &newInfo);
     std::shared_ptr<const Info> addTownCurrentInfo(Town *town);
+
+    void setTargetVector(const QPointF & target);
+    const QPointF &getTargetVector() const;
+    void move(float speed);
+    virtual void arrivedAtDestination() = 0;
 private:
     float m_speed;
     bool m_atDestination;
@@ -56,6 +62,7 @@ private:
     float m_foodPerDistance;
     float m_energy;
     std::unordered_map<Town *, std::shared_ptr<const Info> > m_info;
+    QPointF m_targetVector;
 };
 
 #endif // TRADER_H

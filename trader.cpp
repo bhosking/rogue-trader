@@ -8,7 +8,8 @@
 #include "world.h"
 
 Trader::Trader()
-    :m_speed(1),m_atDestination(true),m_destination(nullptr),m_gp(0),m_foodPerDistance(1.0/1024),m_energy(0)
+    :m_speed(1),m_atDestination(true),m_destination(nullptr),m_gp(0),m_foodPerDistance(1.0/1024),
+      m_energy(0),m_targetVector(0,0)
 {
 
 }
@@ -200,4 +201,44 @@ std::shared_ptr<const Info> Trader::getHeldInfoOnTown(Town * const town) const
     }
     else
         return std::shared_ptr<const Info>(townInfo->second);
+}
+
+float length(const QPointF &p)
+{
+    return sqrtf(p.x()*p.x()+p.y()*p.y());
+}
+
+QPointF normalized(const QPointF &p)
+{
+    float len = length(p);
+    return QPointF(p.x()/len,p.y()/len);
+}
+
+void Trader::setTargetVector(const QPointF &target)
+{
+    m_targetVector = target;
+}
+
+const QPointF &Trader::getTargetVector() const
+{
+    return m_targetVector;
+}
+
+void Trader::move(float speed)
+{
+    bool arrived = false;
+    QPointF movementVector;
+    if(length(m_targetVector) < speed)
+    {
+        arrived = true;
+        movementVector = m_targetVector;
+    }
+    else
+    {
+        movementVector = normalized(m_targetVector)*speed;
+    }
+    moveBy(movementVector.x(),movementVector.y());
+    m_targetVector -= movementVector;
+    if(arrived)
+        arrivedAtDestination();
 }

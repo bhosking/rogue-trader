@@ -1,11 +1,10 @@
 #ifndef PLAYERSCENEITEM_H
 #define PLAYERSCENEITEM_H
-#include "movablesceneitem.h"
 #include "trader.h"
 
 class Info;
 
-class PlayerSceneItem : public MovableSceneItem, public Trader
+class PlayerSceneItem : public Trader
 {
     Q_OBJECT
 public:
