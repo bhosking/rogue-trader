@@ -19,9 +19,10 @@ public:
     QRectF boundingRect() const;
     void processTick(World &);
     void updateTownInfo();
+    void arrivedAtDestination();
+public slots:
     virtual void buy(const Resource *resource, int amount);
     virtual void sell(const Resource *resource, int amount);
-    void arrivedAtDestination();
 signals:
     void arrivedAtTown(std::shared_ptr<const Info>, const std::unordered_map<const Resource *, int> & inventory);
     void leftTown();

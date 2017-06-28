@@ -23,8 +23,6 @@ public slots:
     void tickGame();
     void pause();
     void unpause();
-    void PlayerTryBuyResource(const Resource *resource, int amount);
-    void PlayerTrySellResource(const Resource *resource, int amount);
     void refreshInventoryScreenInfo();
 private:
     InventoryScreen * m_inventoryScreen;
