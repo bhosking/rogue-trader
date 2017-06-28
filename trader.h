@@ -13,6 +13,7 @@ class Info;
 
 class Trader : public CircularSceneItem, public UpdatableEntity
 {
+    Q_OBJECT
 public:
     Trader();
     virtual QPointF getPos() const = 0;
@@ -53,6 +54,8 @@ public:
     const QPointF &getTargetVector() const;
     void move(float speed);
     virtual void arrivedAtDestination() = 0;
+signals:
+    void inventoryChanged();
 private:
     float m_speed;
     bool m_atDestination;

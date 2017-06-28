@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_sideWindow,SIGNAL(buyWidgetClicked(const Resource*,int)),this,SLOT(PlayerTryBuyResource(const Resource*,int)));
     connect(m_sideWindow,SIGNAL(sellWidgetClicked(const Resource*,int)),this,SLOT(PlayerTrySellResource(const Resource*,int)));
 
+    connect(World::getWorld().getPlayerSceneItem(), SIGNAL(inventoryChanged()), this, SLOT(refreshInventoryScreenInfo()));
+
     refreshInventoryScreenInfo();
 
     m_gameTimer->start(16);

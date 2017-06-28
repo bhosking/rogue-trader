@@ -52,6 +52,7 @@ const std::unordered_map<const Resource *, int> &Trader::getInventory() const
 void Trader::setInventory(const std::unordered_map<const Resource *, int> other)
 {
     m_inventory = other;
+    emit inventoryChanged();
 }
 
 int Trader::getInventoryResource(const Resource *resource) const
@@ -80,6 +81,7 @@ int Trader::getGP() const
 void Trader::setGP(int gp)
 {
     m_gp = gp;
+    emit inventoryChanged();
 }
 
 void Trader::adjustGP(int change)
@@ -133,6 +135,7 @@ void Trader::setInventoryResource(const Resource *resource, int value)
     {
         m_inventory[resource] = value;
     }
+    emit inventoryChanged();
 }
 
 void Trader::adjustInventory(const std::unordered_map<const Resource *, int> changes)
