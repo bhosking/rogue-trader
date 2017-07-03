@@ -74,6 +74,12 @@ int Resource::howMuchCanIBuy(int startStock, int population, int gp) const
     return static_cast<int>(-1 * log2(gp * (1-exp2(decay))/(getValue() * exp2(decay * startStock)) + 1) / decay);
 }
 
+int Resource::howMuchCanISell(int startStock, int population, int gp) const
+{
+    float decay = getDecay(population);
+    return static_cast<int>(log2(1 - gp * (1-exp2(decay))/(getValue() * exp2(decay * startStock))) / decay);
+}
+
 int Resource::getMaxTradeAmount(int stockA, int populationA, int stockB, int populationB) const
 {
     float decayA = getDecay(populationA);

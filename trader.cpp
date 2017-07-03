@@ -100,7 +100,9 @@ void Trader::buy(const Resource *resource, int amount)
         int buyAmount = std::min(resource->howMuchCanIBuy(inStock, population, getGP()), amount);
         if(buyAmount==0)
             return;
-        adjustGP(-1 * resource->outPrice(inStock, population, buyAmount));
+        int buyValue = resource->outPrice(inStock, population, buyAmount);
+        adjustGP(-1 * buyValue);
+        destinationTown->adjustGP(buyValue);
         townResource->adjustStock(-1 * buyAmount);
         addTownCurrentInfo(destinationTown);
         adjustInventoryResource(resource, buyAmount);
@@ -114,9 +116,14 @@ void Trader::sell(const Resource *resource, int amount)
     if (isAtDestination() && destinationTown)
     {
         TownResource *townResource = destinationTown->getResource(resource);
-        adjustInventoryResource(resource, -1 * amount);
-        adjustGP(resource->inPrice(townResource->getStock(), destinationTown->getPopulation(), amount));
-        townResource->adjustStock(amount);
+        int inStock = townResource->getStock();
+        int population = destinationTown->getPopulation();
+        int sellAmount = std::min(resource->howMuchCanIBuy(inStock, population, destinationTown->getGP()), amount);
+        int sellValue = resource->inPrice(inStock, population, sellAmount);
+        adjustInventoryResource(resource, -1 * sellAmount);
+        adjustGP(sellValue);
+        townResource->adjustStock(sellAmount);
+        destinationTown->adjustGP(-1 * sellValue);
         addTownCurrentInfo(destinationTown);
     }
 }

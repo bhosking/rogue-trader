@@ -22,6 +22,7 @@ public:
     int outPrice(int startStock, int population, int num = 1) const;
     int inPrice(int startStock, int population, int num = 1) const;
     int howMuchCanIBuy(int startStock, int population, int gp) const;
+    int howMuchCanISell(int startStock, int population, int gp) const;
     int getMaxTradeAmount(int stockA, int populationA, int stockB, int populationB) const;
     float getRelativeDifference(int stockA, int populationA, int stockB, int populationB) const;
 private:

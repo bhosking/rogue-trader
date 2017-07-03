@@ -5,7 +5,7 @@
 #include "resource.h"
 
 Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, int population, std::string &name)
-    :m_population(population), m_name(name)
+    :m_population(population), m_name(name), m_gp(100*population)
 {
     for (std::tuple<const Resource *, float, float> resourceInits:resourceRatesStock)
     {
@@ -42,6 +42,16 @@ int Town::getPopulation() const
 const std::string &Town::getName() const
 {
     return m_name;
+}
+
+int Town::getGP() const
+{
+    return m_gp;
+}
+
+void Town::adjustGP(int change)
+{
+    m_gp += change;
 }
 
 void Town::adjustPopulation(int change)

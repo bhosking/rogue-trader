@@ -19,6 +19,8 @@ public:
     int getPopulation() const;
     const std::string & getName() const;
     virtual QPointF getPos() const = 0;
+    int getGP() const;
+    void adjustGP(int change);
     void adjustPopulation(int change);
     void processTick(World &);
 private:
@@ -28,6 +30,7 @@ private:
     void setWorkers();
     void consumeResources();
     void produceResources();
+    int m_gp;
 };
 
 #endif // TOWN_H
