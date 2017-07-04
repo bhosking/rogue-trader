@@ -115,16 +115,18 @@ void PlayerSceneItem::updateTownInfo()
     addTownCurrentInfo(getDestinationTown());
 }
 
-void PlayerSceneItem::buy(const Resource *resource, int amount)
+int PlayerSceneItem::buy(const Resource *resource, int amount)
 {
-    Trader::buy(resource,amount);
+    int buyAmount = Trader::buy(resource,amount);
     emit arrivedAtTown(getHeldInfoOnTown(getDestinationTown()),getInventory());
+    return buyAmount;
 }
 
-void PlayerSceneItem::sell(const Resource *resource, int amount)
+int PlayerSceneItem::sell(const Resource *resource, int amount)
 {
-    Trader::sell(resource,amount);
+    int sellAmount = Trader::sell(resource,amount);
     emit arrivedAtTown(getHeldInfoOnTown(getDestinationTown()),getInventory());
+    return sellAmount;
 }
 
 void PlayerSceneItem::arrivedAtDestination()

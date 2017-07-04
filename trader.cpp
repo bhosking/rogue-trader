@@ -89,17 +89,16 @@ void Trader::adjustGP(int change)
     setGP(getGP() + change);
 }
 
-void Trader::buy(const Resource *resource, int amount)
+int Trader::buy(const Resource *resource, int amount)
 {
+    int buyAmount = 0;
     Town *destinationTown = getDestinationTown();
     if (isAtDestination() && destinationTown)
     {
         TownResource *townResource = destinationTown->getResource(resource);
         int inStock = townResource->getStock();
         int population = destinationTown->getPopulation();
-        int buyAmount = std::min(resource->howMuchCanIBuy(inStock, population, getGP()), amount);
-        if(buyAmount==0)
-            return;
+        buyAmount = std::min(resource->howMuchCanIBuy(inStock, population, getGP()), amount);
         int buyValue = resource->outPrice(inStock, population, buyAmount);
         adjustGP(-1 * buyValue);
         destinationTown->adjustGP(buyValue);
@@ -108,17 +107,19 @@ void Trader::buy(const Resource *resource, int amount)
         adjustInventoryResource(resource, buyAmount);
 
     }
+    return buyAmount;
 }
 
-void Trader::sell(const Resource *resource, int amount)
+int Trader::sell(const Resource *resource, int amount)
 {
+    int sellAmount = 0;
     Town *destinationTown = getDestinationTown();
     if (isAtDestination() && destinationTown)
     {
         TownResource *townResource = destinationTown->getResource(resource);
         int inStock = townResource->getStock();
         int population = destinationTown->getPopulation();
-        int sellAmount = std::min(resource->howMuchCanIBuy(inStock, population, destinationTown->getGP()), amount);
+        sellAmount = std::min(resource->howMuchCanIBuy(inStock, population, destinationTown->getGP()), amount);
         int sellValue = resource->inPrice(inStock, population, sellAmount);
         adjustInventoryResource(resource, -1 * sellAmount);
         adjustGP(sellValue);
@@ -126,6 +127,7 @@ void Trader::sell(const Resource *resource, int amount)
         destinationTown->adjustGP(-1 * sellValue);
         addTownCurrentInfo(destinationTown);
     }
+    return sellAmount;
 }
 
 void Trader::setInventoryResource(const Resource *resource, int value)

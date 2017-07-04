@@ -32,8 +32,8 @@ public:
     int getGP() const;
     void setGP(int gp);
     void adjustGP(int change);
-    virtual void buy(const Resource *resource, int amount);
-    virtual void sell(const Resource *resource, int amount);
+    virtual int buy(const Resource *resource, int amount);
+    virtual int sell(const Resource *resource, int amount);
     void processTick(World &);
     std::string outPutInventoryAsString();
 

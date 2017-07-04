@@ -21,8 +21,8 @@ public:
     void updateTownInfo();
     void arrivedAtDestination();
 public slots:
-    virtual void buy(const Resource *resource, int amount);
-    virtual void sell(const Resource *resource, int amount);
+    virtual int buy(const Resource *resource, int amount);
+    virtual int sell(const Resource *resource, int amount);
 signals:
     void arrivedAtTown(std::shared_ptr<const Info>, const std::unordered_map<const Resource *, int> & inventory);
     void leftTown();
