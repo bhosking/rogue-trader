@@ -15,9 +15,10 @@ void AITrader::makeTrade()
     Town *thisTown = getDestinationTown();
     if (isAtDestination() && thisTown)
     {
-        while(!getInventory().empty())
+        int sold = -1;
+        while(!getInventory().empty() && (sold != 0))
         {
-            sell(getInventory().begin()->first,getInventory().begin()->second);
+            sold = sell(getInventory().begin()->first,getInventory().begin()->second);
         }
         //Buy some food to bring total food to 10 #dontstarve
         buy(Config().getResource("Food"), 10);
