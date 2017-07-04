@@ -21,7 +21,12 @@ void AITrader::makeTrade()
             sold = sell(getInventory().begin()->first,getInventory().begin()->second);
         }
         //Buy some food to bring total food to 10 #dontstarve
-        buy(Config().getResource("Food"), 10);
+        const Resource *foodResource = Config().getResource("Food");
+        int foodAmount = getInventoryResource(foodResource);
+        if (foodAmount < 10)
+        {
+            buy(foodResource, 10 - foodAmount);
+        }
         int gp = getGP();
         //Naively calculate greatest profit -> largest relative price difference
         Town *bestOtherTown = nullptr;
