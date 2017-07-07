@@ -9,6 +9,7 @@ Info::Info(Town *town, int tick)
     :m_town(town), m_tick(tick)
 {
     m_population = town->getPopulation();
+    m_gp = town->getGP();
     for (const TownResource * townResource : town->getResources())
     {
         m_resources.push_back(std::pair<const Resource *, int> (townResource->getResource(), townResource->getStock()));
@@ -35,6 +36,7 @@ Info &Info::operator=(const Info &other)
    m_town = other.getTown();
    m_tick = other.getTick();
    m_resources = other.getResources();
+   m_gp = other.getGP();
    m_population = other.getPopulation();
    return *this;
 }
@@ -47,7 +49,7 @@ bool Info::isOlderThan(const Info &other) const
 std::string Info::getTownNameStockAndMedianPricesAsString() const
 {
     std::stringstream ss;
-    ss << m_town->getName() << " (" << getPopulation() << ")" << "\n";
+    ss << m_town->getName() << " (" << getPopulation() << ") " << getGP() << "g\n";
     for(std::pair<const Resource *,int> resourceStockPair: getResources())
     {
         ss << resourceStockPair.first->getName() << "(" <<resourceStockPair.second << ") "
@@ -75,6 +77,11 @@ int Info::getAgeOfInfo() const
 int Info::getPopulation() const
 {
     return m_population;
+}
+
+int Info::getGP() const
+{
+    return m_gp;
 }
 
 std::string Info::getAgeOfInfoAsString() const

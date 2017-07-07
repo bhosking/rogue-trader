@@ -18,10 +18,12 @@ public:
     std::string getTownNameStockAndMedianPricesAsString() const;
     int getAgeOfInfo() const;
     int getPopulation() const;
+    int getGP() const;
     std::string getAgeOfInfoAsString() const;
 private:
      Town *m_town;
      int m_population;
+     int m_gp;
      int m_tick;
      std::vector<std::pair<const Resource *, int> > m_resources;
 };
