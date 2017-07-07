@@ -45,7 +45,7 @@ void TownSceneItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     {
         m_showPrices = true;
         prepareGeometryChange();
-        setZValue(1);
+        setZValue(100);
         update();
     }
 }
@@ -54,6 +54,7 @@ void TownSceneItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     m_showPrices = false;
     prepareGeometryChange();
+    setZValue(1);
     update();
 }
 
