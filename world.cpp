@@ -14,7 +14,8 @@ World::World()
     :m_worldScene(new WorldScene()),
       m_map(new Map()),
       m_playerSceneItem(new PlayerSceneItem()),
-      m_tick(0)
+      m_tick(0),
+      m_rng((std::random_device())())
 {
     Config config = Config();
     m_worldScene->setBackgroundBrush(Qt::black);
@@ -52,6 +53,11 @@ World::World()
     addItemToWorld(m_map,QPointF(0,0));
 
     addItemToWorld(m_playerSceneItem,QPointF(50,50));
+
+    for (int i=0; i < 10; i++)
+    {
+        addTown();
+    }
 
     m_playerSceneItem->adjustInventoryResource(config.getResource("Food"),100);
     getMap()->explore(getPlayerSceneItem()->getPos(),getPlayerSceneItem()->getExplorationRadius());
@@ -192,6 +198,47 @@ std::string World::ticksToTime(int ticks, TimeFormat type)
         addMinutesToStringStream(mins,&ss);
     }
     return ss.str();
+}
+
+QPointF World::getRandomPosition(float padding)
+{
+    std::uniform_real_distribution<double> distribution(10.0,502.0);
+    QPointF newLocation;
+    bool tooClose;
+    do
+    {
+        newLocation.setX(distribution(m_rng));
+        newLocation.setY(distribution(m_rng));
+        tooClose = false;
+        for (TownSceneItem *town : getTownSceneItems())
+        {
+            if (containedInCircleAtOrigin(newLocation - town->getPos(), padding))
+            {
+                tooClose = true;
+                break;
+            }
+        }
+
+    } while (tooClose);
+    return newLocation;
+}
+
+void World::addTown()
+{
+    std::exponential_distribution<double> expDistribution(1);
+    std::vector<std::tuple<const Resource *, float, float> > townResources;
+    for (const Resource * resource : Config().getResources())
+    {
+        townResources.push_back(std::tuple<const Resource *, float, float>
+                                (resource, expDistribution(m_rng), 0));
+    }
+    std::stringstream ss;
+    ss << "Town " << (getTownSceneItems().size() + 1);
+    std::string townName = ss.str();
+    int townPopulation = 100;
+    QPointF townPos = getRandomPosition(20);
+
+    addItemToWorld(new TownSceneItem(townResources,townPopulation,townName),townPos);
 }
 
 void World::addDaysToStringStream(int days, std::stringstream *ss)

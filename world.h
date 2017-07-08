@@ -4,6 +4,7 @@
 #include <vector>
 #include <qpoint.h>
 #include <string>
+#include <random>
 
 class QGraphicsSceneMouseEvent;
 class QGraphicsItem;
@@ -75,6 +76,8 @@ public:
     static World &getWorld();
     static std::string ticksToTime(int ticks,TimeFormat type = TimeFormat::MOST_SIGNIFICANT|TimeFormat::DAYS_HOURS_AND_MINUTES|TimeFormat::NON_ZERO);
 private:
+    QPointF getRandomPosition(float padding);
+    void addTown();
     static void addDaysToStringStream(int days, std::stringstream * ss);
     static void addHoursToStringStream(int hours, std::stringstream * ss);
     static void addMinutesToStringStream(int mins, std::stringstream * ss);
@@ -87,6 +90,7 @@ private:
     std::vector<TownSceneItem*> m_townSceneItems;
     int m_tick;
     static World * m_instance;
+    std::mt19937 m_rng;
 };
 
 #endif // WORLD_H
