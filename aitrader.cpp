@@ -82,6 +82,21 @@ void AITrader::makeTrade()
             //go to the town with the largest relative price difference (cheaper than here)
             bestOtherTown = cheapestOtherTown;
         }
+        if (bestOtherTown == nullptr)
+        {
+            // Oops, we're at a stalemate here, we probably have no money and as such aren't considering
+            // any trading opportunities. TODO handle this more gracefully. For now, maybe the town couldn't
+            // buy our goods, so we'll go somewhere with more money. Or at least somewhere.
+            int thisTownGP = thisTownInfo->getGP();
+            for (std::pair<Town *, std::shared_ptr<const Info> > townInfo : getAllHeldInfo())
+            {
+                bestOtherTown = townInfo.first;
+                if (townInfo.second->getGP() > thisTownGP)
+                {
+                    break;
+                }
+            }
+        }
         setTargetVector(bestOtherTown->getPos()-getPos());
         setDestinationTown(bestOtherTown);
         setStoppedAtDestination(false);
