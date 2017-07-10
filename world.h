@@ -76,7 +76,7 @@ public:
     static World &getWorld();
     static std::string ticksToTime(int ticks,TimeFormat type = TimeFormat::MOST_SIGNIFICANT|TimeFormat::DAYS_HOURS_AND_MINUTES|TimeFormat::NON_ZERO);
 private:
-    QPointF getRandomPosition(float padding);
+    QPointF getRandomPosition(float padding = 0);
     void addTown();
     void addTrader();
     static void addDaysToStringStream(int days, std::stringstream * ss);

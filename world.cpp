@@ -215,12 +215,15 @@ QPointF World::getRandomPosition(float padding)
         newLocation.setX(distribution(m_rng));
         newLocation.setY(distribution(m_rng));
         tooClose = false;
-        for (TownSceneItem *town : getTownSceneItems())
+        if (padding > 0)
         {
-            if (containedInCircleAtOrigin(newLocation - town->getPos(), padding))
+            for (TownSceneItem *town : getTownSceneItems())
             {
-                tooClose = true;
-                break;
+                if (containedInCircleAtOrigin(newLocation - town->getPos(), padding))
+                {
+                    tooClose = true;
+                    break;
+                }
             }
         }
 
@@ -250,7 +253,7 @@ void World::addTrader()
 {
     AITrader * trader = new AITrader();
     trader->adjustInventoryResource(Config().getResource("Food"), 100);
-    QPointF traderPos = getRandomPosition(0);
+    QPointF traderPos = getRandomPosition();
     addItemToWorld(trader, traderPos);
     //Get the 4 closest towns. TODO clean this up.
     TownSceneItem *closeTown1;
