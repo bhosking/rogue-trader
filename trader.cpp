@@ -120,7 +120,7 @@ int Trader::sell(const Resource *resource, int amount)
         TownResource *townResource = destinationTown->getResource(resource);
         int inStock = townResource->getStock();
         int population = destinationTown->getPopulation();
-        sellAmount = std::min(resource->howMuchCanIBuy(inStock, population, destinationTown->getGP()), amount);
+        sellAmount = std::min(resource->howMuchCanISell(inStock, population, destinationTown->getGP()), amount);
         if (sellAmount > 0) {
             int sellValue = resource->inPrice(inStock, population, sellAmount);
             adjustInventoryResource(resource, -1 * sellAmount);
