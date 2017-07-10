@@ -78,6 +78,7 @@ public:
 private:
     QPointF getRandomPosition(float padding);
     void addTown();
+    void addTrader();
     static void addDaysToStringStream(int days, std::stringstream * ss);
     static void addHoursToStringStream(int hours, std::stringstream * ss);
     static void addMinutesToStringStream(int mins, std::stringstream * ss);
