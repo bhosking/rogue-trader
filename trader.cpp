@@ -91,46 +91,66 @@ void Trader::adjustGP(int change)
 
 int Trader::buy(const Resource *resource, int amount)
 {
-    int buyAmount = 0;
     Town *destinationTown = getDestinationTown();
     if (isAtDestination() && destinationTown)
     {
         TownResource *townResource = destinationTown->getResource(resource);
         int inStock = townResource->getStock();
         int population = destinationTown->getPopulation();
-        buyAmount = std::min(resource->howMuchCanIBuy(inStock, population, getGP()), amount);
-        if (buyAmount > 0) {
-            int buyValue = resource->outPrice(inStock, population, buyAmount);
+        int buyValue = resource->outPrice(inStock, population, amount);
+        if (buyValue > getGP())
+        {
+            amount = resource->howMuchCanIBuy(inStock, population, getGP());
+            if (amount > 0)
+            {
+                buyValue = resource->outPrice(inStock, population, amount);
+            }
+        }
+        if (amount > 0) {
             adjustGP(-1 * buyValue);
             destinationTown->adjustGP(buyValue);
-            townResource->adjustStock(-1 * buyAmount);
-            adjustInventoryResource(resource, buyAmount);
+            townResource->adjustStock(-1 * amount);
+            adjustInventoryResource(resource, amount);
         }
         addTownCurrentInfo(destinationTown);
     }
-    return buyAmount;
+    else
+    {
+        amount = 0;
+    }
+    return amount;
 }
 
 int Trader::sell(const Resource *resource, int amount)
 {
-    int sellAmount = 0;
     Town *destinationTown = getDestinationTown();
     if (isAtDestination() && destinationTown)
     {
         TownResource *townResource = destinationTown->getResource(resource);
         int inStock = townResource->getStock();
         int population = destinationTown->getPopulation();
-        sellAmount = std::min(resource->howMuchCanISell(inStock, population, destinationTown->getGP()), amount);
-        if (sellAmount > 0) {
-            int sellValue = resource->inPrice(inStock, population, sellAmount);
-            adjustInventoryResource(resource, -1 * sellAmount);
+        int sellValue = resource->inPrice(inStock, population, amount);
+        if (sellValue > destinationTown->getGP())
+        {
+            amount = resource->howMuchCanISell(inStock, population, destinationTown->getGP());
+            if (amount > 0)
+            {
+                sellValue = resource->inPrice(inStock, population, amount);
+            }
+        }
+        if (amount > 0) {
+            adjustInventoryResource(resource, -1 * amount);
             adjustGP(sellValue);
-            townResource->adjustStock(sellAmount);
+            townResource->adjustStock(amount);
             destinationTown->adjustGP(-1 * sellValue);
         }
         addTownCurrentInfo(destinationTown);
     }
-    return sellAmount;
+    else
+    {
+        amount = 0;
+    }
+    return amount;
 }
 
 void Trader::setInventoryResource(const Resource *resource, int value)
