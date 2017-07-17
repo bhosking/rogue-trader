@@ -68,19 +68,9 @@ void TownSceneItem::processTick(World &world)
 {
     if (!m_playerKnowledge)
     {
-        PlayerSceneItem *playerSceneItem = world.getPlayerSceneItem();
-        if(playerSceneItem->getHeldInfoOnTown(this))
+        if(world.getPlayerSceneItem()->getHeldInfoOnTown(this) || canBeSeenByPlayer(world))
         {
             playerKnows();
-        }
-        else
-        {
-            QPointF pos = playerSceneItem->getPos();
-            pos -= getPos();
-            if (containedInCircleAtOrigin(pos, playerSceneItem->getExplorationRadius() + m_radius))
-            {
-                playerKnows();
-            }
         }
     }
     Town::processTick(world);
