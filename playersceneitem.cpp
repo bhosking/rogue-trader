@@ -13,11 +13,6 @@ PlayerSceneItem::PlayerSceneItem()
     setZValue(2);
 }
 
-QPointF PlayerSceneItem::getPos() const
-{
-    return scenePos();
-}
-
 float PlayerSceneItem::getExplorationRadius() const
 {
     return m_explorationRadius;

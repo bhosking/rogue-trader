@@ -64,11 +64,6 @@ void TownSceneItem::playerKnows()
     setVisible(true);
 }
 
-QPointF TownSceneItem::getPos() const
-{
-    return scenePos();
-}
-
 void TownSceneItem::processTick(World &world)
 {
     if (!m_playerKnowledge)

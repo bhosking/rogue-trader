@@ -9,7 +9,6 @@ class PlayerSceneItem : public Trader
     Q_OBJECT
 public:
     PlayerSceneItem();
-    QPointF getPos() const;
     float getExplorationRadius() const;
     void setExplorationRadius(float newRadius);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

@@ -19,7 +19,6 @@ public:
     const std::vector<TownResource *> &getResources() const;
     int getPopulation() const;
     const std::string & getName() const;
-    virtual QPointF getPos() const = 0;
     int getGP() const;
     void adjustGP(int change);
     void adjustPopulation(int change);

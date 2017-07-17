@@ -11,7 +11,6 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void arrivedAtDestination();
     void processTick(World &world);
-    QPointF getPos() const;
 
 
 

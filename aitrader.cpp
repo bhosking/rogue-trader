@@ -124,8 +124,3 @@ void AITrader::processTick(World &world)
     Trader::processTick(world);
     move(getSpeed());
 }
-
-QPointF AITrader::getPos() const
-{
-    return scenePos();
-}

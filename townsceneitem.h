@@ -12,7 +12,6 @@ public:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void playerKnows();
-    QPointF getPos() const;
     void processTick(World & world);
 
 private:

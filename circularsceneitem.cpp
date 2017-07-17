@@ -26,6 +26,11 @@ bool CircularSceneItem::contains(const QPointF &point) const
     return containedInCircleAtOrigin(point,m_radius);
 }
 
+QPointF CircularSceneItem::getPos() const
+{
+    return scenePos();
+}
+
 bool containedInCircleAtOrigin(const QPointF &p, float r)
 {
     float x = p.x();

@@ -16,7 +16,6 @@ class Trader : public CircularSceneItem, public UpdatableEntity
     Q_OBJECT
 public:
     Trader();
-    virtual QPointF getPos() const = 0;
     float getSpeed() const;
     void setSpeed(float);
     bool isAtDestination() const;
