@@ -1,10 +1,9 @@
 #ifndef TOWNSCENEITEM_H
 #define TOWNSCENEITEM_H
-#include "circularsceneitem.h"
 #include "town.h"
 #include <QPointF>
 
-class TownSceneItem :public CircularSceneItem, public Town
+class TownSceneItem :public Town
 {
 public:
     TownSceneItem(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, unsigned population, std::string &name);
