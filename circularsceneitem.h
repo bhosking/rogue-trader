@@ -2,6 +2,8 @@
 #define CIRCULARSCENEITEM_H
 #include <QGraphicsItem>
 
+class World;
+
 class CircularSceneItem : public QGraphicsObject
 {
 public:
@@ -9,6 +11,7 @@ public:
     QRectF boundingRect() const;
     bool collidesWithItem(const QGraphicsItem *other, Qt::ItemSelectionMode mode) const;
     bool contains(const QPointF &point) const;
+    bool canBeSeenByPlayer(World &world) const;
     QPointF getPos() const;
     static float m_radius;
 };

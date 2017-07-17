@@ -1,4 +1,7 @@
 #include "circularsceneitem.h"
+#include "world.h"
+#include "playersceneitem.h"
+
 float CircularSceneItem::m_radius = 10;
 
 CircularSceneItem::CircularSceneItem()
@@ -24,6 +27,21 @@ bool CircularSceneItem::collidesWithItem(const QGraphicsItem *other, Qt::ItemSel
 bool CircularSceneItem::contains(const QPointF &point) const
 {
     return containedInCircleAtOrigin(point,m_radius);
+}
+
+bool CircularSceneItem::canBeSeenByPlayer(World &world) const
+{
+    PlayerSceneItem *playerSceneItem = world.getPlayerSceneItem();
+    QPointF pos = playerSceneItem->getPos();
+    pos -= getPos();
+    if (containedInCircleAtOrigin(pos, playerSceneItem->getExplorationRadius() + m_radius))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 QPointF CircularSceneItem::getPos() const
