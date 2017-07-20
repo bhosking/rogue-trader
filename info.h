@@ -19,6 +19,7 @@ public:
     int getAgeOfInfo() const;
     int getPopulation() const;
     int getGP() const;
+    int getValue() const;
     std::string getAgeOfInfoAsString() const;
 private:
      Town *m_town;

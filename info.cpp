@@ -84,6 +84,11 @@ int Info::getGP() const
     return m_gp;
 }
 
+int Info::getValue() const
+{
+    return 50 + 50 * 1440 / (getAgeOfInfo() + 1440);
+}
+
 std::string Info::getAgeOfInfoAsString() const
 {
     return World::ticksToTime(getAgeOfInfo());
