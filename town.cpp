@@ -3,9 +3,10 @@
 #include "town.h"
 #include "townresource.h"
 #include "resource.h"
+#include "informationholder.h"
 
 Town::Town(std::vector<std::tuple<const Resource *, float, float> > &resourceRatesStock, int population, std::string &name)
-    :m_population(population), m_name(name), m_gp(100*population)
+    :m_population(population), m_name(name), m_gp(100*population), m_info(new InformationHolder)
 {
     for (std::tuple<const Resource *, float, float> resourceInits:resourceRatesStock)
     {

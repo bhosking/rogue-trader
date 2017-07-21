@@ -9,7 +9,7 @@
 
 class Resource;
 class TownResource;
-class Info;
+class InformationHolder;
 
 class Town : public CircularSceneItem, public UpdatableEntity
 {
@@ -30,8 +30,8 @@ private:
     void setWorkers();
     void consumeResources();
     void produceResources();
-    std::unordered_map<Town *, std::shared_ptr<const Info> > m_info;
     int m_gp;
+    InformationHolder *m_info;
 };
 
 #endif // TOWN_H

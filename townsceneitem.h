@@ -3,6 +3,8 @@
 #include "town.h"
 #include <QPointF>
 
+class Info;
+
 class TownSceneItem :public Town
 {
 public:
