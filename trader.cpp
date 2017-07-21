@@ -4,12 +4,12 @@
 #include "townresource.h"
 #include "resource.h"
 #include "config.h"
-#include "info.h"
+#include "informationholder.h"
 #include "world.h"
 
 Trader::Trader()
     :m_speed(1),m_atDestination(true),m_destination(nullptr),m_gp(0),m_foodPerDistance(1.0/1024),
-      m_energy(0),m_targetVector(0,0)
+      m_energy(0),m_targetVector(0,0), m_info(new InformationHolder)
 {
 
 }
@@ -153,6 +153,20 @@ int Trader::sell(const Resource *resource, int amount)
     return amount;
 }
 
+void Trader::buyInfo(Town *infoTown)
+{
+    Town *destinationTown = getDestinationTown();
+    if (isAtDestination() && destinationTown)
+    {
+
+    }
+}
+
+void Trader::sellInfo(Town *infoTown)
+{
+
+}
+
 void Trader::setInventoryResource(const Resource *resource, int value)
 {
     if(value==0)
@@ -213,29 +227,22 @@ std::string Trader::outPutInventoryAsString()
 
 const std::unordered_map<Town *, std::shared_ptr<const Info> > &Trader::getAllHeldInfo() const
 {
-    return m_info;
+    return m_info->getAllHeldInfo();
 }
 
 void Trader::addInfo(const std::shared_ptr<const Info> & newInfo)
 {
-    m_info[newInfo->getTown()] = newInfo;
+    m_info->addInfo(newInfo);
 }
 
 std::shared_ptr<const Info> Trader::addTownCurrentInfo(Town *town)
 {
-    addInfo(std::shared_ptr<const Info>(new Info(town, World::getWorld().getTick())));
-    return getHeldInfoOnTown(town);
+    return m_info->addTownCurrentInfo(town);
 }
 
 std::shared_ptr<const Info> Trader::getHeldInfoOnTown(Town * const town) const
 {
-    auto townInfo = m_info.find(town);
-    if(townInfo==m_info.end())
-    {
-        return std::shared_ptr<const Info>();
-    }
-    else
-        return std::shared_ptr<const Info>(townInfo->second);
+    return m_info->getHeldInfoOnTown(town);
 }
 
 float length(const QPointF &p)

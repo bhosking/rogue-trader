@@ -30,6 +30,7 @@ private:
     void setWorkers();
     void consumeResources();
     void produceResources();
+    std::unordered_map<Town *, std::shared_ptr<const Info> > m_info;
     int m_gp;
 };
 

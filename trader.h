@@ -10,6 +10,7 @@
 class Town;
 class Resource;
 class Info;
+class InformationHolder;
 
 class Trader : public CircularSceneItem, public UpdatableEntity
 {
@@ -33,6 +34,8 @@ public:
     void adjustGP(int change);
     virtual int buy(const Resource *resource, int amount);
     virtual int sell(const Resource *resource, int amount);
+    void buyInfo(Town *infoTown);
+    void sellInfo(Town *infoTown);
     void processTick(World &);
     std::string outPutInventoryAsString();
 
@@ -63,8 +66,8 @@ private:
     int m_gp;
     float m_foodPerDistance;
     float m_energy;
-    std::unordered_map<Town *, std::shared_ptr<const Info> > m_info;
     QPointF m_targetVector;
+    InformationHolder *m_info;
 };
 
 #endif // TRADER_H

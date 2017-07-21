@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     buyorsellwidget.cpp \
     inventoryscreen.cpp \
     aitrader.cpp \
-    carrier.cpp
+    carrier.cpp \
+    informationholder.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -62,7 +63,8 @@ HEADERS += \
     buyorsellwidget.h \
     inventoryscreen.h \
     aitrader.h \
-    carrier.h
+    carrier.h \
+    informationholder.h
 
 QT += svg
 
