@@ -255,64 +255,26 @@ void World::addTrader()
     trader->adjustInventoryResource(Config().getResource("Food"), 100);
     QPointF traderPos = getRandomPosition();
     addItemToWorld(trader, traderPos);
-    //Get the 4 closest towns. TODO clean this up.
-    TownSceneItem *closeTown1;
-    float distanceSquare1 = 81000000;
-    TownSceneItem *closeTown2;
-    float distanceSquare2 = 81000000;
-    TownSceneItem *closeTown3;
-    float distanceSquare3 = 81000000;
-    TownSceneItem *closeTown4;
-    float distanceSquare4 = 81000000;
-    for (TownSceneItem *town : getTownSceneItems())
+
+    if(!getTownSceneItems().empty())
     {
-        QPointF townVector = town->getPos() - traderPos;
-        float townVectorX = townVector.x();
-        float townVectorY = townVector.y();
-        float distanceSquare = townVectorX * townVectorX + townVectorY * townVectorY;
-        if (distanceSquare < distanceSquare4)
+        //get the 4 closest towns
+        std::vector<std::pair<float, TownSceneItem *> > townDistances;
+        for (TownSceneItem *town : getTownSceneItems())
         {
-            if (distanceSquare < distanceSquare3)
-            {
-                closeTown4 = closeTown3;
-                distanceSquare4 = distanceSquare3;
-                if (distanceSquare < distanceSquare2)
-                {
-                    closeTown3 = closeTown2;
-                    distanceSquare3 = distanceSquare2;
-                    if (distanceSquare < distanceSquare1)
-                    {
-                        closeTown2 = closeTown1;
-                        distanceSquare2 = distanceSquare1;
-                        closeTown1 = town;
-                        distanceSquare1 = distanceSquare;
-                    }
-                    else
-                    {
-                        closeTown2 = town;
-                        distanceSquare2 = distanceSquare;
-                    }
-                }
-                else
-                {
-                    closeTown3 = town;
-                    distanceSquare3 = distanceSquare;
-                }
-
-            }
-            else
-            {
-                closeTown4 = town;
-                distanceSquare4 = distanceSquare;
-            }
+            QPointF dv = town->getPos()- traderPos;
+            townDistances.push_back(std::pair<float, TownSceneItem *>(QPointF::dotProduct(dv,dv),town));
         }
-    }
 
-    trader->addInfo(std::shared_ptr<const Info>(new Info(closeTown1, 0)));
-    trader->addInfo(std::shared_ptr<const Info>(new Info(closeTown2, 0)));
-    trader->addInfo(std::shared_ptr<const Info>(new Info(closeTown3, 0)));
-    trader->addInfo(std::shared_ptr<const Info>(new Info(closeTown4, 0)));
-    trader->setDestinationTown(closeTown1);
+        std::sort(townDistances.begin(),townDistances.end());
+
+        for(int i = 0; i < 4 && i < townDistances.size();++i)
+        {
+            trader->addInfo(std::shared_ptr<const Info>(new Info(townDistances.at(i).second, 0)));
+        }
+
+        trader->setDestinationTown(townDistances.at(0).second);
+    }
 }
 
 void World::addDaysToStringStream(int days, std::stringstream *ss)
