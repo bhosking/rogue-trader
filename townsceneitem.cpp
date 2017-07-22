@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QBrush>
 #include <QRadialGradient>
+#include <QGraphicsSceneHoverEvent>
 #include "world.h"
 #include "playersceneitem.h"
 #include "info.h"
@@ -41,21 +42,41 @@ void TownSceneItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void TownSceneItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
+
+}
+
+void TownSceneItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+{
     if(World::getWorld().getPlayerSceneItem()->getHeldInfoOnTown(this))
     {
-        m_showPrices = true;
-        prepareGeometryChange();
-        setZValue(100);
-        update();
+        if(m_showPrices&&!containedInCircleAtOrigin(event->pos(),m_radius+2.0))
+        {
+            m_showPrices = false;
+            prepareGeometryChange();
+            setZValue(1);
+            update();
+            event->ignore();
+        }
+        else if(!m_showPrices&&containedInCircleAtOrigin(event->pos(),m_radius+2.0))
+        {
+            m_showPrices = true;
+            prepareGeometryChange();
+            setZValue(100);
+            update();
+        }
     }
+
 }
 
 void TownSceneItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    m_showPrices = false;
-    prepareGeometryChange();
-    setZValue(1);
-    update();
+    if(m_showPrices)
+    {
+        m_showPrices = false;
+        prepareGeometryChange();
+        setZValue(1);
+        update();
+    }
 }
 
 void TownSceneItem::playerKnows()
