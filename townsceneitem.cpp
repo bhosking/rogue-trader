@@ -11,6 +11,7 @@ TownSceneItem::TownSceneItem(std::vector<std::tuple<const Resource *, float, flo
 {
     setAcceptHoverEvents(true);
     setVisible(false);
+    setZValue(1.5);
 }
 
 QRectF TownSceneItem::boundingRect() const
@@ -74,7 +75,7 @@ void TownSceneItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     {
         m_showPrices = false;
         prepareGeometryChange();
-        setZValue(1);
+        setZValue(1.5);
         update();
     }
 }

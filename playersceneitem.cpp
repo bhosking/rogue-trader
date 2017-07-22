@@ -10,7 +10,7 @@ PlayerSceneItem::PlayerSceneItem()
     :m_explorationRadius(20)
 {
     setBoundingRegionGranularity(0.04);
-    setZValue(2);
+    setZValue(2.5);
 }
 
 float PlayerSceneItem::getExplorationRadius() const

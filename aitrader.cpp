@@ -7,7 +7,7 @@
 
 AITrader::AITrader()
 {
-
+    setZValue(0.5);
 }
 
 void AITrader::makeTrade()

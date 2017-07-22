@@ -8,6 +8,7 @@ Map::Map()
     m_map->fill(QColor(0xEE,0xEE,0xAA,0xFF));
     setPixmap(*m_map);
     setTransformationMode(Qt::SmoothTransformation);
+    setZValue(2);
 }
 
 Map::~Map()
