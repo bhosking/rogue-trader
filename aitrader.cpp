@@ -123,5 +123,5 @@ void AITrader::processTick(World &world)
 {
     Trader::processTick(world);
     move(getSpeed());
-    //setVisible(canBeSeenByPlayer(world));
+    setVisible(canBeSeenByPlayer(world));
 }
