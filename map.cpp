@@ -19,10 +19,14 @@ Map::~Map()
 void Map::explore(QPointF pos, float radius)
 {
     QPainter p(m_map);
-    p.setCompositionMode(QPainter::CompositionMode_Source);
+    p.setCompositionMode(QPainter::CompositionMode_DestinationIn);
     p.setRenderHint(QPainter::Antialiasing);
-    p.setPen(Qt::transparent);
-    p.setBrush(QBrush(Qt::transparent,Qt::SolidPattern));
+    p.setPen(Qt::NoPen);
+    QRadialGradient gradient(pos,radius);
+    gradient.setColorAt(0,Qt::transparent);
+    gradient.setColorAt(0.8,Qt::transparent);
+    gradient.setColorAt(1,QColor(0xEE,0xEE,0xAA,0xFF));
+    p.setBrush(QBrush(gradient));
     p.drawEllipse(pos,radius,radius);
     setPixmap(*m_map);
 }

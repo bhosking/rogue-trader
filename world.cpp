@@ -1,5 +1,6 @@
 #include <QGraphicsSceneMouseEvent>
 #include <sstream>
+#include <QPainter>
 #include "world.h"
 #include "map.h"
 #include "config.h"
@@ -13,6 +14,7 @@ World* World::m_instance = nullptr;
 World::World()
     :m_worldScene(new WorldScene()),
       m_map(new Map()),
+      m_fog(new QGraphicsPixmapItem()),
       m_playerSceneItem(new PlayerSceneItem()),
       m_tick(0),
       m_rng((std::random_device())())
@@ -24,6 +26,14 @@ World::World()
     addItemToWorld(m_map,QPointF(0,0));
 
     addItemToWorld(m_playerSceneItem,QPointF(50,50));
+
+
+    m_fog->setOffset(-512,-512);
+    m_fog->setZValue(1);
+
+    createFog(m_playerSceneItem->getExplorationRadius());
+
+    addItemToWorld(m_fog,m_playerSceneItem->pos());
 
     for (int i=0; i < 10; i++)
     {
@@ -110,6 +120,11 @@ TownSceneItem *World::getTownSceneItemUnderMouse(QGraphicsSceneMouseEvent *event
     return townUnderMouse;
 }
 
+void World::setFogPosition(QPointF pos)
+{
+    m_fog->setPos(pos);
+}
+
 void World::processTick(World &)
 {
     m_tick++;
@@ -167,7 +182,7 @@ std::string World::ticksToTime(int ticks, TimeFormat type)
 
 QPointF World::getRandomPosition(float padding)
 {
-    std::uniform_real_distribution<double> distribution(10.0,502.0);
+    std::uniform_real_distribution<double> distribution(40.0,472.0);
     QPointF newLocation;
     bool tooClose;
     do
@@ -235,6 +250,27 @@ void World::addTrader()
 
         trader->setDestinationTown(townDistances.at(0).second);
     }
+}
+
+void World::createFog(float sightRadius)
+{
+    //make fog
+    QPixmap fogPixmap(1024,1024);
+    fogPixmap.fill(QColor(0x44,0x44,0x44,0xFE));
+    fogPixmap.fill(QColor(0x44,0x44,0x44,0xFF));
+
+    QPainter p(&fogPixmap);
+    p.setCompositionMode(QPainter::CompositionMode_Source);
+    p.setRenderHint(QPainter::Antialiasing);
+    p.setPen(Qt::NoPen);
+    QRadialGradient gradient(-m_fog->offset(),sightRadius);
+    gradient.setColorAt(0,Qt::transparent);
+    gradient.setColorAt(0.8,Qt::transparent);
+    gradient.setColorAt(1,QColor(0x44,0x44,0x44,0xFF));
+    p.setBrush(QBrush(gradient));
+    p.drawEllipse(-m_fog->offset(),sightRadius,sightRadius);
+
+    m_fog->setPixmap(fogPixmap);
 }
 
 void World::addDaysToStringStream(int days, std::stringstream *ss)

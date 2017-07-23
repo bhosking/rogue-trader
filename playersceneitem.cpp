@@ -7,7 +7,7 @@
 #include "townsceneitem.h"
 
 PlayerSceneItem::PlayerSceneItem()
-    :m_explorationRadius(20)
+    :m_explorationRadius(40)
 {
     setBoundingRegionGranularity(0.04);
     setZValue(2.5);
@@ -100,6 +100,7 @@ void PlayerSceneItem::processTick(World &world)
     {    
         move(getSpeed());
         world.getMap()->explore(scenePos(),getExplorationRadius());
+        world.setFogPosition(pos());
     }
     Trader::processTick(world);
     update();

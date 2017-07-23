@@ -8,6 +8,7 @@
 
 class QGraphicsSceneMouseEvent;
 class QGraphicsItem;
+class QGraphicsPixmapItem;
 class Map;
 class TownSceneItem;
 class PlayerSceneItem;
@@ -72,6 +73,8 @@ public:
      */
     TownSceneItem *getTownSceneItemUnderMouse(QGraphicsSceneMouseEvent *event);
 
+    void setFogPosition(QPointF pos);
+
     void processTick(World &);
     static World &getWorld();
     static std::string ticksToTime(int ticks,TimeFormat type = TimeFormat::MOST_SIGNIFICANT|TimeFormat::DAYS_HOURS_AND_MINUTES|TimeFormat::NON_ZERO);
@@ -79,6 +82,7 @@ private:
     QPointF getRandomPosition(float padding = 0);
     void addTown();
     void addTrader();
+    void createFog(float sightRadius);
     static void addDaysToStringStream(int days, std::stringstream * ss);
     static void addHoursToStringStream(int hours, std::stringstream * ss);
     static void addMinutesToStringStream(int mins, std::stringstream * ss);
@@ -86,6 +90,7 @@ private:
     World();
     WorldScene * m_worldScene;
     Map * m_map;
+    QGraphicsPixmapItem * m_fog;
     PlayerSceneItem * m_playerSceneItem;
     std::vector<UpdatableEntity*> m_updatableEntities;
     std::vector<TownSceneItem*> m_townSceneItems;
