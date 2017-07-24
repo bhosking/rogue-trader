@@ -50,6 +50,16 @@ int Town::getGP() const
     return m_gp;
 }
 
+std::shared_ptr<const Info> Town::getHeldInfoOnTown(Town *town) const
+{
+    return m_info->getHeldInfoOnTown(town);
+}
+
+void Town::addInfo(const std::shared_ptr<const Info> &newInfo)
+{
+    m_info->addInfo(newInfo);
+}
+
 void Town::adjustGP(int change)
 {
     m_gp += change;

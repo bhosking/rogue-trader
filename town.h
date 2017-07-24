@@ -10,6 +10,7 @@
 class Resource;
 class TownResource;
 class InformationHolder;
+class Info;
 
 class Town : public CircularSceneItem, public UpdatableEntity
 {
@@ -20,6 +21,8 @@ public:
     int getPopulation() const;
     const std::string & getName() const;
     int getGP() const;
+    std::shared_ptr<const Info> getHeldInfoOnTown(Town *town) const;
+    void addInfo(const std::shared_ptr<const Info> &newInfo);
     void adjustGP(int change);
     void adjustPopulation(int change);
     void processTick(World &);
