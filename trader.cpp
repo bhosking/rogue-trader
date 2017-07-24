@@ -5,6 +5,7 @@
 #include "resource.h"
 #include "config.h"
 #include "informationholder.h"
+#include "info.h"
 #include "world.h"
 
 Trader::Trader()
@@ -156,15 +157,33 @@ int Trader::sell(const Resource *resource, int amount)
 void Trader::buyInfo(Town *infoTown)
 {
     Town *destinationTown = getDestinationTown();
-    if (isAtDestination() && destinationTown)
+    if (isAtDestination() && destinationTown && destinationTown != infoTown)
     {
-
+        std::shared_ptr<const Info> theirInfo = destinationTown->getHeldInfoOnTown(infoTown);
+        int buyValue = theirInfo->getValue();
+        if (buyValue > 0 && buyValue <= getGP()) {
+            adjustGP(-1 * buyValue);
+            addInfo(theirInfo);
+            destinationTown->adjustGP(buyValue);
+        }
+        addTownCurrentInfo(destinationTown);
     }
 }
 
 void Trader::sellInfo(Town *infoTown)
 {
-
+    Town *destinationTown = getDestinationTown();
+    if (isAtDestination() && destinationTown && destinationTown != infoTown)
+    {
+        std::shared_ptr<const Info> myInfo = getHeldInfoOnTown(infoTown);
+        int sellValue = myInfo->getValue() - destinationTown->getHeldInfoOnTown(infoTown)->getValue();
+        if (sellValue > 0 && sellValue <= destinationTown->getGP()) {
+            destinationTown->addInfo(myInfo);
+            destinationTown->adjustGP(-1 * sellValue);
+            adjustGP(sellValue);
+        }
+        addTownCurrentInfo(destinationTown);
+    }
 }
 
 void Trader::setInventoryResource(const Resource *resource, int value)
