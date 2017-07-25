@@ -86,7 +86,7 @@ int Info::getGP() const
 
 int Info::getValue() const
 {
-    return this ? 50 + 50 * 1440 / (getAgeOfInfo() + 1440) : 0;
+    return 50 + 50 * 1440 / (getAgeOfInfo() + 1440);
 }
 
 std::string Info::getAgeOfInfoAsString() const
