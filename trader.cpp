@@ -160,11 +160,13 @@ void Trader::buyInfo(Town *infoTown)
     if (isAtDestination() && destinationTown && destinationTown != infoTown)
     {
         std::shared_ptr<const Info> theirInfo = destinationTown->getHeldInfoOnTown(infoTown);
+        if (theirInfo) {
         int buyValue = theirInfo->getValue();
         if (buyValue > 0 && buyValue <= getGP()) {
             adjustGP(-1 * buyValue);
             addInfo(theirInfo);
             destinationTown->adjustGP(buyValue);
+        }
         }
         addTownCurrentInfo(destinationTown);
     }
@@ -176,11 +178,17 @@ void Trader::sellInfo(Town *infoTown)
     if (isAtDestination() && destinationTown && destinationTown != infoTown)
     {
         std::shared_ptr<const Info> myInfo = getHeldInfoOnTown(infoTown);
-        int sellValue = myInfo->getValue() - destinationTown->getHeldInfoOnTown(infoTown)->getValue();
+        if (myInfo) {
+            int sellValue = myInfo->getValue();
+            std::shared_ptr<const Info> theirInfo = destinationTown->getHeldInfoOnTown(infoTown);
+            if (theirInfo) {
+                 sellValue -= theirInfo->getValue();
+            }
         if (sellValue > 0 && sellValue <= destinationTown->getGP()) {
             destinationTown->addInfo(myInfo);
             destinationTown->adjustGP(-1 * sellValue);
             adjustGP(sellValue);
+        }
         }
         addTownCurrentInfo(destinationTown);
     }
