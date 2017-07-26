@@ -26,11 +26,11 @@ signals:
     void sellWidgetClicked(const Resource * resource, int amount);
 private:
     QLabel * m_townNameLabel;
-    std::vector<BuyOrSellWidget*> m_buyWidgets;
+    std::vector<BuyOrSellWidget*> m_buyOrSellWidgets;
     std::vector<BuyOrSellWidget*> m_sellWidgets;
     QTabWidget * m_tabWidget;
-    QGridLayout * m_buyTab;
-    QGridLayout * m_sellTab;
+    QGridLayout * m_buyAndSellResourcesTab;
+    QGridLayout * m_buyAndSellInfoTab;
 };
 
 #endif // SIDEWINDOW_H

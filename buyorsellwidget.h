@@ -16,9 +16,8 @@ class BuyOrSellWidget : public QWidget
 
     Q_OBJECT
 public:
-    enum class Type{BUY,SELL};
 
-    explicit BuyOrSellWidget(const Resource * resource, Type type, QWidget *parent = 0);
+    explicit BuyOrSellWidget(const Resource * resource, QWidget *parent = 0);
     int getSelectedAmount();
     void setTownStockAmount(int newTownStockAmount);
     void setTownStock(const std::pair<const Resource *, int> &stock);
@@ -36,9 +35,10 @@ private:
     int m_townPopulation;
     int m_playerStock;
     int m_selectedAmount;
-    Type m_type;
 signals:
-    void buyOrSellAmountOfResource(const Resource * resource, int amount);
+    void buyAmountOfResource(const Resource * resource, int amount);
+    void sellAmountOfResource(const Resource * resource, int amount);
+
 public slots:
     void setSelectedAmount(int newAmount);
     void buyOrSellButtonPressed();

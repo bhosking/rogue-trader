@@ -12,8 +12,8 @@
 SideWindow::SideWindow()
     :m_townNameLabel(new QLabel("<b>On the road again...</b>")),
       m_tabWidget(new QTabWidget()),
-      m_buyTab(new QGridLayout()),
-      m_sellTab(new QGridLayout)
+      m_buyAndSellResourcesTab(new QGridLayout()),
+      m_buyAndSellInfoTab(new QGridLayout)
 {
     m_townNameLabel->setAlignment(Qt::AlignTop|Qt::AlignHCenter);
     m_townNameLabel->setStyleSheet("font: 20pt;");
@@ -21,11 +21,11 @@ SideWindow::SideWindow()
     vBoxLayout->addWidget(m_townNameLabel);
 
     QWidget * tab = new QWidget();
-    tab->setLayout(m_buyTab);
-    m_tabWidget->addTab(tab,"Buy");
+    tab->setLayout(m_buyAndSellResourcesTab);
+    m_tabWidget->addTab(tab,"Resources");
     tab = new QWidget();
-    tab->setLayout(m_sellTab);
-    m_tabWidget->addTab(tab,"Sell");
+    tab->setLayout(m_buyAndSellInfoTab);
+    m_tabWidget->addTab(tab,"Info");
 
     vBoxLayout->addWidget(m_tabWidget);
     setLayout(vBoxLayout);
@@ -36,12 +36,10 @@ SideWindow::SideWindow()
     Config config = Config();
     for (const Resource *resource : config.getResources())
     {
-        m_buyWidgets.push_back(new BuyOrSellWidget(resource, BuyOrSellWidget::Type::BUY, this));
-        connect(m_buyWidgets.back(),SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(buyWidgetClicked(const Resource*,int)));
-        m_buyTab->addWidget(m_buyWidgets.back());
-        m_sellWidgets.push_back(new BuyOrSellWidget(resource, BuyOrSellWidget::Type::SELL, this));
-        connect(m_sellWidgets.back(),SIGNAL(buyOrSellAmountOfResource(const Resource *, int)),this,SIGNAL(sellWidgetClicked(const Resource*,int)));
-        m_sellTab->addWidget(m_sellWidgets.back());
+        m_buyOrSellWidgets.push_back(new BuyOrSellWidget(resource, this));
+        connect(m_buyOrSellWidgets.back(),SIGNAL(buyAmountOfResource(const Resource *, int)),this,SIGNAL(buyWidgetClicked(const Resource*,int)));
+        connect(m_buyOrSellWidgets.back(),SIGNAL(sellAmountOfResource(const Resource *, int)),this,SIGNAL(sellWidgetClicked(const Resource*,int)));
+        m_buyAndSellResourcesTab->addWidget(m_buyOrSellWidgets.back());
     }
 }
 
@@ -52,33 +50,27 @@ void SideWindow::setInfo(std::shared_ptr<const Info> newInfo, const std::unorder
     //Note these resources must all be present in the correct order
     const std::vector<std::pair<const Resource *, int> >  & resources = newInfo->getResources();
     int population = newInfo->getPopulation();
-    for(unsigned i = 0;i < resources.size();++i)
+    const std::vector<const Resource *> allResources = Config().getResources();
+    for(unsigned i = 0;i < allResources.size();++i)
     {
-        m_buyWidgets[i]->setTownPopulation(population);
-        m_sellWidgets[i]->setTownPopulation(population);
-        if (resources[i].second > 0)
-        {
-            m_buyWidgets[i]->setTownStock(resources[i]);
-            m_buyWidgets[i]->setSelectedAmount(0);
-            m_buyWidgets[i]->show();
-        }
-        else
-        {
-            m_buyWidgets[i]->hide();
-        }
-        std::unordered_map<const Resource *, int>::const_iterator inventoryResource = inventory.find(resources[i].first);
-        if((inventoryResource!=inventory.end())&&((*inventoryResource).second > 0))
-        {
-            m_sellWidgets[i]->setPlayerStockAmount((*inventoryResource).second);
-            m_sellWidgets[i]->setSelectedAmount(0);
-            m_sellWidgets[i]->setTownStock(resources[i]);
-            m_sellWidgets[i]->show();
-        }
-        else
-        {
-            m_sellWidgets[i]->hide();
-        }
+        m_buyOrSellWidgets[i]->setTownPopulation(population);
 
+        std::unordered_map<const Resource *, int>::const_iterator inventoryResource = inventory.find(allResources[i]);
+        //if either the town or the player has the resource
+        if (resources[i].second > 0||(inventoryResource!=inventory.end()&&(*inventoryResource).second > 0))
+        {
+            m_buyOrSellWidgets[i]->setTownStock(resources[i]);
+            if(inventoryResource!=inventory.end())
+                m_buyOrSellWidgets[i]->setPlayerStockAmount((*inventoryResource).second);
+            else
+                m_buyOrSellWidgets[i]->setPlayerStockAmount(0);
+            m_buyOrSellWidgets[i]->setSelectedAmount(0);
+            m_buyOrSellWidgets[i]->show();
+        }
+        else
+        {
+            m_buyOrSellWidgets[i]->hide();
+        }
     }
 }
 
