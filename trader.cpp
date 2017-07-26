@@ -311,3 +311,10 @@ void Trader::move(float speed)
     if(arrived)
         arrivedAtDestination();
 }
+
+void Trader::sellAllInfo()
+{
+    for (std::pair<Town *, std::shared_ptr<const Info> > townInfo : getAllHeldInfo()) {
+        sellInfo(townInfo.first);
+    }
+}

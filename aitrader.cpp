@@ -15,6 +15,7 @@ void AITrader::makeTrade()
     Town *thisTown = getDestinationTown();
     if (isAtDestination() && thisTown)
     {
+        sellAllInfo();
         addTownCurrentInfo(thisTown);
         int sold = -1;
         while(!getInventory().empty() && (sold != 0))

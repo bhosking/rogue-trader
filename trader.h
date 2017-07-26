@@ -58,6 +58,8 @@ public:
     virtual void arrivedAtDestination() = 0;
 signals:
     void inventoryChanged();
+protected:
+    void sellAllInfo();
 private:
     float m_speed;
     bool m_atDestination;
