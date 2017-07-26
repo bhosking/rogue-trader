@@ -52,7 +52,7 @@ std::string Info::getTownNameStockAndMedianPricesAsString() const
     ss << m_town->getName() << " (" << getPopulation() << ") " << getGP() << "g\n";
     for(std::pair<const Resource *,int> resourceStockPair: getResources())
     {
-        ss << resourceStockPair.first->getName() << "(" <<resourceStockPair.second << ") "
+        ss << resourceStockPair.first->getName() << " (" <<resourceStockPair.second << ") "
            << (resourceStockPair.first->inPrice(resourceStockPair.second, getPopulation())
                +resourceStockPair.first->outPrice(resourceStockPair.second, getPopulation()))/2 <<"g\n";
     }

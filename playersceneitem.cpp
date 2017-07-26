@@ -7,7 +7,7 @@
 #include "townsceneitem.h"
 
 PlayerSceneItem::PlayerSceneItem()
-    :m_explorationRadius(40)
+    :m_explorationRadius(100)
 {
     setBoundingRegionGranularity(0.04);
     setZValue(2.5);

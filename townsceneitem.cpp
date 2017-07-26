@@ -100,12 +100,14 @@ void TownSceneItem::processTick(World &world)
 
 void TownSceneItem::paintPrices(QPainter *painter, std::shared_ptr<const Info> &info)
 {
-    painter->setPen(QPen(Qt::black,2));
+    painter->setFont(QFont("times new roman",12));
+    painter->setPen(QPen(Qt::white,2));
     if(info!=m_currentInfo)
     {
         updatePricesDisplayRectangle(painter,info);
         m_currentInfo = info;
     }
+    painter->setBrush(QColor(0x66,0x66,0x22,0x66));
     painter->drawRoundedRect(pricesRectangle,5,5);
     painter->drawText(pricesRectangle.adjusted(5,5,-5,-5),QString(info->getTownNameStockAndMedianPricesAsString().c_str()));
 }
