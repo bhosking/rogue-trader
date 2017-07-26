@@ -10,10 +10,13 @@
 #include "aitrader.h"
 #include "info.h"
 
+#define WORLD_WIDTH 6000
+#define WORLD_HEIGHT 6000
+
 World* World::m_instance = nullptr;
 World::World()
     :m_worldScene(new WorldScene()),
-      m_map(new Map()),
+      m_map(new Map(WORLD_HEIGHT,WORLD_WIDTH)),
       m_fog(new QGraphicsPixmapItem()),
       m_playerSceneItem(new PlayerSceneItem()),
       m_tick(0),
@@ -22,13 +25,14 @@ World::World()
     Config config = Config();
 
     m_worldScene->setBackgroundBrush(Qt::black);
+    m_worldScene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
-    addItemToWorld(m_map,QPointF(0,0));
+    m_map->addToScene(m_worldScene);
 
     addItemToWorld(m_playerSceneItem,QPointF(50,50));
 
 
-    m_fog->setOffset(-512,-512);
+    m_fog->setOffset(-WORLD_WIDTH,-WORLD_HEIGHT);
     m_fog->setZValue(1);
 
     createFog(m_playerSceneItem->getExplorationRadius());
@@ -255,7 +259,7 @@ void World::addTrader()
 void World::createFog(float sightRadius)
 {
     //make fog
-    QPixmap fogPixmap(1024,1024);
+    QPixmap fogPixmap(2*WORLD_WIDTH,2*WORLD_HEIGHT);
     fogPixmap.fill(QColor(0x44,0x44,0x44,0xFE));
     fogPixmap.fill(QColor(0x44,0x44,0x44,0xFF));
 

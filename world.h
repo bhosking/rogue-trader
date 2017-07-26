@@ -97,6 +97,8 @@ private:
     int m_tick;
     static World * m_instance;
     std::mt19937 m_rng;
+    int m_width;
+    int m_height;
 };
 
 #endif // WORLD_H
