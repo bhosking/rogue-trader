@@ -29,7 +29,7 @@ World::World()
 
     m_map->addToScene(m_worldScene);
 
-    addItemToWorld(m_playerSceneItem,QPointF(50,50));
+    addItemToWorld(m_playerSceneItem,QPointF(WORLD_WIDTH/2,WORLD_HEIGHT/2));
 
 
     m_fog->setOffset(-WORLD_WIDTH,-WORLD_HEIGHT);
@@ -39,11 +39,11 @@ World::World()
 
     addItemToWorld(m_fog,m_playerSceneItem->pos());
 
-    for (int i=0; i < 10; i++)
+    for (int i=0; i < (WORLD_WIDTH/200) * (WORLD_HEIGHT/200); i++)
     {
         addTown();
     }
-    for (int i=0; i < 10; i++)
+    for (int i=0; i < (WORLD_WIDTH/200) * (WORLD_HEIGHT/200); i++)
     {
         addTrader();
     }
@@ -186,13 +186,15 @@ std::string World::ticksToTime(int ticks, TimeFormat type)
 
 QPointF World::getRandomPosition(float padding)
 {
-    std::uniform_real_distribution<double> distribution(40.0,472.0);
+    std::uniform_real_distribution<double> distributionX(50,WORLD_WIDTH-50);
+    std::uniform_real_distribution<double> distributionY(50,WORLD_HEIGHT-50);
+
     QPointF newLocation;
     bool tooClose;
     do
     {
-        newLocation.setX(distribution(m_rng));
-        newLocation.setY(distribution(m_rng));
+        newLocation.setX(distributionX(m_rng));
+        newLocation.setY(distributionY(m_rng));
         tooClose = false;
         if (padding > 0)
         {

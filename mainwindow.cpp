@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setCentralWidget(widget);
     m_worldViewer->setScene(World::getWorld().getWorldScene());
     m_worldViewer->setDragMode(QGraphicsView::ScrollHandDrag);
+    m_worldViewer->centerOn(World::getWorld().getPlayerSceneItem());
     connect(m_gameTimer,SIGNAL(timeout()),this,SLOT(tickGame()));
     connect(World::getWorld().getPlayerSceneItem(),SIGNAL(arrivedAtTown(std::shared_ptr<const Info>, const std::unordered_map<const Resource *, int> &)),this,SLOT(pause()));
     connect(World::getWorld().getPlayerSceneItem(),SIGNAL(arrivedAtTown(std::shared_ptr<const Info>, const std::unordered_map<const Resource *, int> &)),m_sideWindow,SLOT(playerArrivedAtTown(std::shared_ptr<const Info>, const std::unordered_map<const Resource *, int> &)));
