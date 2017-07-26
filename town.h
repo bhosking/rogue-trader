@@ -21,6 +21,7 @@ public:
     int getPopulation() const;
     const std::string & getName() const;
     int getGP() const;
+    const std::unordered_map<Town *, std::shared_ptr<const Info> > &getAllHeldInfo() const;
     std::shared_ptr<const Info> getHeldInfoOnTown(Town *town) const;
     void addInfo(const std::shared_ptr<const Info> &newInfo);
     void adjustGP(int change);

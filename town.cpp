@@ -50,6 +50,11 @@ int Town::getGP() const
     return m_gp;
 }
 
+const std::unordered_map<Town *, std::shared_ptr<const Info> > &Town::getAllHeldInfo() const
+{
+    return m_info->getAllHeldInfo();
+}
+
 std::shared_ptr<const Info> Town::getHeldInfoOnTown(Town *town) const
 {
     return m_info->getHeldInfoOnTown(town);

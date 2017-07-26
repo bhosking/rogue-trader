@@ -83,6 +83,7 @@ void AITrader::makeTrade()
             // No good trades available from this town, go exploring?
             //go to the town with the largest relative price difference (cheaper than here)
             bestOtherTown = cheapestOtherTown;
+            buySomeInfo();
         }
         if (bestOtherTown == nullptr)
         {
@@ -125,4 +126,35 @@ void AITrader::processTick(World &world)
     Trader::processTick(world);
     move(getSpeed());
     setVisible(canBeSeenByPlayer(world));
+}
+
+void AITrader::buySomeInfo()
+{
+    Town *destinationTown = getDestinationTown();
+    if (isAtDestination() && destinationTown)
+    {
+        std::vector<std::pair<float, Town *> > distanceUnknownTowns;
+        std::vector<std::pair<int, Town *> > ageDifferenceKnownTowns;
+        QPointF traderPos = getPos();
+        for (std::pair<Town *, std::shared_ptr<const Info> > townInfo : destinationTown->getAllHeldInfo()) {
+            Town *otherTown = townInfo.first;
+            std::shared_ptr<const Info> myInfo = getHeldInfoOnTown(otherTown);
+            if (myInfo) {
+                int ageDifference = townInfo.second->getTick() - myInfo->getTick();
+                if (ageDifference > 0) {
+                    ageDifferenceKnownTowns.push_back(std::pair<int, Town *>((ageDifference), otherTown));
+                }
+            }
+            else {
+                QPointF dv = otherTown->getPos()- traderPos;
+                distanceUnknownTowns.push_back(std::pair<float, Town *>(QPointF::dotProduct(dv,dv),otherTown));
+            }
+        }
+        if (!distanceUnknownTowns.empty()) {
+            buyInfo(std::min_element(distanceUnknownTowns.begin(), distanceUnknownTowns.end())->second);
+        }
+        else if (!ageDifferenceKnownTowns.empty()) {
+            buyInfo(std::max_element(ageDifferenceKnownTowns.begin(), ageDifferenceKnownTowns.end())->second);
+        }
+    }
 }
