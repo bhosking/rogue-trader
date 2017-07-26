@@ -24,7 +24,7 @@ std::shared_ptr<const Info> InformationHolder::addTownCurrentInfo(Town *town)
     return getHeldInfoOnTown(town);
 }
 
-std::shared_ptr<const Info> InformationHolder::getHeldInfoOnTown(Town * const town) const
+std::shared_ptr<const Info> InformationHolder::getHeldInfoOnTown(Town * town) const
 {
     auto townInfo = m_info.find(town);
     if(townInfo==m_info.end())

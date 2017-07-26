@@ -267,7 +267,7 @@ std::shared_ptr<const Info> Trader::addTownCurrentInfo(Town *town)
     return m_info->addTownCurrentInfo(town);
 }
 
-std::shared_ptr<const Info> Trader::getHeldInfoOnTown(Town * const town) const
+std::shared_ptr<const Info> Trader::getHeldInfoOnTown(Town * town) const
 {
     return m_info->getHeldInfoOnTown(town);
 }
