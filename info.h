@@ -20,6 +20,8 @@ public:
     int getPopulation() const;
     int getGP() const;
     int getValue() const;
+    int getProfit(const Info &oldInfo, const Info &tradeInfo) const;
+    std::vector<std::pair<const Resource *, int> > &getShoppingList(const Info &otherInfo, int gp) const;
     std::string getAgeOfInfoAsString() const;
 private:
      Town *m_town;

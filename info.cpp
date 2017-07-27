@@ -89,6 +89,38 @@ int Info::getValue() const
     return 50 + 50 * 1440 / (getAgeOfInfo() + 1440);
 }
 
+int Info::getProfit(const Info &oldInfo, const Info &tradeInfo) const
+{
+    int oldGP = oldInfo.getGP();
+    int newGP = getGP();
+    int tradeGP = tradeInfo.getGP();
+    std::vector<std::pair<const Resource *, int> > oldShoppingList = tradeInfo.getShoppingList(oldInfo, oldGP);
+    std::vector<std::pair<const Resource *, int> > oldShoppingListRev = oldInfo.getShoppingList(tradeInfo, tradeGP);
+    std::vector<std::pair<const Resource *, int> > newShoppingList = tradeInfo.getShoppingList(*this, newGP);
+    std::vector<std::pair<const Resource *, int> > newShoppingListRev = getShoppingList(tradeInfo, tradeGP);
+}
+
+std::vector<std::pair<const Resource *, int> > &Info::getShoppingList(const Info &otherInfo, int gp) const
+{
+    int pop = getPopulation();
+    int otherPop = otherInfo.getPopulation();
+    std::vector<std::pair<float, const Resource *> > profitResources;
+    std::vector<std::pair<const Resource *, int> > otherResources = otherInfo.getResources();
+    std::vector<std::pair<const Resource *, int> > resources = getResources();
+    for (std::vector<int>::size_type i = 0; i != resources.size(); i++)
+    {
+        std::pair<const Resource *, int> stockResource = resources[i];
+        const Resource *resource = stockResource.first;
+        int stock = stockResource.second;
+        float profit = resource->getRelativeDifference(otherResources[i].second, otherPop, stock, pop);
+        if (profit > 0)
+        {
+            profitResources.push_back(std::pair<float, const Resource *>(profit, resource));
+        }
+    }
+    std::sort(profitResources.begin(),profitResources.end());
+}
+
 std::string Info::getAgeOfInfoAsString() const
 {
     return World::ticksToTime(getAgeOfInfo());
