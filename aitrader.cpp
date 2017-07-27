@@ -30,6 +30,7 @@ void AITrader::makeTrade()
             buy(foodResource, 10 - foodAmount);
         }
         int gp = getGP();
+        float logGP = log2(gp);
         //Naively calculate greatest profit -> largest relative price difference
         Town *bestOtherTown = nullptr;
         const Resource *bestResource = nullptr;
@@ -57,14 +58,22 @@ void AITrader::makeTrade()
                         int otherStock = otherTownInfo->getResources()[i].second;
                         int otherTownPopulation = otherTownInfo->getPopulation();
                         float profit = resource->getRelativeDifference(thisStock, thisTownPopulation, otherStock, otherTownPopulation);
-                        if (profit > bestProfit)
+                        if (profit > 0)
                         {
-                            bestOtherTown = otherTown;
-                            bestResource = resource;
-                            bestThisStock = thisStock;
-                            bestOtherStock = otherStock;
-                            bestOtherTownPopulation = otherTownPopulation;
-                            bestProfit = profit;
+                            int otherTownGP = otherTownInfo->getGP();
+                            if (otherTownGP > 0) {
+                                float maxProfitFromTown = log2(otherTownGP) - logGP;
+                                float maxProfit = std::min(profit, maxProfitFromTown);
+                                if (maxProfit > bestProfit)
+                                {
+                                    bestOtherTown = otherTown;
+                                    bestResource = resource;
+                                    bestThisStock = thisStock;
+                                    bestOtherStock = otherStock;
+                                    bestOtherTownPopulation = otherTownPopulation;
+                                    bestProfit = profit;
+                                }
+                            }
                         }
                         else if (profit < cheapestProfit)
                         {
